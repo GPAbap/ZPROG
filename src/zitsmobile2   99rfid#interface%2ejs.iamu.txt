@@ -1,0 +1,87 @@
+/* --- ITSmobile functions ------------------------------ */
+/* functions which are callable from the RFID-Reader      */
+/* to get and set data against the ITSmobile application  */
+/* page                                                   */
+/* ------------------------------------------------------ */
+
+/* --- ITSmobile_Execute() ------------------------------ */
+/* called whenever a RFID operation should be executed    */
+/* this field                                             */
+/* ------------------------------------------------------ */
+function ITSmobile_ExecuteRFID()
+{
+   /* set device page */
+   var device = document.frames["ITSFrameDev"];
+   if (device == null || device.RfidReader_Execute == null)
+      return;
+
+   /* get rfid data for the sap field (for the focus field) */
+   var rfid_data = ITSmobile_GetFieldData();
+   if ( rfid_data == null )
+   {
+      /* not a RFID field, user presse trigger but we are not */
+      /* on a rfid field - nothing to do - ignore request */
+      return;
+   }
+
+   /* execute command */
+   var ret = device.RfidReader_Execute(rfid_data);
+   if ( ret != null ) 
+   {
+      /* report result to sap */
+      ITSmobile_SetStatus( rfid_data, ret["msg"], ret["msgclass"] );
+   }
+
+   /* reader is not ready to deliver a result, do nothing */
+}
+
+/* --- ITSmobile_GetFieldData --------------------------- */
+/* read the focus field and return related rfid data for  */
+/* this field                                             */
+/* ------------------------------------------------------ */
+function ITSmobile_GetFieldData()
+{
+   /* ITSmobile application frame */
+   var app = document.frames["ITSFrameSrv"];
+   if (app == null || app.RFIDGetFieldData == null)
+      return null;
+   return ( app.RFIDGetFieldData() );
+}
+
+/* --- ITSmobile_SetTagData ----------------------------- */
+/* set read tag data into sap field                       */
+/* ------------------------------------------------------ */
+function ITSmobile_SetTagData( rfid_data, tagvalue )
+{
+   /* ITSmobile application frame */
+   var app = document.frames["ITSFrameSrv"];
+   if (app == null || app.RFIDSetTagData == null)
+      return null;
+   return ( app.RFIDSetTagData( rfid_data, tagvalue ) );
+}
+
+/* --- ITSmobile_GetTagData ----------------------------- */
+/* set read tag data into sap field                       */
+/* ------------------------------------------------------ */
+function ITSmobile_GetTagData( rfid_data )
+{
+   /* ITSmobile application frame */
+   var app = document.frames["ITSFrameSrv"];
+   if (app == null || app.RFIDGetTagData == null)
+      return null;
+   return ( app.RFIDGetTagData( rfid_data ) );
+}
+
+/* --- ITSmobile_SetStatus ------------------------------ */
+/* report the status of an rfid operation to SAP.         */
+/* This function is setting the error code for the rfid   */
+/* operation.                                             */
+/* ------------------------------------------------------ */
+function ITSmobile_SetStatus( rfid_data, rc, rcclass )
+{
+   /* ITSmobile application frame */
+   var app = document.frames["ITSFrameSrv"];
+   if (app == null || app.RFIDSetStatus == null)
+      return;
+   app.RFIDSetStatus( rfid_data, rc, rcclass );
+}

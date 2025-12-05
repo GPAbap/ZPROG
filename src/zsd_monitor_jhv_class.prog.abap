@@ -1,0 +1,61 @@
+*&---------------------------------------------------------------------*
+*&  Include           ZSD_MONITOR_CLASS
+*&---------------------------------------------------------------------*
+CLASS CL_EVENT_HANDLER DEFINITION.
+
+  PUBLIC SECTION.
+
+    CLASS-METHODS ON_LINK_CLICK                   " LINK_CLICK
+      FOR EVENT IF_SALV_EVENTS_ACTIONS_TABLE~LINK_CLICK
+      OF CL_SALV_EVENTS_TABLE
+      IMPORTING ROW
+                COLUMN.
+
+    CLASS-METHODS ON_ADDED_FUNCTION               " ADDED_FUNCTION FOR USER_COMMAND
+      FOR EVENT IF_SALV_EVENTS_FUNCTIONS~ADDED_FUNCTION
+      OF CL_SALV_EVENTS_TABLE
+      IMPORTING E_SALV_FUNCTION.
+
+ENDCLASS.                    "cl_event_handler DEFINITION
+
+*----------------------------------------------------------------------*
+*       CLASS cl_event_handler IMPLEMENTATION
+*----------------------------------------------------------------------*
+CLASS CL_EVENT_HANDLER IMPLEMENTATION.
+
+  METHOD ON_LINK_CLICK.
+    PERFORM SHOW_DOCUMENT USING ROW COLUMN.
+
+    FIELD-SYMBOLS: <LFA_DATA> LIKE LINE OF GT_DATA_ALV.
+    READ TABLE GT_DATA_ALV ASSIGNING <LFA_DATA> INDEX ROW.
+    CHECK SY-SUBRC IS INITIAL.
+    IF <LFA_DATA>-CHECK IS INITIAL.
+      <LFA_DATA>-CHECK = 'X'.
+    ELSE.
+      CLEAR <LFA_DATA>-CHECK.
+    ENDIF.
+    O_ALV->REFRESH( ).
+
+  ENDMETHOD.                    "on_link_click
+
+  METHOD ON_ADDED_FUNCTION.
+
+    IF E_SALV_FUNCTION EQ 'REFRESCAR'.
+      "PERFORM F_REFRESCAR.
+    ELSEIF E_SALV_FUNCTION EQ 'REENVIAR'.
+      "PERFORM F_REENVIAR_XML.
+    ELSEIF E_SALV_FUNCTION EQ 'CANCELAR'.
+      "PERFORM F_DESCARGA_XML_CANC_CONS USING '0'.
+    ELSEIF E_SALV_FUNCTION EQ 'ST.CANCEL.'.
+      "PERFORM F_DESCARGA_XML_CANC_CONS USING '1'.
+    ELSEIF E_SALV_FUNCTION EQ 'MARCAR'.
+      PERFORM F_MARCAR_TODO.
+    ELSEIF E_SALV_FUNCTION EQ 'DESMARCAR'.
+      PERFORM F_DESMARCAR_TODO.
+    ELSEIF E_SALV_FUNCTION EQ 'DESCARGAR'.
+      PERFORM F_DESCARGAR.
+    ENDIF.
+
+  ENDMETHOD.                    "on_added_function
+
+ENDCLASS.                    "cl_event_handler IMPLEMENTATION

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZCO_COSTOS_EQUIV_CIERRE</NAME>
+    <SUBC>1</SUBC>
+    <RLOAD>S</RLOAD>
+    <FIXPT>X</FIXPT>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Parámetros de Selección:</ENTRY>
+     <LENGTH>48</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Modificación Cifras Equivalencias Costos Cierre Mensual</ENTRY>
+     <LENGTH>55</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_GJAHR</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>17</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_POPER</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>9</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+   </TPOOL>
+  </asx:values>
+ </asx:abap>
+</abapGit>

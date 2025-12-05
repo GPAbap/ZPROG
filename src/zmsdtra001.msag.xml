@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMSDTRA001</ARBGB>
+    <MASTERLANG>S</MASTERLANG>
+    <STEXT>Mensajes Para Reporte Melaza</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>La compañía no existe</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>El cliente no existe</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>El cliente no está dado de alta en la sociedad</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>La placa ya fue registrada anteriormente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>No existen unidades para este cliente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Vencio licencia del operador</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>El operador no existe</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>La unidad no existe</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>El cliente no ha sido autorizado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>No existe la entrega o el pedido</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>La Org. Vta no corresponde con la Sociedad</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSDTRA001</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>Picking no efectuado</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

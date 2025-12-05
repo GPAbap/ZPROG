@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Para Copia de Calculo de Fecha-Hr</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZMCWMTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZMCWM</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZL_MC_TIME_DIFFERENCE</FUNCNAME>
+     <SHORT_TEXT>Warehouse controlling</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>DATE_FROM</PARAMETER>
+       <DBFIELD>LTAK-BDATU</DBFIELD>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>DATE_TO</PARAMETER>
+       <DBFIELD>LTAK-BDATU</DBFIELD>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>TIME_FROM</PARAMETER>
+       <DBFIELD>LTAK-BZEIT</DBFIELD>
+       <OPTIONAL>X</OPTIONAL>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>TIME_TO</PARAMETER>
+       <DBFIELD>LTAK-BZEIT</DBFIELD>
+       <OPTIONAL>X</OPTIONAL>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>DELTA_TIME</PARAMETER>
+       <TYP>ZDECIMAL3</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>DELTA_UNIT</PARAMETER>
+       <DBFIELD>MCWMIT-LZEIT</DBFIELD>
+      </RSEXP>
+     </EXPORT>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>FROM_GREATER_TO</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>DATE_FROM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Creation Date of Transfer Order</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>DATE_TO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Creation Date of Transfer Order</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TIME_FROM</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Creation time of transfer order</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TIME_TO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Creation time of transfer order</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>DELTA_TIME</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Time between TR creation and TO creation</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>DELTA_UNIT</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>WM time unit</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>FROM_GREATER_TO</PARAMETER>
+       <KIND>X</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

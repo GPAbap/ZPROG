@@ -1,0 +1,377 @@
+`if (~currdynpro.speechenabled != "")
+`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+`end;`
+<html`if (~currdynpro.speechenabled != "")
+    ` xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:vxml="http://www.w3.org/2001/vxml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xv="http://www.voicexml.org/2002/xhtml+voice"`
+  end;` class="MobileHtml">`
+  if ( ~itsmobileNameSpace != "" )
+    ~current_service = ~itsmobileNameSpace & ~service;
+  elseif ( strsub(~sources, 0, 1) == "/" )
+    ~current_service = strsub(~sources, 0, strchr(~sources, "/", 1)+1) & ~service;
+  else
+    ~current_service = ~service;
+  end;`
+`
+<!-- Generated Template
+      NAME:   SAPMZCPED
+      SCREEN: 0103
+      DATE:   20171121
+      TIME:   104522
+      STYLE:  MOBILE4
+-->
+declare class(name, idx=1), style(name, idx=1), style_attr(name, idx=1), icon(name, idx=1),
+    class_ext(name, idx=1), align(name, idx=1), label(name, idx=1), has_label(name, idx=1),
+    width(i, a), margin_left(i, a), w(i, a) in "some.html";
+if ( ~itsmobileFuncInclude != "" )
+    include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileFuncInclude, ~style="x");
+else
+    include(~service="itsmobile", ~language="", ~theme="99", ~name=nonExt&"functions", ~style="x");
+end;
+    `<head><style>.MobileRow {zoom:300%}</style>`
+    if ( ~itsmobileDeviceInclude != "" )
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileDeviceInclude & ".html");
+    end;
+        `<title>`~windowtitle`</title>`
+if ( ~itsmobileSoundInclude != "" ) <!-- customers sound -->
+   include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileSoundInclude & ".html");
+else <!-- default -->
+   include(~service="itsmobile", ~language="", ~theme="99", ~name="include/sound.html");
+end;`
+`
+ if ( ~itsmobileCssInclude != "" ) <!-- customer include from gui settings -->`
+        <link rel="stylesheet" href="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCssInclude & ".css")`" type="text/css" />
+` else <!-- default include from itsmobile --> `
+        <link rel="stylesheet" href="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="styles/all/mobile.css")`" type="text/css" />
+` end;
+ if ( ~itsmobileJsInclude != "" ) <!-- customer include specified in gui settings -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileJsInclude & ".js")`"></script>
+` else <!-- default include from itsmobile -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="scripts/all/mobile.js")`"></script>
+` end;
+  if ( ~itsmobileCustomJsInclude != "" )`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCustomJsInclude & ".js")`"></script>
+` end;`
+        <script type="text/javascript" language="Javascript">
+           var itsmobile_eos = "`wgateurl(~okcode="/nex")`";
+        </script>
+` <!-- rfid values --------------------------- -->
+  if ( ~RfidEnabledFields != "" ) `
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="rfid/rfbutton.js")`"></script>
+        <script type="text/javascript" language="Javascript">
+           var rfid_fields = new Object;
+`   repeat with i from 1 to ~RfidEnabledFields.dim
+      <!-- get field name and index -->
+      rfidField = ~RfidEnabledFields[i];
+      rfidFieldIdx = ~RfidEnabledFields[i].idx;
+      rfidFieldParams = ~RfidEnabledFields[i].params; `
+           rfid_fields["`rfidField`[`rfidFieldIdx`]"] = { `rfidFieldParams` };
+`   end;`
+        </script>
+` end;`
+
+`       <!-- Check if screen supports voice integration -->
+        if ( ~currdynpro.speechenabled != "" )
+          <!-- include the htmlb functions for voice integration -->
+          if ( ~itsmobileVoiceInclude != "" ) <!-- customers voice generation html -->
+            include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileVoiceInclude & ".html");
+          else <!-- default its default voice include -->
+            include(~service="itsmobile", ~language="", ~theme="99", ~name="include/voice.html");
+          end;
+        end;`
+`
+    `</head>`
+    `<body class="MobileBody `class("~currdynpro", 1)`" `style_attr("~currdynpro", 1)` id="MobileBody"`
+      if (~currdynpro.speechenabled != "")` ev:event="load" ev:handler="#sayOnPageLoad"` else
+      ` onload="setFocus('`~focusfield`');`~itsmobileOnloadHandler`"` end;
+      ` onkeydown="return processKeyEvent(event);" onhelp="return false;">
+`
+        `<form method="post" action="`WGateURL()`" id="mobileform" name="mobileform" onsubmit="return firstSend()" style="display:inline">
+            <input type="hidden" id="~OkCode" name="~OkCode" value="/0" />
+            <input type="hidden" id="~FKey" name="~FKey" value="" />
+            <input type="hidden" id="~Focusfield" name="~Focusfield" value="" />
+            `if (~SEC_SESSTOKEN != "")`<input type="hidden" name="~SEC_SESSTOKEN" value="`~SEC_SESSTOKEN`" />`end`
+`if (~active_timer != "")
+    include(~service="itsmobile", ~theme="99", ~name="timer.html");
+    timer(~active_timer, width, height);
+end`
+`
+`<!-- main screen begin -->
+<div width="100%">`
+    if ( ~itsmobileCuaInclude != "" ) <!-- customers cua area -->
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileCuaInclude & ".html");
+    elseif ( ~itsmobileNoCuaInclude != "1" && ~itsmobileNoCuaInclude != "X" ) <!-- default cua area -->
+       include(~service="itsmobile", ~language="", ~theme="99", ~name="include/cuaarea.html");
+    end;`
+</div>
+<div width="100%" class="MobileUserArea">`
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'RLMOB-PBACK'[1].exists == "X" && 'RLMOB-PBACK'[1].visible == "X" ) ||
+     0 )
+`<!-- line 1 -->
+<div class="MobileRow">`
+if ( ( 'RLMOB-PBACK'[1].exists == "X" ) && ( 'RLMOB-PBACK'[1].visible == "X" ) )
+    `<input type="button" style="`width("10", "8.200em"); style("RLMOB-PBACK", 1)`" `
+    `class="MobileButton`class_ext("RLMOB-PBACK", 1)` `class("RLMOB-PBACK", 1)`" `
+    if ( 'RLMOB-PBACK'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'RLMOB-PBACK'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'RLMOB-PBACK'[1].name`" `end;
+    `value="`label("RLMOB-PBACK", 1)`" `
+    if ( 'RLMOB-PBACK'[1].onclick != "" )
+         `onclick="`'RLMOB-PBACK'[1].onclick`;" `
+    elseif ( 'RLMOB-PBACK'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'RLMOB-PBACK'[1].name`');"
+        onblur="leaveFocusField('`'RLMOB-PBACK'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'RLMOB-PBACK'[1].okcode`');" `
+    end;
+    `/>`
+else
+    `<span style="`margin_left("10", "8.200em")`; height:1px"></span>`
+end;
+if ( 10 != 0 )
+    `<span style="`margin_left("10", "8.200em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     1 )
+`<!-- line 2 -->
+<div class="MobileRow">`
+if ( 20 != 0 )
+    `<span style="`margin_left("20", "16.400em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG1'[1].exists == "X" && 'VG_MSG1'[1].visible == "X" ) ||
+     0 )
+`<!-- line 3 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG1'[1].exists == "X" ) && ( 'VG_MSG1'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG1", 1); style("VG_MSG1", 1)`" `
+    if ( 'VG_MSG1'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG1", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG1", 1)`"`
+    end;
+    `>`strmask('VG_MSG1'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG2'[1].exists == "X" && 'VG_MSG2'[1].visible == "X" ) ||
+     0 )
+`<!-- line 4 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG2'[1].exists == "X" ) && ( 'VG_MSG2'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG2", 1); style("VG_MSG2", 1)`" `
+    if ( 'VG_MSG2'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG2", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG2", 1)`"`
+    end;
+    `>`strmask('VG_MSG2'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG3'[1].exists == "X" && 'VG_MSG3'[1].visible == "X" ) ||
+     0 )
+`<!-- line 5 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG3'[1].exists == "X" ) && ( 'VG_MSG3'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG3", 1); style("VG_MSG3", 1)`" `
+    if ( 'VG_MSG3'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG3", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG3", 1)`"`
+    end;
+    `>`strmask('VG_MSG3'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG4'[1].exists == "X" && 'VG_MSG4'[1].visible == "X" ) ||
+     0 )
+`<!-- line 6 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG4'[1].exists == "X" ) && ( 'VG_MSG4'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG4", 1); style("VG_MSG4", 1)`" `
+    if ( 'VG_MSG4'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG4", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG4", 1)`"`
+    end;
+    `>`strmask('VG_MSG4'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG5'[1].exists == "X" && 'VG_MSG5'[1].visible == "X" ) ||
+     0 )
+`<!-- line 7 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG5'[1].exists == "X" ) && ( 'VG_MSG5'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG5", 1); style("VG_MSG5", 1)`" `
+    if ( 'VG_MSG5'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG5", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG5", 1)`"`
+    end;
+    `>`strmask('VG_MSG5'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG6'[1].exists == "X" && 'VG_MSG6'[1].visible == "X" ) ||
+     0 )
+`<!-- line 8 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG6'[1].exists == "X" ) && ( 'VG_MSG6'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG6", 1); style("VG_MSG6", 1)`" `
+    if ( 'VG_MSG6'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG6", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG6", 1)`"`
+    end;
+    `>`strmask('VG_MSG6'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG7'[1].exists == "X" && 'VG_MSG7'[1].visible == "X" ) ||
+     0 )
+`<!-- line 9 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG7'[1].exists == "X" ) && ( 'VG_MSG7'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG7", 1); style("VG_MSG7", 1)`" `
+    if ( 'VG_MSG7'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG7", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG7", 1)`"`
+    end;
+    `>`strmask('VG_MSG7'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG8'[1].exists == "X" && 'VG_MSG8'[1].visible == "X" ) ||
+     0 )
+`<!-- line 10 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG8'[1].exists == "X" ) && ( 'VG_MSG8'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG8", 1); style("VG_MSG8", 1)`" `
+    if ( 'VG_MSG8'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG8", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG8", 1)`"`
+    end;
+    `>`strmask('VG_MSG8'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG9'[1].exists == "X" && 'VG_MSG9'[1].visible == "X" ) ||
+     0 )
+`<!-- line 11 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG9'[1].exists == "X" ) && ( 'VG_MSG9'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG9", 1); style("VG_MSG9", 1)`" `
+    if ( 'VG_MSG9'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG9", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG9", 1)`"`
+    end;
+    `>`strmask('VG_MSG9'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_MSG10'[1].exists == "X" && 'VG_MSG10'[1].visible == "X" ) ||
+     0 )
+`<!-- line 12 -->
+<div class="MobileRow">`
+if ( ( 'VG_MSG10'[1].exists == "X" ) && ( 'VG_MSG10'[1].visible == "X" ) )
+    `<span style="`width("21", "17.220em"); align("VG_MSG10", 1); style("VG_MSG10", 1)`" `
+    if ( 'VG_MSG10'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("VG_MSG10", 1)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("VG_MSG10", 1)`"`
+    end;
+    `>`strmask('VG_MSG10'[1])`</span>`
+else
+    `<span style="`margin_left("21", "17.220em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     1 )
+`<!-- line 13 -->
+<div class="MobileRow">`
+if ( 20 != 0 )
+    `<span style="`margin_left("20", "16.400em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     1 )
+`<!-- line 14 -->
+<div class="MobileRow">`
+if ( 20 != 0 )
+    `<span style="`margin_left("20", "16.400em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     1 )
+`<!-- line 15 -->
+<div class="MobileRow">`
+if ( 20 != 0 )
+    `<span style="`margin_left("20", "16.400em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+`</div>
+<!-- main screen end -->`
+        `</form>`
+    `</body>`
+`</html>
+                                                                                                                                                                                

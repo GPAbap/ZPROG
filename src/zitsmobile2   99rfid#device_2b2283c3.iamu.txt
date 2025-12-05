@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+
+<!-- ---------------------------------------------------------- -->
+<!-- HARDWARE dependent RFID Reader Page                        -->
+<!-- SAMPLE for: Intermec Handheld RFID-Reader                  -->
+<!--             Type: IM4 Version 7.16 Interface S             -->
+<!-- ---------------------------------------------------------- -->
+
+<!-- ---------------------------------------------------------- -->
+<!-- Instantiating the intermec(ItcAxRfid_Basic reader) object. -->
+<!-- ---------------------------------------------------------- -->
+<object id="rfidreader"
+        classid="CLSID:2690DB3E-C0B4-4546-B2D2-D7A984DA4EE9">
+</object>
+
+<!-- ---------------------------------------------------------- -->
+<!-- RfidReader functions                                       -->
+<!-- This functions will be called to read and write rfid       -->
+<!-- tags. Data like rfid command or related form field will    -->
+<!-- be read using ITSmobile-Interface functions.               -->
+<!-- Not locally handled errors must be reported via ITSmobile  -->
+<!-- interface to be send against the backend                   -->
+<!-- ---------------------------------------------------------- -->
+<script language="JavaScript">
+
+/* *** globals ************************************************* */
+/* rfid debug screen      */
+var debug_out;
+
+/* error handling, message number and class */
+var deviceOpen = 0;
+var deviceMsg = '006';  /* not open */
+var deviceMsgClass = 'SITS_MOBILE_RFID';
+
+/* *** RfidReader_Open ***************************************** */ 
+function RfidReader_Open()
+{
+   /* set the globals */
+   debug_out = document.forms["rfid_debug_screen"];
+   
+   /* sap debug out, nothing to report */
+   debug_out["dbg_sapfield"].value = "<none>";
+   debug_out["dbg_sapdata"].value   = "<none> (open reader)";
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* rfidreader command */
+   var rc = rfidreader.Open("tcp://127.0.0.1");
+   
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "rfidreader.Open(tcp://127.0.0.1)";
+   debug_out["dbg_rfidresult"].value = rc;
+   
+   if ( rc != "0" )
+   {
+      deviceOpen = 0;
+      deviceMsg = '006'; /* not started, open failed */
+      debug_out["dbg_rc"].value   = deviceMsg;
+      return;
+   }
+   else
+   {
+      deviceOpen = 1;
+      deviceMsg = '000'; /* running */
+      debug_out["dbg_rc"].value   = deviceMsg;
+   }
+   
+   /* map device center button (trigger), so that we get the    */
+   /* trigger pressed event                                     */
+   var rc2 = rfidreader.Execute("DCE BUTTON CENTER=ON");
+
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "rfidreader.Execute(DCE BUTTON CENTER=ON)";
+   debug_out["dbg_rfidresult"].value = rc2;
+
+   if ( rc2 != "OK>" )
+   {
+      deviceOpen = 0;
+      deviceMsg = '006'; /* not started, open failed */
+      debug_out["dbg_rc"].value   = deviceMsg;
+      return;
+   }
+}
+
+/* *** RfidReader_Close **************************************** */
+function RfidReader_Close()
+{
+   /* sap debug out, nothing to report */
+   debug_out["dbg_sapfield"].value = "<none>";
+   debug_out["dbg_sapdata"].value   = "<none> (close reader)";
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* rfidreader command */
+   var rc = rfidreader.Close();
+   rfidreader = null;
+   
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "rfidreader.Close()";
+   debug_out["dbg_rfidresult"].value = rc;
+
+   /* set device state */
+   deviceOpen = 0;
+   deviceMsg = '007'; /* not started, already closed */
+
+   /* debug out, returncode */
+   debug_out["dbg_rc"].value = deviceMsg;
+}
+
+/* *** RfidReader_Execute ************************************** */
+function RfidReader_Execute(rfid_data)
+{
+   var rc = new Object;
+   var sapattribute = "";
+   
+   /* reset debug output, new command */
+   debug_out["dbg_sapfield"].value = rfid_data["Name"];
+   debug_out["dbg_sapdata"].value = "";
+   for (sapattribute in rfid_data)
+   {
+      debug_out["dbg_sapdata"].value = debug_out["dbg_sapdata"].value + sapattribute + ":" + rfid_data[sapattribute] + ", ";  
+   }
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* Check rfid reader state */
+   if ( deviceOpen != 1 )
+   {
+       /* report device status to sap application if not ready */
+       debug_out["dbg_rc"].value = deviceMsg;
+       debug_out["dbg_rfidcmd"].value = "not ready";
+       rc["msg"] = deviceMsg;
+       rc["msgclass"] = deviceMsgClass;
+       return(rc);
+   }
+
+   /* execute command */
+   ExecuteCommand(rfid_data);
+
+   /* set return values for sap */
+   debug_out["dbg_rc"].value = deviceMsg;
+   rc["msg"] = deviceMsg;
+   rc["msgclass"] = deviceMsgClass;
+   return(rc);
+}
+
+/* *** RfidReader_Execute ************************************** */
+function ExecuteCommand(rfid_data)
+{
+   var rfid_cmd, rfid_result;
+
+   /* prepare the command */
+   if (rfid_data["Command"] == "ReadTag" || rfid_data["Command"] == "ReadMultipleTag") {
+      rfid_cmd = "READ TAGTYPE";
+   } else if (rfid_data["Command"] == "WriteTag") {
+      rfid_cmd = "WRITE EPCID=H" + parent.ITSmobile_GetTagData(rfid_data);
+   } else if (rfid_data["Command"] == "ClearTag") {
+      // Not working: rfid_cmd = "KILLTAG";
+      rfid_cmd = "WRITE EPCID=H000000000000000000000000";
+   } else {
+      debug_out["dbg_tag"].value = "";
+      parent.ITSmobile_SetTagData( rfid_data, "" );
+      deviceMsg = "005";
+      return;
+   }
+
+   /* execute the command */
+   debug_out["dbg_rfidcmd"].value = rfid_cmd;
+   rfid_result = rfidreader.Execute(rfid_cmd);
+   debug_out["dbg_rfidresult"].value = rfid_result;
+
+   /* parse the response */
+   if (rfid_result.search(/OK>/) != -1) {
+      debug_out["dbg_tag"].value = "";
+
+      /* response is OK, try to interpret error codes */
+      if (rfid_data["Command"] == "ReadTag" ||
+          rfid_data["Command"] == "ReadMultipleTag") {
+
+         if (rfid_result.search(/ERR /) == 0) {
+            parent.ITSmobile_SetTagData( rfid_data, "" );
+            deviceMsg = "002";
+            return;
+         }
+
+         var arr = rfid_result.split("\r\n");
+         arr.splice(arr.length-1,1);
+         for (var i in arr) {
+            var line = arr[i];
+            if (line.charAt(0) == 'H') {
+               /* remove the prefix */
+               arr[i] = line.substr(1);
+
+               /* take only the first part, the ID */
+               arr[i] = arr[i].split(" ")[0];
+            }
+         }
+
+         if (arr.length == 0) {
+            /* no tags found */
+            parent.ITSmobile_SetTagData( rfid_data, "" );
+            deviceMsg = "002";
+         } else if (arr.length > 1 && rfid_data["Command"] == "ReadTag") {
+            /* more than one tag are found during ReadTag operation */
+            parent.ITSmobile_SetTagData( rfid_data, "" );
+            deviceMsg = "008";
+         } else {
+            debug_out["dbg_tag"].value = arr.join(",");
+            parent.ITSmobile_SetTagData( rfid_data, debug_out["dbg_tag"].value );
+            deviceMsg = "000";
+         }
+      } else if (rfid_data["Command"] == "WriteTag" ||
+                 rfid_data["Command"] == "ClearTag") {
+         if (rfid_result.search(/WROK/) != -1) {
+            /* success */
+            deviceMsg = "000";
+         } else {
+            /* 003 Rfid write failed */
+            deviceMsg = "003";
+         }
+      } else {
+         alert("Unspecified error, should never happen");
+         deviceMsg = "005";
+         return;
+      }
+   } else {
+      debug_out["dbg_tag"].value = "";
+      if (rfid_data["Command"] == "ReadTag" ||
+          rfid_data["Command"] == "ReadMultipleTag") {
+         /* 002 Rfid read failed, no tag received */
+         parent.ITSmobile_SetTagData( rfid_data, "" );
+         deviceMsg = "002";
+      } else if (rfid_data["Command"] == "WriteTag") {
+         /* 003 Rfid write failed */
+         deviceMsg = "003";
+      } else if (rfid_data["Command"] == "ClearTag") {
+         /* 004 Rfid clear failed */
+         deviceMsg = "004";
+      } else {
+         alert("Unspecified error, should never happen");
+         deviceMsg = "005";
+         return;
+      }
+   }
+}
+
+
+/* --- DEVICE SPECIFIC SCRIPTS -----------------*/
+
+/* *** DCEEvent *********************************************** */
+/* If an extended BRI command such as "DCE BUTTON CENTER=ON"    */
+/* is issued, then the DCE will report events whenever the      */
+/* center button (offered on the IP4 reader) is pressed or      */
+/* released.  the function DCEEvent will be called for these    */
+/* events.                                                      */
+/* ************************************************************ */
+function rfidreader::DCEEvent(param1, param2)
+{
+     /* alert("DCEEvent received"); */
+
+     /* If the center button is released we execute the */
+     /* reader command related to the field which has   */
+     /* the focus                                       */  
+     if (param2 == "CENTER 0")
+     {
+        /* trigger released */
+        parent.ITSmobile_ExecuteRFID();
+    }	
+}
+</script>
+
+<!-- ---------------------------------------------------------- -->
+<!-- Debug screen, only visible when ~itsmobiledebug has been   -->
+<!-- set before starting the service                            -->
+<!-- ---------------------------------------------------------- -->
+</head>
+<body onLoad="javascript:RfidReader_Open();" onUnload="javascript:RfidReader_Close();">
+<form name="rfid_debug_screen" id="rfid_debug_screen" onsubmit="return false;">
+  <table width="100%">
+    <tr>
+	<td><span>SAP field:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapfield" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>SAP rfid data:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapdata" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID command:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rfidcmd" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID response:</span></td>
+       <td><p><textarea readonly="readonly" name="dbg_rfidresult" rows="3"></textarea></p></td>
+    </tr>
+    <tr>
+	<td><span>DATA for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_tag" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>MSG for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rc" maxlength="512" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

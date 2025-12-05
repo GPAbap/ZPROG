@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_IAMU" serializer_version="v2.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <IAMU>
+    <ATTRIBUTES>
+     <SERVICE>ZITSMOBILE2</SERVICE>
+     <THEME>99</THEME>
+     <MIMENAME>RFID/DEVICE_278DC82A</MIMENAME>
+     <LONGNAME>RFID/DEVICE_SYMBOL.HTML</LONGNAME>
+     <ORIGLANG>S</ORIGLANG>
+     <MODIFLANG>S</MODIFLANG>
+    </ATTRIBUTES>
+    <EXTENSION>txt</EXTENSION>
+   </IAMU>
+  </asx:values>
+ </asx:abap>
+</abapGit>

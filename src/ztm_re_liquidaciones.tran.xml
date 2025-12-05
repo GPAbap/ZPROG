@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZTM_RE_LIQUIDACIONES</TCODE>
+    <PGMNA>ZTM_RE_FLETES</PGMNA>
+    <DYPNO>1000</DYPNO>
+    <CINFO>gA==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZTM_RE_LIQUIDACIONES</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>S</SPRSL>
+    <TCODE>ZTM_RE_LIQUIDACIONES</TCODE>
+    <TTEXT>Reporte de Liquidaciones de Fletes</TTEXT>
+   </TSTCT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

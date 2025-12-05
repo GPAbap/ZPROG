@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZCO_SOLPED</OBJCT>
+    <FIEL1>BTCUNAME</FIEL1>
+    <FIEL2>ACTVT</FIEL2>
+    <OCLSS>ZCO</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>S</LANGU>
+    <OBJECT>ZCO_SOLPED</OBJECT>
+    <TTEXT>Objeto autorización para Solpeds Presupuesto</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZCO_SOLPED</OBJCT>
+   </TOBJVORFLG>
+   <TACTZ>
+    <TACTZ>
+     <BROBJ>ZCO_SOLPED</BROBJ>
+     <ACTVT>03</ACTVT>
+    </TACTZ>
+   </TACTZ>
+  </asx:values>
+ </asx:abap>
+</abapGit>

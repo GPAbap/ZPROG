@@ -1,0 +1,234 @@
+/* --- FUNCTION RfidButtonClick ----------------------- */
+function RfidButtonClick()
+{
+   /* ------------------------------------------------- */ 
+   /* If we run with a rfid reader object than call the */
+   /* execute function of the reader as if the trigger  */
+   /* has been pressed.                                 */
+   /* If we do not have a reader object, simulate the   */
+   /* rfid operation using a prompt popup               */ 
+   /* ------------------------------------------------- */
+   if ( parent.ITSmobile_ExecuteRFID != undefined )
+   {
+      /* call rfid readers trigger function */
+      parent.ITSmobile_ExecuteRFID();
+   }
+   else
+   {
+      /* call the trigger simulation */
+      SimulateReader_Execute();
+   }
+}
+
+/* --- FUNCTION SimulateReader_Execute ---------------- */
+function SimulateReader_Execute()
+{
+   /* initial set of the return values */
+   var msgno = "000";
+   var msgclass = "SITS_MOBILE_RFID"
+
+   /* get rfid data for the sap field (for the focus field) */
+   var rfid_data = RFIDGetFieldData();
+
+   /* check if we have rfid data for that field */
+   if ( ! rfid_data )
+   {
+       /* alert("Field " + myname + " not a rfid field "); */
+       /* nothing to do */
+       return;
+   }
+  
+   /* get rfid command */
+   var cmd = rfid_data["Command"];
+
+   /* get tag data */
+   var tagdata = RFIDGetTagData( rfid_data );
+
+   /* simulate the rfid operation */
+   if ( ( cmd == "ReadTag" ) || ( cmd == "ReadMultipleTag" ) )
+   {
+      var tagvalue = prompt("RFID simulate tag input, please insert tag data.","");
+      if ( tagvalue != "" && tagvalue != null )
+      {
+         RFIDSetTagData( rfid_data, tagvalue );
+         msgno = "000";
+      }
+      else
+      {
+         RFIDSetTagData( rfid_data, "");
+         /* 002 Rfid read failed, no tag received */
+         msgno = "002";
+      }
+   }
+   else if ( cmd == "WriteTag" )
+   {
+      var tagvalue = prompt("RFID simulate TAG write, do not modify data to simulate a successful write.", tagdata);
+      if ( tagvalue == tagdata )
+      {
+         msgno = "000";
+      }
+      else
+      {
+         /* 003 Rfid write tag failed */
+         msgno = "003";
+      }
+
+   }
+   else if ( cmd == "ClearTag" )
+   {
+      var tagvalue = prompt("RFID simulate clear tag, clear data to simulate successful deletion.", tagdata);
+      if ( tagvalue == "" )
+      {
+         msgno = "000";
+      }
+      else
+      {
+         /* 004 Rfid clear tag failed */
+         msgno = "004";
+	}
+   }
+   else
+   {
+      /* 005 unknown rfid command */
+      msgno = "005"
+   }
+
+   /* report command execution to application */
+   RFIDSetStatus( rfid_data, msgno, msgclass );
+}
+
+/* --- RFIDxx functions --------------------------------- */
+/* functions which are callable from the RFID-Reader-Page */
+/* to get and set data against the ITSmobile application. */
+/* We also use this functions in the simulation mode      */
+/* ------------------------------------------------------ */
+
+/* --- RFIDGetFieldData --------------------------------- */
+/* read the focus field and return related rfid data for  */
+/* this field                                             */
+/* ------------------------------------------------------ */
+function RFIDGetFieldData()
+{
+   /* get focus field */
+   var curfield = document.forms["mobileform"]["~Focusfield"].value;
+   var myfield  = document.forms["mobileform"][curfield]; 
+
+   /* we are not able to detect the field with the focus */
+   if ( ! myfield )
+   {
+       /* alert("Field " + myname + " not found"); */
+       return null;
+   }
+
+   /* the focus field is disabled, no rfid operation on disabled fields */
+   if ( myfield.disabled )
+   {
+       /* alert("Field " + myname + " disabled"); */
+       return null;
+   }
+
+   /* check if we have rfid data for that field */
+   var rfid_data = rfid_fields[curfield];
+   if ( ! rfid_data )
+   {
+       /* alert("Field " + myname + " not a rfid field "); */
+       return null;
+   }
+
+   /* check if we have a writeable data / error code field */
+   var tagdataname = rfid_data["TagData"];
+   var tagdata = document.forms["mobileform"][tagdataname];
+   var msgnoname = rfid_data["ErrCode"];
+   var msgno = document.forms["mobileform"][msgnoname];
+
+   if ( (!tagdata) || (!msgno) || ( msgno && msgno.disabled) )
+   {
+      /* we can not report an error, we miss the error/data fields */
+      /* alert("Data transmission fields missing"); */
+      var fcode = rfid_data["OkCode"];
+      setOkCode(fcode);
+      return null;
+   }
+
+   /* success, rfid operation possible on this field */ 
+   return rfid_data;
+}
+
+/* --- RFIDSetTagData ----------------------------------- */
+/* set read tag data into sap field                       */
+/* ------------------------------------------------------ */
+function RFIDSetTagData( rfid_data, tagvalue )
+{
+   var tagdataname = rfid_data["TagData"];
+   var tagdata = document.forms["mobileform"][tagdataname];
+   if ( ( ! tagdata ) || (tagdata.disabled) )
+   {
+      alert("Tag data field " + tagdataname + " not found");
+      return 0;
+   }
+
+   /* store the tagdata */
+   tagdata.value = tagvalue;
+   return 1;
+}
+
+/* --- RFIDGetTagData ----------------------------------- */
+/* get tag data to be written                             */
+/* ------------------------------------------------------ */
+function RFIDGetTagData( rfid_data )
+{
+   var tagdataname = rfid_data["TagData"];
+   var tagdata = document.forms["mobileform"][tagdataname];
+   if ( ! tagdata )
+   {
+      alert("Tag data field " + tagdataname + " not found");
+      return "";
+   }
+
+   /* return the tagdata */    
+   return( tagdata.value );   
+}
+
+/* --- RFIDSetStatus ------------------------------------ */
+/* report the status of an rfid operation to SAP.         */
+/* This function is setting the error code for the rfid   */
+/* operation.                                             */
+/* ------------------------------------------------------ */
+function RFIDSetStatus( rfid_data, rc, rcclass )
+{
+   /* current field */
+   var myname = rfid_data['Name'];
+   var myfield = document.forms["mobileform"][myname]; 
+
+   var msgnoname = rfid_data["ErrCode"];
+   var msgno = document.forms["mobileform"][msgnoname];
+
+   var msgclassname = rfid_data["ErrName"];
+   var msgclass = document.forms["mobileform"][msgclassname];
+
+   /* set error class if we have one */
+   if ( msgclass ) { msgclass.value = rcclass; }
+   if ( msgno )    { msgno.value = rc; }
+
+   /* set focus to next field */
+   if ( msgno.value == "000" )
+   {
+      /* operation successfully done, disable rfid button */
+      /* to prevent multiple execution                    */
+      myfield.disabled = "true";   
+
+      var nextfieldname = rfid_data["NextField"];
+      var nextfield = document.forms["mobileform"][nextfieldname];
+      if ( nextfield && !nextfield.disabled )
+      {
+         setFocus(nextfieldname);
+         return;   
+      }
+   }
+   
+   /* submit, execute okcode */
+   var fcode = rfid_data["OkCode"];
+   setOkCode(fcode);
+}
+
+

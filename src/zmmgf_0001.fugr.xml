@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Envio MATMAS y LOIPRO a MII</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZMMGF_0001F01</SOBJ_NAME>
+    <SOBJ_NAME>LZMMGF_0001TOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZMMGF_0001</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>BAPI_ZIDOC_LOIPRO</FUNCNAME>
+     <SHORT_TEXT>Envio de IDOC LOIPRO a MII</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IM_AUFNR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>CAUFV-AUFNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IM_MATNR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>CAUFV-PLNBEZ</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IM_WERKS</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>CAUFV-WERKS</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IM_AUFNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número de orden</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IM_MATNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número de material</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IM_WERKS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Centro</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>BAPI_ZIDOC_MATMAS</FUNCNAME>
+     <SHORT_TEXT>Envio de MATMAS a MII</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IM_MATNR</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>MARA-MATNR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>IM_WERKS</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <TYP>MARC-WERKS</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IM_MATNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número de material</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IM_WERKS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Centro</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

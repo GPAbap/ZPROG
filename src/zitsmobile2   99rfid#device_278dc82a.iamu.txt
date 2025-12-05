@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+
+<!-- ---------------------------------------------------------- -->
+<!-- HARDWARE dependent RFID Reader Page                        -->
+<!-- SAMPLE for: Symbol Handheld RFID-Reader                    -->
+<!-- ---------------------------------------------------------- -->
+
+    <!-- set up the RFID environment -->
+    <META HTTP-Equiv="rfid" Content="enabled">
+    <META HTTP-Equiv="OnTrigger" Content="javascript:parent.frames['ITSFrameDev'].onTrigger('%s')">
+    <META HTTP-Equiv="RFIDNavigate" Content="javascript:parent.frames['ITSFrameDev'].onTag('%s')">
+    <META HTTP-Equiv="RFIDStatusNavigate" Content="javascript:parent.frames['ITSFrameDev'].onStatus(%s)">
+
+<!-- ---------------------------------------------------------- -->
+<!-- RfidReader functions                                       -->
+<!-- These functions will be called to read and write rfid      -->
+<!-- tags. Data like rfid command or related form field will    -->
+<!-- be read using ITSmobile-Interface functions.               -->
+<!-- Not locally handled errors must be reported via ITSmobile  -->
+<!-- interface to be send against the backend                   -->
+<!-- ---------------------------------------------------------- -->
+<script language="JavaScript">
+
+var Generic = new ActiveXObject("SymbolBrowser.Generic");
+
+/* *** globals ************************************************* */
+/* rfid debug screen      */
+var debug_out;
+
+/* error handling, message number and class */
+var deviceOpen = 0;
+var deviceMsg = '006';  /* not open */
+var deviceMsgClass = 'SITS_MOBILE_RFID';
+var secondPart = false;
+var tags = new Array();
+var timeout;
+
+function onTrigger(state)
+{
+   if (state != 0) /* trigger is pressed */
+      return; /* nothing to do */
+
+   parent.ITSmobile_ExecuteRFID();
+}
+
+function noMoreTags()
+{
+   secondPart = true;
+   parent.ITSmobile_ExecuteRFID();
+}
+
+function onTag(tagid)
+{
+   /* store the scanned RFID tag */
+   tags.push(tagid);
+
+   /* re-install the timeout */
+   if (typeof timeout != 'undefined')
+      clearTimeout(timeout);
+   timeout = setTimeout("noMoreTags()", 2000);
+}
+
+function onStatus(status)
+{
+   if (status == true) {
+      /* write succeeded */
+      deviceMsg = "000";
+   } else {
+      /* write failed */
+      deviceMsg = "003";
+   }
+
+   secondPart = true;
+   parent.ITSmobile_ExecuteRFID();
+}
+
+/* *** RfidReader_Execute ************************************** */
+function RfidReader_Execute(rfid_data)
+{
+   var rc = new Object();
+   var sapattribute = "";
+
+   /* set the globals */
+   debug_out = document.forms["rfid_debug_screen"];
+
+   /* reset debug output, new command */
+   debug_out["dbg_sapfield"].value = rfid_data["Name"];
+   debug_out["dbg_sapdata"].value = "";
+   for (sapattribute in rfid_data)
+   {
+      debug_out["dbg_sapdata"].value = debug_out["dbg_sapdata"].value + sapattribute + ":" + rfid_data[sapattribute] + ", ";
+   }
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* execute command */
+   var ret = ExecuteCommand(rfid_data);
+   if ( ! ret )
+   {
+      /* do nothing */
+      return null;
+   }
+
+   /* set return values for sap */
+   debug_out["dbg_rc"].value = deviceMsg;
+   rc["msg"] = deviceMsg;
+   rc["msgclass"] = deviceMsgClass;
+   return(rc);
+}
+
+
+/* *** RfidReader_Execute ************************************** */
+function ExecuteCommand(rfid_data)
+{
+   /* set the globals */
+   debug_out = document.forms["rfid_debug_screen"];
+
+   /* prepare the command */
+   if (rfid_data["Command"] == "ReadTag" || rfid_data["Command"] == "ReadMultipleTag") {
+      parent.ITSmobile_SetTagData( rfid_data, "" );
+      if (secondPart == false) {
+         Generic.InvokeMETAFunction('rfid', 'start');
+         return false;
+      } else {
+         Generic.InvokeMETAFunction('rfid', 'stop');
+         secondPart = false;
+
+         if (tags.length == 0) {
+            /* no tags found */
+            parent.ITSmobile_SetTagData( rfid_data, "" );
+            deviceMsg = "002";
+         } else if (tags.length > 1 && rfid_data["Command"] == "ReadTag") {
+            /* more than one tag are found during ReadTag operation */
+            parent.ITSmobile_SetTagData( rfid_data, "" );
+            deviceMsg = "008";
+         } else {
+            debug_out["dbg_tag"].value = tags.join(",");
+            parent.ITSmobile_SetTagData( rfid_data, debug_out["dbg_tag"].value );
+            deviceMsg = "000";
+         }
+
+         delete tags;
+         tags = new Array();
+      }
+   } else if (rfid_data["Command"] == "WriteTag") {
+      if (secondPart == false) {
+         Generic.InvokeMETAFunction('RFIDProgramTag', 'tagid=' + parent.ITSmobile_GetTagData(rfid_data));
+         Generic.InvokeMETAFunction('RFIDProgramTag', 'TagVerifyCount=3');
+         Generic.InvokeMETAFunction('RFIDProgramTag', 'EraseAttempts=3');
+         Generic.InvokeMETAFunction('RFIDProgramTag', 'ProgramAttempts=3');
+         Generic.InvokeMETAFunction('RFIDProgramTag', 'Program');
+         return false;
+      } else {
+         secondPart = false;
+      }
+   } else if (rfid_data["Command"] == "ClearTag") {
+      if (secondPart == false) {
+         Generic.InvokeMETAFunction('RFIDEraseTag', 'TagVerifyCount=3');
+         Generic.InvokeMETAFunction('RFIDEraseTag', 'EraseAttempts=3');
+         Generic.InvokeMETAFunction('RFIDEraseTag', 'Erase');
+         return false;
+      } else {
+         secondPart = false;
+      }
+   } else {
+      debug_out["dbg_tag"].value = "";
+      parent.ITSmobile_SetTagData( rfid_data, "" );
+      deviceMsg = "005";
+   }
+
+   return true;
+}
+</script>
+</head>
+
+<!-- ---------------------------------------------------------- -->
+<!-- Debug screen, only visible when ~itsmobiledebug has been   -->
+<!-- set before starting the service                            -->
+<!-- ---------------------------------------------------------- -->
+<body>
+<form name="rfid_debug_screen" id="rfid_debug_screen" onsubmit="return false;">
+  <table width="100%">
+    <tr>
+	<td><span>SAP field:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapfield" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>SAP rfid data:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapdata" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID command:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rfidcmd" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID response:</span></td>
+       <td><p><textarea readonly="readonly" name="dbg_rfidresult" rows="3"></textarea></p></td>
+    </tr>
+    <tr>
+	<td><span>DATA for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_tag" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>MSG for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rc" maxlength="512" /></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

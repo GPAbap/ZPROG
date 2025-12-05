@@ -1,0 +1,239 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+
+<!-- ---------------------------------------------------------- -->
+<!-- HARDWARE dependent RFID Reader Page                        -->
+<!-- SAMPLE - SIMULATION                                        -->
+<!-- You may use this device simulation to test your rfid       -->
+<!-- enabled transaction if you do not have rfid hardware       -->
+<!-- available.                                                 -->
+<!-- ---------------------------------------------------------- -->
+
+<!-- ---------------------------------------------------------- -->
+<!-- define the device specific opject                          -->
+<!-- ---------------------------------------------------------- -->
+<!--- nothing to do for the simulation -->
+
+<script language="JavaScript">
+
+/* *** globals ************************************************* */
+/* rfid debug screen      */
+var debug_out;
+
+/* error handling, message number and class */
+var deviceOpen = 0;
+var deviceMsg = '006'; /* not open */
+var deviceMsgClass = 'SITS_MOBILE_RFID';
+
+/* ************************************************************* */
+/* RfidReader functions                                          */
+/* This functions will be called to read and write rfid          */
+/* tags. Data like rfid command or related form field will       */
+/* be read using ITSmobile-Interface functions.                  */
+/* Not locally handled errors must be reported via ITSmobile     */
+/* interface to be send against the backend                      */
+/* ***************************************************************/
+
+/* *** RfidReader_Open ***************************************** */ 
+function RfidReader_Open()
+{
+   /* set the globals */
+   debug_out = document.forms["rfid_debug_screen"];
+
+   /* sap debug out, nothing to report */
+   debug_out["dbg_sapfield"].value = "<none>";
+   debug_out["dbg_sapdata"].value   = "<none> (open reader)";
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* rfidreader open/init command */
+   var rc = 0; /* Simulation, nothing to do */
+   
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "Simulate RfidReader_Open()";
+   debug_out["dbg_rfidresult"].value = rc;
+   
+   if ( rc != 0 )
+   {
+      deviceOpen = 0;
+      deviceMsg = '006'; /* not started, open failed */
+   }
+   else
+   {
+      deviceOpen = 1;
+      deviceMsg = '000'; /* running */
+   }
+   
+   /* debug out, returncode */
+   debug_out["dbg_rc"].value = deviceMsg;
+}
+
+/* *** RfidReader_Close **************************************** */
+function RfidReader_Close()
+{
+   /* sap debug out, nothing to report */
+   debug_out["dbg_sapfield"].value = "<none>";
+   debug_out["dbg_sapdata"].value   = "<none> (close reader)";
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+
+   /* rfidreader close/terminate command */
+   var rc = 0; /* Simulation, nothing to do */
+
+   /* set device state */
+   deviceOpen = 0;
+   deviceMsg = '007'; /* not started, already closed */
+
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "Simulate RfidReader_Close()";
+   debug_out["dbg_rfidresult"].value = rc;
+
+   /* debug out, returncode */
+   debug_out["dbg_rc"].value = deviceMsg;
+}
+
+/* *** RfidReader_Execute ************************************** */
+function RfidReader_Execute(rfid_data)
+{
+   var rc = new Object;
+   var sapattribute = "";
+
+   /* reset debug output, new command */
+   debug_out["dbg_sapfield"].value = rfid_data["Name"];
+   debug_out["dbg_sapdata"].value = "";
+   for (sapattribute in rfid_data)
+   {
+      debug_out["dbg_sapdata"].value = debug_out["dbg_sapdata"].value + sapattribute + ":" + rfid_data[sapattribute] + ", ";  
+   }
+   debug_out["dbg_rfidcmd"].value = "<none>";
+   debug_out["dbg_rfidresult"].value = "<none>";
+   debug_out["dbg_tag"].value = "<none>";
+   debug_out["dbg_rc"].value = "<none>";
+  
+   /* Check rfid reader state */
+   if ( deviceOpen != 1 )
+   {
+       /* report device status to sap application if not ready */
+       debug_out["dbg_rc"].value = deviceMsg;
+       debug_out["dbg_rfidcmd"].value = "not ready";
+       rc["msg"] = deviceMsg;
+       rc["msgclass"] = deviceMsgClass;
+       return(rc);
+   }
+
+   /* execute command */
+   ExecuteCommand(rfid_data);
+
+   /* set return values for sap */
+   debug_out["dbg_rc"].value = deviceMsg;
+   rc["msg"] = deviceMsg;
+   rc["msgclass"] = deviceMsgClass;
+   return(rc);
+}
+
+
+/* *** RfidReader_Execute ************************************** */
+function ExecuteCommand(rfid_data)
+{
+   var cmd = rfid_data["Command"];
+
+   /* reader debug out */
+   debug_out["dbg_rfidcmd"].value = "Simulate " + cmd;
+
+   /* simulate the rfid operation */
+   if ( ( cmd == "ReadTag" ) || ( cmd == "ReadMultipleTag" ) )
+   {
+      var tagvalue = prompt("RFID simulate tag input, please insert tag data.","");
+      if ( tagvalue != "" && tagvalue != null )
+      {
+         debug_out["dbg_rfidresult"].value = tagvalue;
+         parent.ITSmobile_SetTagData( rfid_data, tagvalue );
+         deviceMsg = "000";
+      }
+      else
+      {
+         debug_out["dbg_rfidresult"].value = "";
+         parent.ITSmobile_SetTagData( rfid_data, "" );
+         /* 002 Rfid read failed, no tag received */
+         deviceMsg = "002";
+      }
+   }
+   else if ( cmd == "WriteTag" )
+   {
+      var tagdata = parent.ITSmobile_GetTagData( rfid_data );
+      var tagvalue = prompt("RFID simulate TAG write, do not modify data to simulate a successful write.", tagdata);
+      if ( tagvalue == tagdata )
+      {
+         deviceMsg = "000";
+      }
+      else
+      {
+         /* 003 Rfid write tag failed */
+         deviceMsg = "003";
+      }
+
+   }
+   else if ( cmd == "ClearTag" )
+   {
+      var tagdata = parent.ITSmobile_GetTagData( rfid_data );
+      var tagvalue = prompt("RFID simulate clear tag, clear data to simulate successful deletion.", tagdata);
+      if ( tagvalue == "" )
+      {
+         deviceMsg = "000";
+      }
+      else
+      {
+         /* 004 Rfid clear tag failed */
+         deviceMsg = "004";
+      }
+   }
+   else
+   {
+      /* 005 unknown rfid command */
+      deviceMsg = "005";
+   }
+}
+</script>
+
+<!-- ---------------------------------------------------------- -->
+<!-- Debug screen, only visible when ~itsmobiledebug has been   -->
+<!-- set before starting the service                            -->
+<!-- ---------------------------------------------------------- -->
+</head>
+<body onLoad="javascript:RfidReader_Open();" onUnload="javascript:RfidReader_Close();">
+<form name="rfid_debug_screen" id="rfid_debug_screen" onsubmit="return false;">
+  <table width="100%">
+    <tr>
+	<td><span>SAP field:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapfield" value="<initial>" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>SAP rfid data:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_sapdata" value ="<initial>" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID command:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rfidcmd" value ="<initial>" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>RFID response:</span></td>
+       <td><p><textarea readonly="readonly" name="dbg_rfidresult" value ="<initial>" rows="3"></textarea></p></td>
+    </tr>
+    <tr>
+	<td><span>DATA for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_tag" value ="<initial>" maxlength="512" /></td>
+    </tr>
+    <tr>
+	<td><span>MSG for SAP:</span></td>
+       <td><input type="text" readonly="readonly" name="dbg_rc" value ="<initial>" maxlength="512" /></td>
+    </tr>
+  </table>	
+</form>
+</body>
+</html>

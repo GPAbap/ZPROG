@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SSST" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <HEADER>
+    <STYLENAME>ZSTYLES_TITULOS_PEDIDOSAP</STYLENAME>
+    <MASTERLANG>S</MASTERLANG>
+    <LANGU>S</LANGU>
+    <CAPTION>Titulos Centrados</CAPTION>
+    <V_CAPTION>Estilos ZSTYLES_TITULOS_CENTRO</V_CAPTION>
+    <TDFIRSTPAR>ZA</TDFIRSTPAR>
+    <CPI>10.0</CPI>
+    <LPI>6.0</LPI>
+    <TDTABDIST>1.0</TDTABDIST>
+    <TDTABDISTU>CM</TDTABDISTU>
+    <ACTIVE>A</ACTIVE>
+    <TDFAMILY>COURIER</TDFAMILY>
+    <TDHEIGHT>180</TDHEIGHT>
+   </HEADER>
+   <SSFPARAS>
+    <SSFPARAS>
+     <ACTIVE>A</ACTIVE>
+     <STYLENAME>ZSTYLES_TITULOS_PEDIDOSAP</STYLENAME>
+     <TDPARGRAPH>ZA</TDPARGRAPH>
+     <TDPJUSTIFY>CENTER</TDPJUSTIFY>
+     <TDPLDIST>1.0</TDPLDIST>
+     <TDPLDISTU>LN</TDPLDISTU>
+     <TDPTOPU>CM</TDPTOPU>
+     <TDPBOTU>CM</TDPBOTU>
+     <TDPLEFTU>CM</TDPLEFTU>
+     <TDPRIGHTU>CM</TDPRIGHTU>
+     <TDPENTRYU>CM</TDPENTRYU>
+     <TDNUMLEFTU>CM</TDNUMLEFTU>
+     <TDFAMILY>TIMES</TDFAMILY>
+     <TDHEIGHT>180</TDHEIGHT>
+     <TDBOLD>X</TDBOLD>
+     <TDITALIC>*</TDITALIC>
+     <TDUNDERLIN>*</TDUNDERLIN>
+     <LANGU>S</LANGU>
+     <CAPTION>Titulos Centrados</CAPTION>
+    </SSFPARAS>
+   </SSFPARAS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

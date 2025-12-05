@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZPA_PER1</ROLLNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <DOMNAME>CHAR5</DOMNAME>
+    <HEADLEN>30</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>15</SCRLEN2>
+    <SCRLEN3>25</SCRLEN3>
+    <DDTEXT>Parámetro Personalizado</DDTEXT>
+    <REPTEXT>Parámetro Personalizado</REPTEXT>
+    <SCRTEXT_S>Param. Ps</SCRTEXT_S>
+    <SCRTEXT_M>Param. Pers.</SCRTEXT_M>
+    <SCRTEXT_L>Parámetro Personalizado</SCRTEXT_L>
+    <DTELMASTER>S</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

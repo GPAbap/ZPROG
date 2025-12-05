@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZNOMCTA</ROLLNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <DOMNAME>TXT50</DOMNAME>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>13</SCRLEN2>
+    <SCRLEN3>19</SCRLEN3>
+    <DDTEXT>Nombre de la cuenta</DDTEXT>
+    <SCRTEXT_S>Nom. Cta.</SCRTEXT_S>
+    <SCRTEXT_M>Nombre Cuenta</SCRTEXT_M>
+    <SCRTEXT_L>Nombre de la Cuenta</SCRTEXT_L>
+    <DTELMASTER>S</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<abapGit version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TDLINES>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>MAIN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_NEWPAGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>NEW-PAGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_UEB0</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Centro                         :,,&amp;ISEG-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Denominación                   :,,&amp;T001W-NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Documento para inventario      :,,&amp;ISEG-IBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Creado por                     :,,&amp;IKPF-USNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Fecha planif.recuento invent.  :,,&amp;IKPF-GIDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Referencia inventario          :,,&amp;IKPF-XBLNI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Número inventario              :,,&amp;IKPF-INVNU&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Stock especial                 :,,&amp;IKPF-SOBKZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>                                          Pedido cliente:&amp;ISEG-KDAUF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L4</TDFORMAT>
+     <TDLINE>Pos.,,Material,,Lote,,Pos.ped.clte.,,Almacén,,Ubicación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Texto breve material,,Tipo stocks</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L3</TDFORMAT>
+     <TDLINE>Status de posición,,Ctd.recuento,,UM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_UEB1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Centro                         :,,&amp;ISEG-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Denominación                   :,,&amp;T001W-NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Documento para inventario      :,,&amp;ISEG-IBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Creado por                     :,,&amp;IKPF-USNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Fecha planif.recuento invent.  :,,&amp;IKPF-GIDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Referencia inventario          :,,&amp;IKPF-XBLNI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Número de inventario           :,,&amp;IKPF-INVNU&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Stock especial                 :,,&amp;IKPF-SOBKZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>                                          Proveedor    :&amp;ISEG-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>Pos.,,Material,,Lote,,Almacén,,Ubicación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Texto breve material,,Tipo stocks</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L3</TDFORMAT>
+     <TDLINE>Status de posición,,Ctd.recuento,,UM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_UEB2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Centro                        :,,&amp;ISEG-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Denominación                  :,,&amp;T001W-NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Documento para inventario     :,,&amp;ISEG-IBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Creado por                    :,,&amp;IKPF-USNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Fecha planif.recuento invent. :,,&amp;IKPF-GIDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Referencia inventario         :,,&amp;IKPF-XBLNI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Número inventario             :,,&amp;IKPF-INVNU&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Stock especial                :,,&amp;IKPF-SOBKZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>                                         Cliente      :&amp;ISEG-KUNNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>Pos.,,Material,,Lote,,Almacén,,Ubicación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Texto breve material,,Tipo stocks</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L3</TDFORMAT>
+     <TDLINE>Status de posición,,Ctd.recuento,,UM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_UEB3</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Centro                         :,,&amp;ISEG-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Denominación                   :,,&amp;T001W-NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Documento para inventario      :,,&amp;ISEG-IBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Creado por                     :,,&amp;IKPF-USNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Fecha planif.recuento invent.  :,,&amp;IKPF-GIDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Referencia inventario          :,,&amp;IKPF-XBLNI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Número inventario              :,,&amp;IKPF-INVNU&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>Pos.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>,Almacén,,,,Ubicación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>Material,,(UMB)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_UEB4</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Centro                         :,,&amp;ISEG-WERKS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Denominación                   :,,&amp;T001W-NAME1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Documento para inventario      :,,&amp;ISEG-IBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Creado por                     :,,&amp;IKPF-USNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Fecha planif.recuento invent.  :,,&amp;IKPF-GIDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Referencia inventario          :,,&amp;IKPF-XBLNI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Número inventario              :,,&amp;IKPF-INVNU&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Stock especial                 :,,&amp;IKPF-SOBKZ&amp;            Elemento PEP</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> :&amp;ISEG-PS_PSP_PNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L1</TDFORMAT>
+     <TDLINE>Pos.,,Material,,Lote,,Almacén,,Ubicación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Texto breve material,,Tipo stocks</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L3</TDFORMAT>
+     <TDLINE>Status de posición,,Ctd.recuento,,UM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_SERIALPOS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>&amp;serialno1&amp;  &amp;serialno2&amp;  &amp;serialno3&amp;  &amp;serialno4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_SERIALUEB</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+     <TDLINE>Números de serie:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_BELZEILE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L4</TDFORMAT>
+     <TDLINE>&amp;ISEG-ZEILI&amp;,,&amp;ISEG-MATNR&amp;,,&amp;ISEG-CHARG&amp;,,&amp;ISEG-KDPOS&amp;,,&amp;ISEG-LGORT&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;MABDR-LGPBE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>&amp;MABDR-MAKTX&amp;,,&amp;T064B-BTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L3</TDFORMAT>
+     <TDLINE>&amp;T064T-STEXT&amp;,,______________,,&amp;ISEG-ERFME&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_BELZEILE2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L4</TDFORMAT>
+     <TDLINE>Folio: &amp;ISEG-ZEILI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L4</TDFORMAT>
+     <TDLINE>&amp;ISEG-LGORT&amp;,,&amp;T001W-NAME1&amp;,,,,Ubicación: &amp;MABDR-LGPBE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L4</TDFORMAT>
+     <TDLINE>&amp;ISEG-MATNR&amp;,,&amp;MABDR-MAKTX&amp; (&amp;ISEG-ERFME&amp;)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;ISEG-CHARG&amp;,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Tipo de Stock: &amp;T064B-BTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Envasado en: __________________________  Unidad Medida: ________________</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;T064T-STEXT&amp;,,_______________,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Total Unidades: _____________________  Total Kilogramos: ______________</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Datos de Estiba: ______________________________________________________</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>POS_ENDPAGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Fecha: ___________________</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Hora Inicio: ___________________    Hora Final: ___________________</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L2</TDFORMAT>
+     <TDLINE>Nombre(s)/Firma(s)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>L</TDFORMAT>
+    </TLINE>
+   </TDLINES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

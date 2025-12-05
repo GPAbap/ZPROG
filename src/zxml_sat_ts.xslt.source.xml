@@ -1,0 +1,47 @@
+<?sap.transform simple?>
+<tt:transform xmlns:tt="http://www.sap.com/transformation-templates" xmlns:ddic="http://www.sap.com/abapxml/types/dictionary" xmlns:def="http://www.sap.com/abapxml/types/defined">
+  <tt:root name="CFDI" type="ddic:ZFI_ST_XMLSATPROV"/>
+  <tt:template>
+    <CFDI>
+      <VERSION tt:value-ref=".CFDI.VERSION"/>
+      <SERIE tt:value-ref=".CFDI.SERIE"/>
+      <FOLIO tt:value-ref=".CFDI.FOLIO"/>
+      <FECHA tt:value-ref=".CFDI.FECHA"/>
+      <FORMAPAGO tt:value-ref=".CFDI.FORMAPAGO"/>
+      <CONDICIONESDEPAGO tt:value-ref=".CFDI.CONDICIONESDEPAGO"/>
+      <SUBTOTAL tt:value-ref=".CFDI.SUBTOTAL"/>
+      <DESCUENTO tt:value-ref=".CFDI.DESCUENTO"/>
+      <MONEDA tt:value-ref=".CFDI.MONEDA"/>
+      <TIPOCAMBIO tt:value-ref=".CFDI.TIPOCAMBIO"/>
+      <TOTAL tt:value-ref=".CFDI.TOTAL"/>
+      <TIPODECOMPROBANTE tt:value-ref=".CFDI.TIPODECOMPROBANTE"/>
+      <EXPORTACION tt:value-ref=".CFDI.EXPORTACION"/>
+      <METODOPAGO tt:value-ref=".CFDI.METODOPAGO"/>
+      <LUGAREXPEDICION tt:value-ref=".CFDI.LUGAREXPEDICION"/>
+      <UUID tt:value-ref=".CFDI.UUID"/>
+      <RFC tt:value-ref=".CFDI.RFC"/>
+      <NOMBRE tt:value-ref=".CFDI.NOMBRE"/>
+      <REGIMENFISCAL tt:value-ref=".CFDI.REGIMENFISCAL"/>
+      <RFC2 tt:value-ref=".CFDI.RFC2"/>
+      <NOMBRE3 tt:value-ref=".CFDI.NOMBRE3"/>
+      <DOMICILIOFISCALRECEPTOR tt:value-ref=".CFDI.DOMICILIOFISCALRECEPTOR"/>
+      <REGIMENFISCALRECEPTOR tt:value-ref=".CFDI.REGIMENFISCALRECEPTOR"/>
+      <USOCFDI tt:value-ref=".CFDI.USOCFDI"/>
+      <CLAVEPRODSERV tt:value-ref=".CFDI.CLAVEPRODSERV"/>
+      <NOIDENTIFICACION tt:value-ref=".CFDI.NOIDENTIFICACION"/>
+      <CANTIDAD tt:value-ref=".CFDI.CANTIDAD"/>
+      <CLAVEUNIDAD tt:value-ref=".CFDI.CLAVEUNIDAD"/>
+      <UNIDAD tt:value-ref=".CFDI.UNIDAD"/>
+      <DESCRIPCION tt:value-ref=".CFDI.DESCRIPCION"/>
+      <VALORUNITARIO tt:value-ref=".CFDI.VALORUNITARIO"/>
+      <IMPORTE tt:value-ref=".CFDI.IMPORTE"/>
+      <DESCUENTO4 tt:value-ref=".CFDI.DESCUENTO4"/>
+      <OBJETOIMP tt:value-ref=".CFDI.OBJETOIMP"/>
+      <BASE tt:value-ref=".CFDI.BASE"/>
+      <IMPUESTO tt:value-ref=".CFDI.IMPUESTO"/>
+      <TIPOFACTOR tt:value-ref=".CFDI.TIPOFACTOR"/>
+      <TASAOCUOTA tt:value-ref=".CFDI.TASAOCUOTA"/>
+      <IMPORTE5 tt:value-ref=".CFDI.IMPORTE5"/>
+    </CFDI>
+  </tt:template>
+</tt:transform>

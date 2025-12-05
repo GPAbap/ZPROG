@@ -1,0 +1,169 @@
+/* moved from ITSMOBILE/99/STYLES/ALL/MOBILE.CSS */
+
+.MobileALVGrid {
+  border-collapse: collapse;
+  border: 2px solid #666666;
+  width: 300%;
+}
+
+.MobileALVGrid td {
+  border: 1px solid #a5b1bf;
+}
+
+.MobileALVGridHead {
+  background-color: #f2e1af;
+}
+
+.MobileALVGridTitle {
+}
+
+.MobileALVGridOverallTotal {
+  font-weight: bold;
+}
+
+.MobileALVGridSelectionBox {
+  background-color: #d9e5f2;
+}
+
+.MobileALVGridRow {
+}
+
+.MobileALVGridRow2 {
+  background-color: #D9E5F2;
+}
+
+.MobileALVGridRowSelected {
+  background-color: #ffcc33 !important;
+}
+
+.MobileALVGridRowSum {
+  background-color: #F9ED5B;
+}
+
+
+/* copied from WEBGUI/SL/GUI_GRIDVIEW.CSS */
+
+td.alvc0rb, td.alvc1rb, td.alvc2rb, td.alvc3rb, td.alvc4rb, td.alvc5rb,
+td.alvc6rb, td.alvc7rb, td.alvc8rb, td.alvc9rb, td.alvc10rb, td.alvc11rb,
+td.alvc12rb, td.alvc13rb, td.alvc14rb, td.alvc15rb, td.alvc16rb, td.alvc32rb,
+td.alvc33rb, td.alvc64rb
+{
+  border-style: solid;
+  border-color: #a5b1bf;
+  border-width: 0px 1px 1px 0px;
+  padding: 1px;
+  overflow: hidden;
+}
+td.alvc0oo, td.alvc1oo, td.alvc2oo, td.alvc3oo, td.alvc4oo, td.alvc5oo,
+td.alvc6oo, td.alvc7oo, td.alvc8oo, td.alvc9oo, td.alvc10oo, td.alvc11oo,
+td.alvc12oo, td.alvc13oo, td.alvc14oo, td.alvc15oo, td.alvc16oo, td.alvc32oo,
+td.alvc33oo, td.alvc64oo
+{
+  border-width: 0px;
+  padding: 1px;
+  overflow: hidden;
+}
+td.alvc0ro, td.alvc1ro, td.alvc2ro, td.alvc3ro, td.alvc4ro, td.alvc5ro,
+td.alvc6ro, td.alvc7ro, td.alvc8ro, td.alvc9ro, td.alvc10ro, td.alvc11ro,
+td.alvc12ro, td.alvc13ro, td.alvc14ro, td.alvc15ro, td.alvc16ro, td.alvc32ro,
+td.alvc33ro, td.alvc64ro
+{
+  border-style: solid;
+  border-color: #a5b1bf;
+  border-width: 0px;
+  border-right-width: 1px;
+  padding: 1px;
+  overflow: hidden;
+}
+td.alvc0ob, td.alvc1ob, td.alvc2ob, td.alvc3ob, td.alvc4ob, td.alvc5ob,
+td.alvc6ob, td.alvc7ob, td.alvc8ob, td.alvc9ob, td.alvc10ob, td.alvc11ob,
+td.alvc12ob, td.alvc13ob, td.alvc14ob, td.alvc15ob, td.alvc16ob, td.alvc32ob,
+td.alvc33ob, td.alvc64ob
+{
+  border-style: solid;
+  border-color: #a5b1bf;
+  border-width: 0px 0px 1px 0px;
+  padding: 1px;
+  overflow: hidden;
+}
+td.alvc0rb, td.alvc0oo, td.alvc0ro, td.alvc0ob
+{
+  background-color: #d9e5f2;
+}
+td.alvc1rb, td.alvc1oo, td.alvc1ro, td.alvc1ob
+{
+  background-color: #e9eef4;
+}
+td.alvc2rb, td.alvc2oo, td.alvc2ro, td.alvc2ob
+{
+  background-color: #aee5fb;
+}
+td.alvc3rb, td.alvc3oo, td.alvc3ro, td.alvc3ob
+{
+  background-color: #eef9fd;
+}
+td.alvc4rb, td.alvc4oo, td.alvc4ro, td.alvc4ob
+{
+  background-color: #fefeb8;
+}
+td.alvc5rb, td.alvc5oo, td.alvc5ro, td.alvc5ob
+{
+  background-color: #cde8fb;
+}
+td.alvc6rb, td.alvc6oo, td.alvc6ro, td.alvc6ob
+{
+  background-color: #cef8ae;
+}
+td.alvc7rb, td.alvc7oo, td.alvc7ro, td.alvc7ob
+{
+  background-color: #fdbcbc;
+}
+td.alvc8rb, td.alvc8oo, td.alvc8ro, td.alvc8ob
+{
+  background-color: #fcdec0;
+}
+td.alvc9rb, td.alvc9oo, td.alvc9ro, td.alvc9ob
+{
+  background-color: #e5eaf0;
+}
+td.alvc10rb, td.alvc10oo, td.alvc10ro, td.alvc10ob
+{
+  background-color: #5dcbfd;
+}
+td.alvc11rb, td.alvc11oo, td.alvc11ro, td.alvc11ob
+{
+  background-color: #d7ecf4;
+}
+td.alvc12rb, td.alvc12oo, td.alvc12ro, td.alvc12ob
+{
+  background-color: #f9ed5b;
+}
+td.alvc13rb, td.alvc13oo, td.alvc13ro, td.alvc13ob
+{
+  background-color: #9accee;
+}
+td.alvc14rb, td.alvc14oo, td.alvc14ro, td.alvc14ob
+{
+  background-color: #79c666;
+}
+td.alvc15rb, td.alvc15oo, td.alvc15ro, td.alvc15ob
+{
+  background-color: #fa6a6a;
+}
+td.alvc16rb, td.alvc16oo, td.alvc16ro, td.alvc16ob
+{
+  background-color: #fbc36e;
+}
+td.alvc32rb, td.alvc32oo, td.alvc32ro, td.alvc32ob
+{
+  background-color: #ffffe5;
+}
+td.alvc33rb, td.alvc33oo, td.alvc33ro, td.alvc33ob
+{
+  background-color: #ffffb7;
+}
+td.alvc64rb, td.alvc64oo, td.alvc64ro, td.alvc64ob
+{
+  background-color: #ffffff;
+}
+

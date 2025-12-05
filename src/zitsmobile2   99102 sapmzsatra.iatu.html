@@ -1,0 +1,1116 @@
+`if (~currdynpro.speechenabled != "")
+`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+`elseif (~itsmobileStandardsMode == "X")`
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+`end;`
+<html`if (~currdynpro.speechenabled != "")
+    ` xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:vxml="http://www.w3.org/2001/vxml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xv="http://www.voicexml.org/2002/xhtml+voice"
+      class="MobileHtml"`
+  end;`>`
+  if ( ~itsmobileNameSpace != "" )
+    ~current_service = ~itsmobileNameSpace & ~service;
+  elseif ( strsub(~sources, 0, 1) == "/" )
+    ~current_service = strsub(~sources, 0, strchr(~sources, "/", 1)+1) & ~service;
+  else
+    ~current_service = ~service;
+  end;`
+`
+<!-- Generated Template
+      NAME:   SAPMZSATRA
+      SCREEN: 0102
+      DATE:   20221028
+      TIME:   171838
+      STYLE:  MOBILE4
+-->
+declare class(name, idx=1), style(name, idx=1), style_attr(name, idx=1), icon(name, idx=1),
+    class_ext(name, idx=1), align(name, idx=1), label(name, idx=1), has_label(name, idx=1),
+    width(i, a), margin_left(i, a), w(i, a), sh(), mkid(s) in "some.html";
+if ( ~itsmobileFuncInclude != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileFuncInclude, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"functions", ~style="x");
+end;
+
+declare cust_control(name, width, height) in "some.html";
+if ( ~itsmobileCustomControls != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileCustomControls, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"cust_controls", ~style="x");
+end;`
+`
+    `<head>`
+    if ( ~itsmobileDeviceInclude != "" )
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileDeviceInclude & ".html");
+    end;`
+`
+        `<title>`~windowtitle`</title>
+`if (~resp_content_type == "") ~resp_content_type = "text/html"; end;`
+        <meta http-equiv="Content-Type" content="`~resp_content_type`; charset=`~resp_content_charset`" `sh()`>`
+if ( ~itsmobileSoundInclude != "" ) <!-- customers sound -->
+   include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileSoundInclude & ".html");
+else <!-- default -->
+   include(~service="itsmobile", ~language="", ~theme="99", ~name="include/sound.html");
+end;
+ if ( ~itsmobileCssInclude != "" ) <!-- customer include from gui settings -->`
+        <link rel="stylesheet" href="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCssInclude & ".css")`" type="text/css" `sh()`>
+` else <!-- default include from itsmobile --> `
+        <link rel="stylesheet" href="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="styles/all/mobile.css")`" type="text/css" `sh()`>
+` end;
+ if ( ~itsmobileJsInclude != "" ) <!-- customer include specified in gui settings -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileJsInclude & ".js")`"></script>
+` else <!-- default include from itsmobile -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="scripts/all/mobile.js")`"></script>
+` end;
+  if ( ~itsmobileCustomJsInclude != "" )`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCustomJsInclude & ".js")`"></script>
+` end;`
+        <script type="text/javascript" language="Javascript">
+           var itsmobile_eos = "`wgateurl(~okcode="/nex")`";
+        </script>
+` <!-- rfid values --------------------------- -->
+  if ( ~RfidEnabledFields != "" ) `
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="rfid/rfbutton.js")`"></script>
+        <script type="text/javascript" language="Javascript">
+           var rfid_fields = new Object;
+`   repeat with i from 1 to ~RfidEnabledFields.dim
+      <!-- get field name and index -->
+      rfidField = ~RfidEnabledFields[i];
+      rfidFieldIdx = ~RfidEnabledFields[i].idx;
+      rfidFieldParams = ~RfidEnabledFields[i].params; `
+           rfid_fields["`rfidField`[`rfidFieldIdx`]"] = { `rfidFieldParams` };
+`   end;`
+        </script>
+` end;`
+
+`       <!-- Check if screen supports voice integration -->
+        if ( ~currdynpro.speechenabled != "" )
+          <!-- include the htmlb functions for voice integration -->
+          if ( ~itsmobileVoiceInclude != "" ) <!-- customers voice generation html -->
+            include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileVoiceInclude & ".html");
+          else <!-- default its default voice include -->
+            include(~service="itsmobile", ~language="", ~theme="99", ~name="include/voice.html");
+          end;
+        end;`
+`
+    `</head>`
+    `<body class="MobileBody `class("~currdynpro", 1)`" `style_attr("~currdynpro", 1);
+      if (~currdynpro.speechenabled != "")` id="MobileBody" ev:event="load" ev:handler="#sayOnPageLoad"` else
+      ` onload="setFocus('`~focusfield`');`~itsmobileOnloadHandler`"` end;
+      ` onkeydown="return processKeyEvent(event);" onhelp="return false;">
+`
+        `<form method="post" action="`WGateURL()`" id="mobileform" name="mobileform" onsubmit="return firstSend()" style="display:inline">
+            <input type="hidden" name="~OkCode" value="/0"`sh()`>
+            <input type="hidden" name="~FKey" value=""`sh()`>
+            <input type="hidden" name="~Event" value=""`sh()`>
+            <input type="hidden" name="~Control" value=""`sh()`>
+            <input type="hidden" name="~Focusfield" value=""`sh()`>`if (~SEC_SESSTOKEN != "")`
+            <input type="hidden" name="~SEC_SESSTOKEN" value="`~SEC_SESSTOKEN`"`sh()`>`end`
+`if (~active_timer != "")
+    include(~service="itsmobile", ~theme="99", ~name="timer.html");
+    timer(~active_timer, width, height);
+end`
+`
+`<!-- main screen begin -->
+<div>`
+    if ( ~itsmobileCuaInclude != "" ) <!-- customers cua area -->
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileCuaInclude & ".html");
+    elseif ( ~itsmobileNoCuaInclude != "1" && ~itsmobileNoCuaInclude != "X" ) <!-- default cua area -->
+       include(~service="itsmobile", ~language="", ~theme="99", ~name="include/cuaarea.html");
+    end;`
+</div>
+<div class="MobileUserArea">`
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'RLMOB-PSAVE'[1].exists == "X" && 'RLMOB-PSAVE'[1].visible == "X" ) ||
+     ( 'RLMOB-PNEXT'[1].exists == "X" && 'RLMOB-PNEXT'[1].visible == "X" ) ||
+     ( 'RLMOB-PBACK'[1].exists == "X" && 'RLMOB-PBACK'[1].visible == "X" ) ||
+     0 )
+`<!-- line 1 -->
+<div class="MobileRow">`
+if ( ( 'RLMOB-PSAVE'[1].exists == "X" ) && ( 'RLMOB-PSAVE'[1].visible == "X" ) )
+    `<input type="button" style="`width("7", "10.500em"); style("RLMOB-PSAVE", 1)`" `
+    `class="MobileButton`class_ext("RLMOB-PSAVE", 1)` `class("RLMOB-PSAVE", 1)`" `
+    if ( 'RLMOB-PSAVE'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'RLMOB-PSAVE'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'RLMOB-PSAVE'[1].name`" `end;
+    `value="`label("RLMOB-PSAVE", 1)`" `
+    if ( 'RLMOB-PSAVE'[1].onclick != "" )
+         `onclick="`'RLMOB-PSAVE'[1].onclick`;" `
+    elseif ( 'RLMOB-PSAVE'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'RLMOB-PSAVE'[1].name`');"
+        onblur="leaveFocusField('`'RLMOB-PSAVE'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'RLMOB-PSAVE'[1].okcode`');" `
+    end;
+    sh()`>`
+else
+    `<span style="`margin_left("7", "10.500em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+if ( ( 'RLMOB-PNEXT'[1].exists == "X" ) && ( 'RLMOB-PNEXT'[1].visible == "X" ) )
+    `<input type="button" style="`width("7", "10.500em"); style("RLMOB-PNEXT", 1)`" `
+    `class="MobileButton`class_ext("RLMOB-PNEXT", 1)` `class("RLMOB-PNEXT", 1)`" `
+    if ( 'RLMOB-PNEXT'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'RLMOB-PNEXT'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'RLMOB-PNEXT'[1].name`" `end;
+    `value="`label("RLMOB-PNEXT", 1)`" `
+    if ( 'RLMOB-PNEXT'[1].onclick != "" )
+         `onclick="`'RLMOB-PNEXT'[1].onclick`;" `
+    elseif ( 'RLMOB-PNEXT'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'RLMOB-PNEXT'[1].name`');"
+        onblur="leaveFocusField('`'RLMOB-PNEXT'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'RLMOB-PNEXT'[1].okcode`');" `
+    end;
+    sh()`>`
+else
+    `<span style="`margin_left("7", "10.500em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+if ( ( 'RLMOB-PBACK'[1].exists == "X" ) && ( 'RLMOB-PBACK'[1].visible == "X" ) )
+    `<input type="button" style="`width("7", "10.500em"); style("RLMOB-PBACK", 1)`" `
+    `class="MobileButton`class_ext("RLMOB-PBACK", 1)` `class("RLMOB-PBACK", 1)`" `
+    if ( 'RLMOB-PBACK'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'RLMOB-PBACK'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'RLMOB-PBACK'[1].name`" `end;
+    `value="`label("RLMOB-PBACK", 1)`" `
+    if ( 'RLMOB-PBACK'[1].onclick != "" )
+         `onclick="`'RLMOB-PBACK'[1].onclick`;" `
+    elseif ( 'RLMOB-PBACK'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'RLMOB-PBACK'[1].name`');"
+        onblur="leaveFocusField('`'RLMOB-PBACK'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'RLMOB-PBACK'[1].okcode`');" `
+    end;
+    sh()`>`
+else
+    `<span style="`margin_left("7", "10.500em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-VBELN'[1].exists == "X" && 'SG_P101-VBELN'[1].visible == "X" ) ||
+     ( '%#AUTOTEXT015'[1].exists == "X" && '%#AUTOTEXT015'[1].visible == "X" ) ||
+     ( 'VG_CONTAB'[1].exists == "X" && 'VG_CONTAB'[1].visible == "X" ) ||
+     0 )
+`<!-- line 2 -->
+<div class="MobileRow">`
+if ( 'SG_P101-VBELN'[1].exists == "X" )
+    if ( 'SG_P101-VBELN'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-VBELN', 1); class("SG_P101-VBELN", 1)`" `
+         if ( 'SG_P101-VBELN'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-VBELN'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-VBELN'[1].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-VBELN'[1].okcode`');return false;" `
+         end;
+         `style="`width("11", "16.500em"); style("SG_P101-VBELN", 1)`" `
+         `rows="`'SG_P101-VBELN'[1].rows`" cols="11" `
+         `onfocus="setFocusField('`'SG_P101-VBELN'[1].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-VBELN'[1].name`');" `
+         `name="`'SG_P101-VBELN'[1].name`">`'SG_P101-VBELN'[1]`</textarea>`
+    else
+        if ( 'SG_P101-VBELN'[1].disabled == "X" )
+            if ( 'SG_P101-VBELN'[1].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-VBELN'[1].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("11", "16.500em"); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-VBELN", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-VBELN", 1)`" `
+                end;
+            elseif ( 'SG_P101-VBELN'[1].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("11", "16.500em"); align("SG_P101-VBELN", 1); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-VBELN", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-VBELN", 1)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("11", "16.500em"); align("SG_P101-VBELN", 1); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-VBELN", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-VBELN", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-VBELN'[1].name`');" `
+            `name="`'SG_P101-VBELN'[1].name`" `
+            if ( ( 'SG_P101-VBELN'[1].inputrequired == "X" ) && ( 'SG_P101-VBELN'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-VBELN'[1], 1)`" `
+            end;
+            `size="`'SG_P101-VBELN'[1].width`" maxlength="`'SG_P101-VBELN'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-VBELN", 1 );
+            if ( 'SG_P101-VBELN'[1].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-VBELN'[1].type == "Password" )
+                `<input type="password" `
+                `style="`width("11", "16.500em"); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-VBELN", 1)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-VBELN", 1)`" `
+                end;
+            elseif ( 'SG_P101-VBELN'[1].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("11", "16.500em"); align("SG_P101-VBELN", 1); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-VBELN", 1)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-VBELN", 1)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("11", "16.500em"); align("SG_P101-VBELN", 1); style("SG_P101-VBELN", 1)`" `
+                if ( 'SG_P101-VBELN'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-VBELN", 1)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-VBELN", 1)`" `
+                end;
+            end;
+            if ( 'SG_P101-VBELN'[1].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-VBELN'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-VBELN'[1].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-VBELN'[1].name`');" `
+            `name="`'SG_P101-VBELN'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-VBELN'[1].name`" `end;
+            if ( ( 'SG_P101-VBELN'[1].inputrequired == "X" ) && ( 'SG_P101-VBELN'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-VBELN'[1], 1)`" `
+            end;
+            `size="`'SG_P101-VBELN'[1].width`" maxlength="`'SG_P101-VBELN'[1].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("11", "16.500em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+if ( ( '%#AUTOTEXT015'[1].exists == "X" ) && ( '%#AUTOTEXT015'[1].visible == "X" ) )
+    icon( "%#AUTOTEXT015", 1 );
+    `<span style="`width("7", "10.500em"); align("%#AUTOTEXT015", 1); style("%#AUTOTEXT015", 1)`" `
+    if ( '%#AUTOTEXT015'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("%#AUTOTEXT015", 1)`" `
+    else
+        `class="MobileLabel `class("%#AUTOTEXT015", 1)`" `
+    end
+    `>`label("%#AUTOTEXT015", 1)`</span>`
+else
+    `<span style="`margin_left("7", "10.500em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+if ( ( 'VG_CONTAB'[1].exists == "X" ) && ( 'VG_CONTAB'[1].visible == "X" ) )
+    if ( 'VG_CONTAB'[1].disabled != "X" )
+        `<input type="hidden" name="`'VG_CONTAB'[1].name`" value=" " `sh()`>`
+    end;
+    `<input type="checkbox" class="MobileCheck `class("VG_CONTAB", 1)`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'VG_CONTAB'[1].name`" `end;
+    if ( 'VG_CONTAB'[1].label == "" )
+        `style="`width("2", "3.000em"); style("VG_CONTAB", 1)`" `
+    else
+        style_attr("VG_CONTAB", 1);
+    end;
+    if ( 'VG_CONTAB'[1].disabled == "X" ) `disabled="disabled" `end;
+    if ( 'VG_CONTAB'[1] == "X" ) `checked="checked" `end;
+    `id="`mkid('VG_CONTAB'[1].name)`" name="`'VG_CONTAB'[1].name`" value="X" `
+    if ( 'VG_CONTAB'[1].okcode != "" )
+        `onclick="setOkCode('`'VG_CONTAB'[1].okcode`');" `
+    end;
+    sh()`>`
+    icon( "VG_CONTAB", 1 );
+    if ( has_label("VG_CONTAB", 1) )
+        `<label class="MobileCheckLabel" `style_attr("VG_CONTAB", 1)`
+          for="`mkid('VG_CONTAB'[1].name)`">`label("VG_CONTAB", 1)`</label>`
+    end;
+else
+    `<span style="`margin_left("2", "3.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VG_SCANER'[1].exists == "X" && 'VG_SCANER'[1].visible == "X" ) ||
+     0 )
+`<!-- line 3 -->
+<div class="MobileRow">`
+if ( 'VG_SCANER'[1].exists == "X" )
+    if ( 'VG_SCANER'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('VG_SCANER', 1); class("VG_SCANER", 1)`" `
+         if ( 'VG_SCANER'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'VG_SCANER'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'VG_SCANER'[1].okcode != "" )
+             `onchange="setOkCode('`'VG_SCANER'[1].okcode`');return false;" `
+         end;
+         `style="`width("20", "30.000em"); style("VG_SCANER", 1)`" `
+         `rows="`'VG_SCANER'[1].rows`" cols="20" `
+         `onfocus="setFocusField('`'VG_SCANER'[1].name`');" `
+         `onblur="leaveFocusField('`'VG_SCANER'[1].name`');" `
+         `name="`'VG_SCANER'[1].name`">`'VG_SCANER'[1]`</textarea>`
+    else
+        if ( 'VG_SCANER'[1].disabled == "X" )
+            if ( 'VG_SCANER'[1].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'VG_SCANER'[1].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("20", "30.000em"); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("VG_SCANER", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("VG_SCANER", 1)`" `
+                end;
+            elseif ( 'VG_SCANER'[1].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("20", "30.000em"); align("VG_SCANER", 1); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("VG_SCANER", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("VG_SCANER", 1)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("20", "30.000em"); align("VG_SCANER", 1); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("VG_SCANER", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("VG_SCANER", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'VG_SCANER'[1].name`');" `
+            `name="`'VG_SCANER'[1].name`" `
+            if ( ( 'VG_SCANER'[1].inputrequired == "X" ) && ( 'VG_SCANER'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('VG_SCANER'[1], 1)`" `
+            end;
+            `size="`'VG_SCANER'[1].width`" maxlength="`'VG_SCANER'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "VG_SCANER", 1 );
+            if ( 'VG_SCANER'[1].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'VG_SCANER'[1].type == "Password" )
+                `<input type="password" `
+                `style="`width("20", "30.000em"); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("VG_SCANER", 1)`" `
+                else
+                    `class="MobilePassword `class("VG_SCANER", 1)`" `
+                end;
+            elseif ( 'VG_SCANER'[1].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("20", "30.000em"); align("VG_SCANER", 1); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("VG_SCANER", 1)`" `
+                else
+                    `class="MobileEditRequired `class("VG_SCANER", 1)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("20", "30.000em"); align("VG_SCANER", 1); style("VG_SCANER", 1)`" `
+                if ( 'VG_SCANER'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("VG_SCANER", 1)`" `
+                else
+                    `class="MobileEdit `class("VG_SCANER", 1)`" `
+                end;
+            end;
+            if ( 'VG_SCANER'[1].okcode != "" )
+                `onchange="setOkCode('`'VG_SCANER'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'VG_SCANER'[1].name`');" `
+            `onblur="leaveFocusField('`'VG_SCANER'[1].name`');" `
+            `name="`'VG_SCANER'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'VG_SCANER'[1].name`" `end;
+            if ( ( 'VG_SCANER'[1].inputrequired == "X" ) && ( 'VG_SCANER'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('VG_SCANER'[1], 1)`" `
+            end;
+            `size="`'VG_SCANER'[1].width`" maxlength="`'VG_SCANER'[1].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("20", "30.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( '%#AUTOTEXT016'[1].exists == "X" && '%#AUTOTEXT016'[1].visible == "X" ) ||
+     0 )
+`<!-- line 4 -->
+<div class="MobileRow">`
+if ( ( '%#AUTOTEXT016'[1].exists == "X" ) && ( '%#AUTOTEXT016'[1].visible == "X" ) )
+    icon( "%#AUTOTEXT016", 1 );
+    `<span style="`width("20", "30.000em"); align("%#AUTOTEXT016", 1); style("%#AUTOTEXT016", 1)`" `
+    if ( '%#AUTOTEXT016'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("%#AUTOTEXT016", 1)`" `
+    else
+        `class="MobileLabel `class("%#AUTOTEXT016", 1)`" `
+    end
+    `>`label("%#AUTOTEXT016", 1)`</span>`
+else
+    `<span style="`margin_left("20", "30.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( '%#C_101'[1].exists == "X" && '%#C_101'[1].visible == "X" ) ||
+     1 )
+`<!-- line 5 -->
+<div class="MobileRow">`
+`<!-- loop -->`
+                                        repeat with LOOP_INDEX from 1 to 2
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-MATNR'[LOOP_INDEX].exists == "X" && 'SG_P101-MATNR'[LOOP_INDEX].visible == "X" ) ||
+     0 )
+`<!-- line 5 --><!``-- loop line `LOOP_INDEX` --``>
+<div class="MobileRow">`
+if ( 'SG_P101-MATNR'[LOOP_INDEX].exists == "X" )
+    if ( 'SG_P101-MATNR'[LOOP_INDEX].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-MATNR', LOOP_INDEX); class("SG_P101-MATNR", LOOP_INDEX)`" `
+         if ( 'SG_P101-MATNR'[LOOP_INDEX].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-MATNR'[LOOP_INDEX].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-MATNR'[LOOP_INDEX].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-MATNR'[LOOP_INDEX].okcode`');return false;" `
+         end;
+         `style="`width("19", "28.500em"); style("SG_P101-MATNR", LOOP_INDEX)`" `
+         `rows="`'SG_P101-MATNR'[LOOP_INDEX].rows`" cols="19" `
+         `onfocus="setFocusField('`'SG_P101-MATNR'[LOOP_INDEX].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-MATNR'[LOOP_INDEX].name`');" `
+         `name="`'SG_P101-MATNR'[LOOP_INDEX].name`">`'SG_P101-MATNR'[LOOP_INDEX]`</textarea>`
+    else
+        if ( 'SG_P101-MATNR'[LOOP_INDEX].disabled == "X" )
+            if ( 'SG_P101-MATNR'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-MATNR'[LOOP_INDEX].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("19", "28.500em"); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-MATNR'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("19", "28.500em"); align("SG_P101-MATNR", LOOP_INDEX); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("19", "28.500em"); align("SG_P101-MATNR", LOOP_INDEX); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-MATNR'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-MATNR'[LOOP_INDEX].name`" `
+            if ( ( 'SG_P101-MATNR'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-MATNR'[LOOP_INDEX] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-MATNR'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-MATNR'[LOOP_INDEX].width`" maxlength="`'SG_P101-MATNR'[LOOP_INDEX].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-MATNR", LOOP_INDEX );
+            if ( 'SG_P101-MATNR'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-MATNR'[LOOP_INDEX].type == "Password" )
+                `<input type="password" `
+                `style="`width("19", "28.500em"); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-MATNR'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("19", "28.500em"); align("SG_P101-MATNR", LOOP_INDEX); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("19", "28.500em"); align("SG_P101-MATNR", LOOP_INDEX); style("SG_P101-MATNR", LOOP_INDEX)`" `
+                if ( 'SG_P101-MATNR'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-MATNR", LOOP_INDEX)`" `
+                end;
+            end;
+            if ( 'SG_P101-MATNR'[LOOP_INDEX].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-MATNR'[LOOP_INDEX].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-MATNR'[LOOP_INDEX].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-MATNR'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-MATNR'[LOOP_INDEX].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-MATNR'[LOOP_INDEX].name`" `end;
+            if ( ( 'SG_P101-MATNR'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-MATNR'[LOOP_INDEX] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-MATNR'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-MATNR'[LOOP_INDEX].width`" maxlength="`'SG_P101-MATNR'[LOOP_INDEX].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("19", "28.500em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-LFIMG'[LOOP_INDEX].exists == "X" && 'SG_P101-LFIMG'[LOOP_INDEX].visible == "X" ) ||
+     0 )
+`<!-- line 6 --><!``-- loop line `LOOP_INDEX` --``>
+<div class="MobileRow">`
+if ( 'SG_P101-LFIMG'[LOOP_INDEX].exists == "X" )
+    if ( 'SG_P101-LFIMG'[LOOP_INDEX].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-LFIMG', LOOP_INDEX); class("SG_P101-LFIMG", LOOP_INDEX)`" `
+         if ( 'SG_P101-LFIMG'[LOOP_INDEX].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-LFIMG'[LOOP_INDEX].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-LFIMG'[LOOP_INDEX].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-LFIMG'[LOOP_INDEX].okcode`');return false;" `
+         end;
+         `style="`width("18", "27.000em"); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+         `rows="`'SG_P101-LFIMG'[LOOP_INDEX].rows`" cols="18" `
+         `onfocus="setFocusField('`'SG_P101-LFIMG'[LOOP_INDEX].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-LFIMG'[LOOP_INDEX].name`');" `
+         `name="`'SG_P101-LFIMG'[LOOP_INDEX].name`">`'SG_P101-LFIMG'[LOOP_INDEX]`</textarea>`
+    else
+        if ( 'SG_P101-LFIMG'[LOOP_INDEX].disabled == "X" )
+            if ( 'SG_P101-LFIMG'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-LFIMG'[LOOP_INDEX].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-LFIMG'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-LFIMG", LOOP_INDEX); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-LFIMG", LOOP_INDEX); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-LFIMG'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-LFIMG'[LOOP_INDEX].name`" `
+            if ( ( 'SG_P101-LFIMG'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-LFIMG'[LOOP_INDEX] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-LFIMG'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-LFIMG'[LOOP_INDEX].width`" maxlength="`'SG_P101-LFIMG'[LOOP_INDEX].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-LFIMG", LOOP_INDEX );
+            if ( 'SG_P101-LFIMG'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-LFIMG'[LOOP_INDEX].type == "Password" )
+                `<input type="password" `
+                `style="`width("18", "27.000em"); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-LFIMG'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-LFIMG", LOOP_INDEX); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-LFIMG", LOOP_INDEX); style("SG_P101-LFIMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-LFIMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-LFIMG", LOOP_INDEX)`" `
+                end;
+            end;
+            if ( 'SG_P101-LFIMG'[LOOP_INDEX].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-LFIMG'[LOOP_INDEX].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-LFIMG'[LOOP_INDEX].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-LFIMG'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-LFIMG'[LOOP_INDEX].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-LFIMG'[LOOP_INDEX].name`" `end;
+            if ( ( 'SG_P101-LFIMG'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-LFIMG'[LOOP_INDEX] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-LFIMG'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-LFIMG'[LOOP_INDEX].width`" maxlength="`'SG_P101-LFIMG'[LOOP_INDEX].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("18", "27.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-PIKMG'[LOOP_INDEX].exists == "X" && 'SG_P101-PIKMG'[LOOP_INDEX].visible == "X" ) ||
+     0 )
+`<!-- line 7 --><!``-- loop line `LOOP_INDEX` --``>
+<div class="MobileRow">`
+if ( 'SG_P101-PIKMG'[LOOP_INDEX].exists == "X" )
+    if ( 'SG_P101-PIKMG'[LOOP_INDEX].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-PIKMG', LOOP_INDEX); class("SG_P101-PIKMG", LOOP_INDEX)`" `
+         if ( 'SG_P101-PIKMG'[LOOP_INDEX].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-PIKMG'[LOOP_INDEX].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-PIKMG'[LOOP_INDEX].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-PIKMG'[LOOP_INDEX].okcode`');return false;" `
+         end;
+         `style="`width("18", "27.000em"); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+         `rows="`'SG_P101-PIKMG'[LOOP_INDEX].rows`" cols="18" `
+         `onfocus="setFocusField('`'SG_P101-PIKMG'[LOOP_INDEX].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-PIKMG'[LOOP_INDEX].name`');" `
+         `name="`'SG_P101-PIKMG'[LOOP_INDEX].name`">`'SG_P101-PIKMG'[LOOP_INDEX]`</textarea>`
+    else
+        if ( 'SG_P101-PIKMG'[LOOP_INDEX].disabled == "X" )
+            if ( 'SG_P101-PIKMG'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-PIKMG'[LOOP_INDEX].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-PIKMG'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-PIKMG", LOOP_INDEX); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-PIKMG", LOOP_INDEX); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-PIKMG'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-PIKMG'[LOOP_INDEX].name`" `
+            if ( ( 'SG_P101-PIKMG'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-PIKMG'[LOOP_INDEX] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-PIKMG'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-PIKMG'[LOOP_INDEX].width`" maxlength="`'SG_P101-PIKMG'[LOOP_INDEX].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-PIKMG", LOOP_INDEX );
+            if ( 'SG_P101-PIKMG'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-PIKMG'[LOOP_INDEX].type == "Password" )
+                `<input type="password" `
+                `style="`width("18", "27.000em"); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-PIKMG'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-PIKMG", LOOP_INDEX); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-PIKMG", LOOP_INDEX); style("SG_P101-PIKMG", LOOP_INDEX)`" `
+                if ( 'SG_P101-PIKMG'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-PIKMG", LOOP_INDEX)`" `
+                end;
+            end;
+            if ( 'SG_P101-PIKMG'[LOOP_INDEX].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-PIKMG'[LOOP_INDEX].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-PIKMG'[LOOP_INDEX].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-PIKMG'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-PIKMG'[LOOP_INDEX].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-PIKMG'[LOOP_INDEX].name`" `end;
+            if ( ( 'SG_P101-PIKMG'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-PIKMG'[LOOP_INDEX] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-PIKMG'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-PIKMG'[LOOP_INDEX].width`" maxlength="`'SG_P101-PIKMG'[LOOP_INDEX].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("18", "27.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-CAPRO'[LOOP_INDEX].exists == "X" && 'SG_P101-CAPRO'[LOOP_INDEX].visible == "X" ) ||
+     0 )
+`<!-- line 8 --><!``-- loop line `LOOP_INDEX` --``>
+<div class="MobileRow">`
+if ( 'SG_P101-CAPRO'[LOOP_INDEX].exists == "X" )
+    if ( 'SG_P101-CAPRO'[LOOP_INDEX].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-CAPRO', LOOP_INDEX); class("SG_P101-CAPRO", LOOP_INDEX)`" `
+         if ( 'SG_P101-CAPRO'[LOOP_INDEX].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-CAPRO'[LOOP_INDEX].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-CAPRO'[LOOP_INDEX].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-CAPRO'[LOOP_INDEX].okcode`');return false;" `
+         end;
+         `style="`width("18", "27.000em"); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+         `rows="`'SG_P101-CAPRO'[LOOP_INDEX].rows`" cols="18" `
+         `onfocus="setFocusField('`'SG_P101-CAPRO'[LOOP_INDEX].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-CAPRO'[LOOP_INDEX].name`');" `
+         `name="`'SG_P101-CAPRO'[LOOP_INDEX].name`">`'SG_P101-CAPRO'[LOOP_INDEX]`</textarea>`
+    else
+        if ( 'SG_P101-CAPRO'[LOOP_INDEX].disabled == "X" )
+            if ( 'SG_P101-CAPRO'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-CAPRO'[LOOP_INDEX].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-CAPRO'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-CAPRO", LOOP_INDEX); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-CAPRO", LOOP_INDEX); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-CAPRO'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-CAPRO'[LOOP_INDEX].name`" `
+            if ( ( 'SG_P101-CAPRO'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-CAPRO'[LOOP_INDEX] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-CAPRO'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-CAPRO'[LOOP_INDEX].width`" maxlength="`'SG_P101-CAPRO'[LOOP_INDEX].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-CAPRO", LOOP_INDEX );
+            if ( 'SG_P101-CAPRO'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-CAPRO'[LOOP_INDEX].type == "Password" )
+                `<input type="password" `
+                `style="`width("18", "27.000em"); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-CAPRO'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-CAPRO", LOOP_INDEX); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-CAPRO", LOOP_INDEX); style("SG_P101-CAPRO", LOOP_INDEX)`" `
+                if ( 'SG_P101-CAPRO'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-CAPRO", LOOP_INDEX)`" `
+                end;
+            end;
+            if ( 'SG_P101-CAPRO'[LOOP_INDEX].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-CAPRO'[LOOP_INDEX].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-CAPRO'[LOOP_INDEX].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-CAPRO'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-CAPRO'[LOOP_INDEX].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-CAPRO'[LOOP_INDEX].name`" `end;
+            if ( ( 'SG_P101-CAPRO'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-CAPRO'[LOOP_INDEX] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-CAPRO'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-CAPRO'[LOOP_INDEX].width`" maxlength="`'SG_P101-CAPRO'[LOOP_INDEX].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("18", "27.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'SG_P101-CSURT'[LOOP_INDEX].exists == "X" && 'SG_P101-CSURT'[LOOP_INDEX].visible == "X" ) ||
+     0 )
+`<!-- line 9 --><!``-- loop line `LOOP_INDEX` --``>
+<div class="MobileRow">`
+if ( 'SG_P101-CSURT'[LOOP_INDEX].exists == "X" )
+    if ( 'SG_P101-CSURT'[LOOP_INDEX].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('SG_P101-CSURT', LOOP_INDEX); class("SG_P101-CSURT", LOOP_INDEX)`" `
+         if ( 'SG_P101-CSURT'[LOOP_INDEX].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'SG_P101-CSURT'[LOOP_INDEX].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'SG_P101-CSURT'[LOOP_INDEX].okcode != "" )
+             `onchange="setOkCode('`'SG_P101-CSURT'[LOOP_INDEX].okcode`');return false;" `
+         end;
+         `style="`width("18", "27.000em"); style("SG_P101-CSURT", LOOP_INDEX)`" `
+         `rows="`'SG_P101-CSURT'[LOOP_INDEX].rows`" cols="18" `
+         `onfocus="setFocusField('`'SG_P101-CSURT'[LOOP_INDEX].name`');" `
+         `onblur="leaveFocusField('`'SG_P101-CSURT'[LOOP_INDEX].name`');" `
+         `name="`'SG_P101-CSURT'[LOOP_INDEX].name`">`'SG_P101-CSURT'[LOOP_INDEX]`</textarea>`
+    else
+        if ( 'SG_P101-CSURT'[LOOP_INDEX].disabled == "X" )
+            if ( 'SG_P101-CSURT'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-CSURT'[LOOP_INDEX].type == "Password" )
+                `<input type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-CSURT'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-CSURT", LOOP_INDEX); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("18", "27.000em"); align("SG_P101-CSURT", LOOP_INDEX); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else;
+                    `class="MobileEditDisabled `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            end;
+            `onfocus="focusField('`'SG_P101-CSURT'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-CSURT'[LOOP_INDEX].name`" `
+            if ( ( 'SG_P101-CSURT'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-CSURT'[LOOP_INDEX] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('SG_P101-CSURT'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-CSURT'[LOOP_INDEX].width`" maxlength="`'SG_P101-CSURT'[LOOP_INDEX].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "SG_P101-CSURT", LOOP_INDEX );
+            if ( 'SG_P101-CSURT'[LOOP_INDEX].visible != "X" )
+                `<input type="hidden" `
+            elseif ( 'SG_P101-CSURT'[LOOP_INDEX].type == "Password" )
+                `<input type="password" `
+                `style="`width("18", "27.000em"); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobilePasswordHighlighted `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else
+                    `class="MobilePassword `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            elseif ( 'SG_P101-CSURT'[LOOP_INDEX].inputrequired == "X" )
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-CSURT", LOOP_INDEX); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else
+                    `class="MobileEditRequired `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            else
+                `<input type="text" `
+                `style="`width("18", "27.000em"); align("SG_P101-CSURT", LOOP_INDEX); style("SG_P101-CSURT", LOOP_INDEX)`" `
+                if ( 'SG_P101-CSURT'[LOOP_INDEX].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                else
+                    `class="MobileEdit `class("SG_P101-CSURT", LOOP_INDEX)`" `
+                end;
+            end;
+            if ( 'SG_P101-CSURT'[LOOP_INDEX].okcode != "" )
+                `onchange="setOkCode('`'SG_P101-CSURT'[LOOP_INDEX].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'SG_P101-CSURT'[LOOP_INDEX].name`');" `
+            `onblur="leaveFocusField('`'SG_P101-CSURT'[LOOP_INDEX].name`');" `
+            `name="`'SG_P101-CSURT'[LOOP_INDEX].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'SG_P101-CSURT'[LOOP_INDEX].name`" `end;
+            if ( ( 'SG_P101-CSURT'[LOOP_INDEX].inputrequired == "X" ) && ( 'SG_P101-CSURT'[LOOP_INDEX] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('SG_P101-CSURT'[LOOP_INDEX], 1)`" `
+            end;
+            `size="`'SG_P101-CSURT'[LOOP_INDEX].width`" maxlength="`'SG_P101-CSURT'[LOOP_INDEX].maxinputsize`"`
+            sh()`>`
+        end;
+    end;
+else
+    `<span style="`margin_left("18", "27.000em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+                                        end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( '%#AUTOTEXT013'[1].exists == "X" && '%#AUTOTEXT013'[1].visible == "X" ) ||
+     ( '%#AUTOTEXT014'[1].exists == "X" && '%#AUTOTEXT014'[1].visible == "X" ) ||
+     0 )
+`<!-- line 15 -->
+<div class="MobileRow">`
+if ( ( '%#AUTOTEXT013'[1].exists == "X" ) && ( '%#AUTOTEXT013'[1].visible == "X" ) )
+    `<input type="button" style="`width("9", "13.500em"); style("%#AUTOTEXT013", 1)`" `
+    `class="MobileButton`class_ext("%#AUTOTEXT013", 1)` `class("%#AUTOTEXT013", 1)`" `
+    if ( '%#AUTOTEXT013'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'%#AUTOTEXT013'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'%#AUTOTEXT013'[1].name`" `end;
+    `value="`label("%#AUTOTEXT013", 1)`" `
+    if ( '%#AUTOTEXT013'[1].onclick != "" )
+         `onclick="`'%#AUTOTEXT013'[1].onclick`;" `
+    elseif ( '%#AUTOTEXT013'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'%#AUTOTEXT013'[1].name`');"
+        onblur="leaveFocusField('`'%#AUTOTEXT013'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'%#AUTOTEXT013'[1].okcode`');" `
+    end;
+    sh()`>`
+else
+    `<span style="`margin_left("9", "13.500em")`; height:1px"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1px"></span>`
+end;
+if ( ( '%#AUTOTEXT014'[1].exists == "X" ) && ( '%#AUTOTEXT014'[1].visible == "X" ) )
+    `<input type="button" style="`width("9", "13.500em"); style("%#AUTOTEXT014", 1)`" `
+    `class="MobileButton`class_ext("%#AUTOTEXT014", 1)` `class("%#AUTOTEXT014", 1)`" `
+    if ( '%#AUTOTEXT014'[1].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'%#AUTOTEXT014'[1].name`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'%#AUTOTEXT014'[1].name`" `end;
+    `value="`label("%#AUTOTEXT014", 1)`" `
+    if ( '%#AUTOTEXT014'[1].onclick != "" )
+         `onclick="`'%#AUTOTEXT014'[1].onclick`;" `
+    elseif ( '%#AUTOTEXT014'[1].rfidenabled == "X" )
+        `onfocus="setFocusField('`'%#AUTOTEXT014'[1].name`');"
+        onblur="leaveFocusField('`'%#AUTOTEXT014'[1].name`');"
+        onclick="RfidButtonClick();" `
+    else
+        `onclick="setOkCode('`'%#AUTOTEXT014'[1].okcode`');" `
+    end;
+    sh()`>`
+else
+    `<span style="`margin_left("9", "13.500em")`; height:1px"></span>`
+end;
+if ( 2 != 0 )
+    `<span style="`margin_left("2", "3.000em")`; height:1px"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+`</div>
+<!-- main screen end -->`
+        `</form>`
+    `</body>`
+`</html>                 

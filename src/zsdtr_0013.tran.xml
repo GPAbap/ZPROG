@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TRAN" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TSTC>
+    <TCODE>ZSDTR_0013</TCODE>
+    <PGMNA>ZSDRE_PEDAUTON</PGMNA>
+    <DYPNO>1000</DYPNO>
+    <CINFO>hA==</CINFO>
+   </TSTC>
+   <TSTCC>
+    <TCODE>ZSDTR_0013</TCODE>
+    <S_WEBGUI>1</S_WEBGUI>
+    <S_WIN32>X</S_WIN32>
+    <S_PLATIN>X</S_PLATIN>
+   </TSTCC>
+   <TSTCT>
+    <SPRSL>S</SPRSL>
+    <TCODE>ZSDTR_0013</TCODE>
+    <TTEXT>Crear entregas - Ped Auto 2</TTEXT>
+   </TSTCT>
+   <AUTHORIZATIONS>
+    <TSTCA>
+     <TCODE>ZSDTR_0013</TCODE>
+     <OBJCT>S_TCODE</OBJCT>
+     <FIELD>TCD</FIELD>
+     <VALUE>ZSDTR_0013</VALUE>
+    </TSTCA>
+   </AUTHORIZATIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

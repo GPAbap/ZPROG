@@ -1,0 +1,7 @@
+
+PROCESS BEFORE OUTPUT.
+  MODULE status_screen_0010.
+
+PROCESS AFTER INPUT.
+  MODULE exit_commands_0010 AT EXIT-COMMAND.
+  MODULE user_commands_0010.

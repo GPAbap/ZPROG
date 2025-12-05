@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>ZMSG_CCP</ARBGB>
+    <MASTERLANG>S</MASTERLANG>
+    <STEXT>Textos comparativos para Carta porte.</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>Pedido</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Entrega Saliente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>ALP-Ped. en Transito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Venta Intercompany</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>CD-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>CD-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>ING-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>ING-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>SA-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>SA-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>ALP-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>ALP-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>ALP-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>AE-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>AE-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>OP-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>OP-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>PPA-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>PPA-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>AT-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>AT-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>PV-Venta a Crédito</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>PV-Venta de Contado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>CD-Stock Cliente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>ING-Stock Cliente</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>PV-Vta.Créd.OtrosPro</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>S</SPRSL>
+     <ARBGB>ZMSG_CCP</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>PV-Vta.Cont.OtrosPro</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

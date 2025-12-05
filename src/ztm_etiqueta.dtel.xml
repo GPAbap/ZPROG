@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZTM_ETIQUETA</ROLLNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <DOMNAME>/SCMTMS/DESCRIPTION_S</DOMNAME>
+    <HEADLEN>45</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>15</SCRLEN2>
+    <SCRLEN3>30</SCRLEN3>
+    <DDTEXT>Etiqueta</DDTEXT>
+    <REPTEXT>Etiqueta</REPTEXT>
+    <SCRTEXT_S>Etiqueta</SCRTEXT_S>
+    <SCRTEXT_M>Etiqueta</SCRTEXT_M>
+    <SCRTEXT_L>Etiqueta</SCRTEXT_L>
+    <DTELMASTER>S</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

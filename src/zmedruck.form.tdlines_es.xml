@@ -1,0 +1,3831 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<abapGit version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TDLINES>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>ADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PAGE&amp; EQ 1.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T024E-TXADR&amp; OBJECT TEXT ID ADRS LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-ADRNR(K)&amp; EQ &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>  TITLE    &amp;LFA1-ANRED&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  NAME     &amp;LFA1-NAME1&amp;, &amp;LFA1-NAME2&amp;, &amp;LFA1-NAME3&amp;, &amp;LFA1-NAME4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  STREET   &amp;LFA1-STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POBOX    &amp;LFA1-PFACH&amp;  CODE &amp;LFA1-PSTL2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  CITY     &amp;LFA1-ORT01&amp;, &amp;LFA1-ORT02&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POSTCODE &amp;LFA1-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  COUNTRY  &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  REGION   &amp;LFA1-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;T001-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  ADDRESSNUMBER &amp;EKKO-ADRNR(K)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;T001-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>CONSGNEE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_DELADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Sírvase entregar a:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>ENTREGAR EN:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PEKKO-ADRNR(K)&amp; EQ &apos;          &apos; AND &amp;PEKKO-ADRN2(K)&amp; EQ &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS DELIVERY PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  TITLE    &amp;SADR-ANRED&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  NAME     &amp;SADR-NAME1&amp;, &amp;SADR-NAME2&amp;, &amp;SADR-NAME3&amp;, &amp;SADR-NAME4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  STREET   &amp;SADR-STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  CITY     &amp;SADR-ORT01&amp;, &amp;SADR-ORT02&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POSTCODE &amp;SADR-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  COUNTRY  &amp;SADR-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  REGION   &amp;SADR-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PEKKO-ADRNR(K)&amp; NE &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS DELIVERY PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  ADDRESSNUMBER &amp;PEKKO-ADRNR(K)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS DELIVERY PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  ADDRESSNUMBER &amp;PEKKO-ADRN2(K)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>DELDATE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_DATES</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;&apos;Plazo para presentación de la oferta &apos;EKKO-ANGDT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Plazo vinculante de la oferta        &apos;EKKO-BNDDT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Inicio período de validez            &apos;EKKO-KDATB&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Fin período de validez               &apos;EKKO-KDATE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DELDATE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>FECHA DE ENTREGA &amp;PEKKO-PRITX&amp; &amp;PEKKO-LFDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>FOOTER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T024E-TXFUS&amp; OBJECT TEXT ID ADRS LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T024E-TXKOP&amp; OBJECT TEXT ID ADRS LANGUAGE &amp;EKKO-SPRAS&amp; PARAGRAPH FT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>INFO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>POSITION WINDOW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>POSITION XORIGIN &apos;-0.5&apos; CH YORIGIN &apos;-0.25&apos; LN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>SIZE WIDTH &apos;+0.4&apos; CH HEIGHT +1 LN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX HEIGHT &apos;13&apos; LN FRAME 10 TW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>IF &amp;T166U-DRART&amp; EQ &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX HEIGHT &apos;1.5&apos; LN INTENSITY 20</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>BOX HEIGHT &apos;2.5&apos; LN INTENSITY 20</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TI</TDFORMAT>
+     <TDLINE>&amp;T166U-DRTYP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TI</TDFORMAT>
+     <TDLINE>&amp;T166U-DRART&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;&amp;T166U-DRNUM&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-REVNO&amp; GT &apos;00000000&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-EBELN&amp;&amp;&apos;-&apos;EKKO-REVNO&amp;&amp;&apos; / &apos;EKKO-BEDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-EBELN&amp;&amp;&apos; / &apos;EKKO-BEDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&lt;S&gt;Persona de contacto/Teléfono&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Orden&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&amp;EKpo-AFNAM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>imprimir texto de cabecera</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;EKKO-EBELN&amp; OBJECT EKKO ID F01 LANGUAGE &amp;SY-LANGU&amp; PARAGRAPH IX</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;T024-EKNAM&amp;&amp;&apos;/&apos;T024-EKTEL&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;T024-TELFX&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Nuestro número de fax&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;T024-TELFX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-UNSEZ&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Nuestra referencia&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-UNSEZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-STCEG&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Nuestro NIF&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-STCEG&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-VERKF&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Su responsable&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-VERKF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-IHREZ&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Su referencia&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-IHREZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>INFO1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&lt;S&gt;Su número de proveedor en nuestra empresa&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-LIFNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-ANGNR&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Su oferta/fecha&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-ANGNR&amp;&amp;&apos;/&apos;EKKO-IHRAN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PEKKO-LABNR&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Su confirmación de pedido&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;PEKKO-LABNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>INFO2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;&amp;T166U-DRNUM&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKO-EBELN&amp;&amp;&apos; / &apos;EKKO-BEDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>MAIN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos de cabecera</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;TTXIT-TDTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T166K-TXNAM&amp; OBJECT &amp;T166K-TDOBJECT&amp; ID &amp;T166K-TDID&amp;  LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_INFO_ACKNOW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>Esperamos su confirmación de pedido para las siguientes posiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TERMS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CN</TDFORMAT>
+     <TDLINE>&amp;&apos;Entrega a &apos;PEKKO-ABLAD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CN</TDFORMAT>
+     <TDLINE>&amp;&apos;Entrega para &apos;PEKKO-WEMPF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CN</TDFORMAT>
+     <TDLINE>&amp;&apos;Cond.entrega:&apos;EKKO-INCO1&amp; &amp;EKKO-INCO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;&apos;Cond.pago:&apos;PEKKO-ZBTXT&amp;,,&amp;&apos;Moneda&apos;EKKO-WAERS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CN</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TERMS_OF_PAYMENT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEADER_TARGET_VALUE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;&apos;Valor previsto&apos;EKKO-KTWRT&amp; &amp;EKKO-WAERS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>REASON_FOR_REJECTION</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;&apos;Motivo de rechazo&apos;EKKO-ABSGR&amp; &amp;T165M-ABSGR_TXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>CHANGE_REMARKS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>*** &amp;T166T-CHTXT&amp; ***</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos de posición</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Pedido --------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_F</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&lt;K&gt;Pos.,,Material,,Denominación&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;   Ctd.pedido,,Unidad,,    Precio por unidad,, Valor neto &lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;   Ctd.pedido,,Unidad,,                                   &lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_DATE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>,,Fecha entrega &amp;RM06P-PRITX&amp; &amp;RM06P-LFDAT&amp;,,,,&lt;B&gt;&amp;RM06P-PHTXT(20)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_WEMNG</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG2&amp;,,&amp;T006A-MSEHT&amp;,, aún por entregar</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_2F</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG1&amp;,,&amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;RM06P-PRMG2&amp; NE &apos;                 &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>*** La cantidad confirmada asciende a &amp;rm06p-prmg2&amp; &amp;t006A-mseht&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_3F</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG1&amp;,,&amp;*T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;RM06P-PRMG2&amp; NE &apos;                 &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>*** La cantidad confirmada asciende a &amp;rm06p-prmg2&amp; &amp;t006A-mseht&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_3F_PRICE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>por signo +/- negativo en la posición de devolución RF 4.0</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;VORZ&amp; = &apos;-&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG1&amp;,,&amp;*T006A-MSEHT&amp;,,&amp;EKPO-NETPR&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;EKPO-NETWR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-RETPO&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;VORZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;RM06P-PRMG2&amp; NE &apos;                 &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>*** La cantidad confirmada asciende a &amp;rm06p-prmg2&amp; &amp;t006A-mseht&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Petición de oferta --------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_A</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&lt;K&gt;Pos.,,Material,,Denominación&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;     Ctd.pet.oferta,,Unidad,,Plazo oferta,,Fe.entrega&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_A</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&amp;EKPO-EBELP&amp;,,&amp;EKPO-EMATN&amp;,,&amp;EKPO-TXZ01&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG1&amp;,,,, &amp;T006A-MSEHT&amp;,,,,&amp;EKPO-AGDAT&amp;,,&amp;RM06P-PRITX&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;RM06P-LFDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Contrato marco ------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_R</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&lt;K&gt;Pos.,,Material,,Denominación&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&lt;K&gt; Ctd.prevista,,Unidad,,Precio por unidad,,Valor neto&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_2R</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-PRMG1&amp;,,&amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_3R</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE> IF &amp;EKPO-PSTYP&amp; = &apos;9&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE> ,,&amp;RM06P-PRMG1&amp;,,&amp;*T006A-MSEHT&amp;,,&amp;EKPO-NETPR&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;EKPO-NETPR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE> ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>I2</TDFORMAT>
+     <TDLINE> ,,&amp;RM06P-PRMG1&amp;,,&amp;*T006A-MSEHT&amp;,,&amp;EKPO-NETPR&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;EKPO-ZWERT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE> ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Reparto del plan de entregas ----------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-LPHIS&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&lt;K&gt;Posición &amp;EKPO-EBELP&amp; Transferencia nº   &amp;EKPO-DRUNR&amp; creada el</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;EKEK-ERDAT&amp; a las &amp;EKEK-ERUHR&amp;   ,,,,,, &amp;EKPO-MAHNZ&apos;. Reclamación&apos;&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&lt;K&gt;Posición &amp;EKPO-EBELP&amp; Transferencia nº   &amp;EKPO-DRUNR&amp;   ,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;EKPO-MAHNZ&apos;. Reclamación&apos;&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&lt;K&gt;&lt;K&gt;Material &amp;EKPO-EMATN&amp; &amp;EKPO-TXZ01&amp;&lt;/&gt;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;&apos;Su número de material&apos;EKPO-IDNLF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Su lote&apos;PEKPO-LICHA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Número de artículo europeo&apos;EKPO-EAN11&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Su confirmación de pedido&apos;EKPO-LABNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Estado de revisión&apos;EKPO-REVLV&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Norma de envío&apos;T027B-EVTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Cantidad prevista &amp;RM06P-PRMG3&amp; &amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Cantidad de reparto &amp;RM06P-PRMG1&amp; &amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Cantidad entregada &amp;RM06P-PRMG2&amp; &amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_FZ</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>Última entrega &amp;RM06P-PRMG1&amp; &amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>     &amp;&apos;el&apos;PEKPO-BUDAT&amp; &amp;&apos;con nº nota de entrega&apos;PEKPO-XBLNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_ABRFZ</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>Última entrada mcías.&amp;RM06P-PRMG1&amp; &amp;T006A-MSEHT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE> &amp;&apos;el&apos;EKEK-LWEDT&amp; &amp;&apos;con nº nota de entrega&apos;EKEK-LFNKD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>     &amp;&apos;para &apos;EKEK-LFDKD&amp; &amp;&apos;CA concertada EM obtenida &apos;RM06P-PRMG2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;&apos;Última EM         &apos;RM06P-PRMG1&amp; &amp;T006A-MSEHT&amp; &amp;&apos;el &apos;EKEK-LWEDT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>p.nº nota entrega  ,,&amp;EKEK-LFNKD&amp; &amp;&apos;respecto a &apos;EKEK-LFDKD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;&apos;CA conc.EM obtnd. &apos;RM06P-PRMG2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_REC</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>CA concert.&amp;RM06P-PRMG3&amp; &amp;T006A-MSEHT&amp; Fecha concert. &amp;EKPO-ABDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_ZONE1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&amp;&apos;Liberación de fabricación a &apos;RM06P-DATUM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_ZONE2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>&amp;&apos;Liberación de material a &apos;RM06P-DATUM&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_VKP</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Precio de venta, impuestos incluidos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IU</TDFORMAT>
+     <TDLINE>,,Precio de venta,,&amp;EKVKP-VKPMS&amp;,,&amp;EKVKP-WAEMS&amp;,,&amp;&apos;&apos;EKVKP-KPEMS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;EKVKP-KMEMS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IU</TDFORMAT>
+     <TDLINE>,,&amp;&apos;EAN&apos;EKVKP-EANMS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Precio de venta, impuestos excluidos</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,Precio de venta,,&amp;EKVKP-VKPOS&amp;,,&amp;EKVKP-WAEOS&amp;,,&amp;&apos;&apos;EKVKP-KPEOS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;EKVKP-KMEOS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,&amp;&apos;EAN &apos;EKVKP-EANOS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKPO-EBELP&amp;,,&amp;EKPO-EMATN&amp;,,&amp;EKPO-TXZ01&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- General ------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Su número de material&apos;EKPO-IDNLF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Su lote&apos;PEKPO-LICHA&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Número de artículo europeo&apos;EKPO-EAN11&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Su confirmación de pedido&apos;EKPO-LABNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-RETPO&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,Posición de devolución</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Orden entrega pedido abierto&apos;EKPO-KONNR&amp; &amp;&apos;Posición&apos;EKPO-KTPNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Estado de revisión&apos;EKPO-REVLV&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Norma de envío&apos;T027B-EVTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Condiciones entrega&apos;EKPO-INCO1&amp; &amp;EKPO-INCO2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Número de pieza de fabricante &apos;EKPO-MFRPN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Fabricante                    &apos;EKPO-MFRNR&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_ACKNOW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,Esperamos su confirmación de pedido para esta posición</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_QM_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,Para cada entrega esperamos un certificado del,,tipo &amp;TQ05-ZGTYP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE> &amp;TQ05T-KURZTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_QM_2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,Para cada posición esperamos un certificado del,,tipo &amp;TQ05-ZGTYP&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE> &amp;TQ05T-KURZTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>QM_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;TTXIT-TDTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;THEAD-TDNAME&amp; OBJECT &amp;THEAD-TDOBJECT&amp; ID &amp;THEAD-TDID&amp;  LANGUAGE &amp;EKKO-SPRAS&amp; PARAGRAPH IX</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;TTXIT-TDTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T166P-TXNAM&amp; OBJECT &amp;T166P-TDOBJECT&amp; ID &amp;T166P-TDID&amp; LANGUAGE &amp;EKKO-SPRAS&amp; PARAGRAPH IX</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_DELADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Entregar a:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-ADRNR(K)&amp; EQ &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS DELIVERY PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  TITLE    &amp;SADR-ANRED&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  NAME     &amp;SADR-NAME1&amp;, &amp;SADR-NAME2&amp;, &amp;SADR-NAME3&amp;, &amp;SADR-NAME4&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  STREET   &amp;SADR-STRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POBOX    &amp;SADR-PFACH&amp;  CODE &amp;SADR-PSTL2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  CITY     &amp;SADR-ORT01&amp;, &amp;SADR-ORT02&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  POSTCODE &amp;SADR-PSTLZ&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  COUNTRY  &amp;SADR-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  REGION   &amp;SADR-REGIO&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ADDRESS DELIVERY PARAGRAPH AS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  ADDRESSNUMBER &amp;EKPO-ADRNR(K)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>  FROMCOUNTRY &amp;LFA1-LAND1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDADDRESS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF PEKKO-WEMPF EQ &apos;            &apos;.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;&apos;Entrega a &apos;PEKPO-ABLAD&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;&apos;Entrega para &apos;PEKPO-WEMPF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_RECIEVER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Suministre &amp;&apos;a &apos;EKKN-ABLAD&amp; &amp;&apos;para &apos;EKKN-WEMPF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_RECIEVER_WQ</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKN-MENGE(I)&amp; &amp;EKPO-MEINS&amp; &amp;&apos;a &apos;EKKN-ABLAD&amp; &amp;&apos;para &apos;EKKN-WEMPF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_RECIEVER_WP</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;EKKN-VPROZ(I)&amp; &amp;&apos;a &apos;EKKN-ABLAD&amp; &amp;&apos;para &apos;EKKN-WEMPF&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Condiciones documento -----------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CONDITIONS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;KOMVD-VTEXT&amp;,,&amp;&apos;&apos;KOMVD-KBETR&amp; &amp;KOMVD-KOEIN&amp;,,&amp;KOMVD-KWERT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CONDITIONS_UNIT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IU</TDFORMAT>
+     <TDLINE>,,&amp;KOMVD-VTEXT(16)&amp;,,&amp;KOMVD-KBETR&amp;,,&amp;KOMVD-KOEIN&amp;,,&amp;&apos;&apos;KOMVD-KPEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;KOMVD-KMEIN&amp;,,&amp;KOMVD-KWERT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Condiciones maestras ------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S3</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,,&amp;&apos;&apos;EKOMD-KBETR&amp;,,&amp;EKOMD-KOEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_UNIT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S3</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,,&amp;&apos;&apos;EKOMD-KBETR&amp;,,&amp;EKOMD-KOEIN&amp;,,&amp;&apos;&apos;EKOMD-KPEIN&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;EKOMD-KMEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_PLANT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S3</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;Condiciones centro &amp;EKOMD-WERKS&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_VALID</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,Válido de &amp;EKOMD-DATAB&amp; a &amp;EKOMD-DATBI&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_SCALE_FROM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,, escalonado de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_SCALE_TO</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,, escalonado a</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_SCALE_FROM_I</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,, escalonado de (increm.)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_SCALE_TO_I</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IC</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-VTEXT&amp;,, escalonado a (increm.)</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_QUANT_SCALE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S1</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-KSTBM&amp;,,&amp;EKOMD-KONMS&amp;,,&amp;EKOMD-KBETR&amp;,,&amp;EKOMD-KOEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_QUANT_SCALE_U</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S1</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-KSTBM&amp;,,&amp;EKOMD-KONMS&amp;,,&amp;EKOMD-KBETR&amp;,,&amp;&apos;&apos;EKOMD-KOEIN&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;EKOMD-KPEIN&amp;,,&amp;EKOMD-KMEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_VALUE_SCALE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S2</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-KSTBW&amp;,,&amp;EKOMD-KONWS&amp;,,&amp;EKOMD-KBETR&amp;,,&amp;EKOMD-KOEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MCONDITIONS_VALUE_SCALE_U</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>S2</TDFORMAT>
+     <TDLINE>,,&amp;EKOMD-KSTBW&amp;,,&amp;EKOMD-KONWS&amp;,,&amp;EKOMD-KBETR&amp;,,&amp;&apos;&apos;EKOMD-KOEIN&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;EKOMD-KPEIN&amp;,,&amp;EKOMD-KMEIN&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>HEAD_MCONDITIONS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Las siguientes condiciones son válidas para todas las posiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos del reparto</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Pedido/Petición de oferta -------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_NEW</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,Reparto de la cantidad total en las fechas de entrega siguientes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IM</TDFORMAT>
+     <TDLINE>,,,,,,Ctd.,,Unidad,,Fe.entrega,,,,&amp;ETUHRTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,De la cantidad total aún deben entregarse en las fechas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,siguientes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IM</TDFORMAT>
+     <TDLINE>,,,,,,Ctd.,,Unidad,,Fecha entrega,,,,&amp;ETUHRTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IM</TDFORMAT>
+     <TDLINE>,,,,,,&amp;RM06P-PRMG1&amp;,,&amp;T006A-MSEHT&amp;,,&amp;RM06P-PRITX&amp; &amp;RM06P-LFDAT&amp;,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(27)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_DAY</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IM</TDFORMAT>
+     <TDLINE>,,,,,,&amp;RM06P-PRMG1&amp;,,&amp;T006A-MSEHT&amp;,,&amp;RM06P-LFDAT&amp;,,,,&amp;RM06P-PHTXT(27)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-- Reparto plan entregas------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fecha entrega,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(10)&amp;,,Ctd.,,,,,,Modific.,,,,Ctd.entregada&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fe.entrega,, &amp;RM06P-PHTXT(10)&amp;,,Ctd.entrega pend.,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>Modificación&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L3</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fecha de entrega,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(10)&amp;,,Ctd.,,,,,,Modific.,,,,Ctd.entrg.pend.&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L4</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fecha entrega,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(10)&amp;,,CA de reparto,,,,,,Cantidad,,,,&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L5</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fe.entrega,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(10)&amp;,,CA de reparto,,,,,,Modif.,,,,CA pend.&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_HEADER_L6</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&lt;K&gt;Fe.entrega,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PHTXT(10)&amp;,,CA entrega pend.,,,,,,Modific.&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_L</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;XFZ&amp; EQ &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>&amp;PEKPO-LPEIN&amp;,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG1&amp; ,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PRMG3&amp; ,,,,&amp;RM06P-PRMG2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>&amp;PEKPO-LPEIN&amp;,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG1&amp; ,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PRMG3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_DAY_L</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;XFZ&amp; EQ &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG1&amp;,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PRMG3&amp; ,,,,&amp;RM06P-PRMG2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG1&amp;,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PRMG3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_REM_L</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>&amp;PEKPO-LPEIN&amp;,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG2&amp; ,,,,,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE>&amp;RM06P-PRMG3&amp; &amp;RM06P-PHTXT(20)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SCHEDULE_DAY_REM_L</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ID</TDFORMAT>
+     <TDLINE>,,&amp;RM06P-LFDAT&amp;,,&amp;PEKPO-TPRIN(*)&amp;,,&amp;RM06P-PRMG2&amp; ,,,,,,&amp;RM06P-PRMG3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> &amp;RM06P-PHTXT(20)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Gestión de variantes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-----------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos de cabecera</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos de posición</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SAMMELART</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+     <TDLINE>,,el artículo genérico arriba mencionado</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> &amp;ekpo-ematn&amp; se subdivide en las siguientes variantes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_XMERKMAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>M1</TDFORMAT>
+     <TDLINE>,,&lt;B&gt;&amp;varposr-xmerk&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_XWERTE2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>,,&amp;rwerter-wert(10)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_XSUMME</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>,,TOTAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_YMERKMAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>M1</TDFORMAT>
+     <TDLINE>&lt;B&gt;&amp;varposr-ymerk(15)&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;uline(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_YWERT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>&amp;rwerter-wert(10)&amp;,,&amp;vline&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_TAB</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>CASE &amp;VARPOSR-YZEILE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0001&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0002&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0003&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0004&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0005&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,,,,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0006&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,,,,,,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN &apos;0007&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>DEFINE &amp;TAB&amp; = &apos;,,,,,,,,,,,,,,&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>WHEN OTHERS.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Tab.sin definir</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDCASE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_YMENGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;tab&amp; &amp;varposr-xymenge&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_YSUMME</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>TOTAL</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SUMV</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;tab&amp; &amp;mtxh-sumv(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_SUMH</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;tab&amp; &amp;mtxh-sumh(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_GSUM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;tab&amp; &amp;mtxh-gsum(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_ABW_UEBS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>para las variantes arriba mencionadas son válidas las siguientes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>desviaciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_ABW_LDAT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>Pos. &amp;varposr-ebelp(Z)&amp;  en &amp;varposr-xwert&amp;,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> &amp;varposr-ywert&amp; - cantidad pedida: &amp;varposr-xymenge(C)&amp;  - se</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>suministra el día: &amp;eket-eindt&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_ABW_PRZU</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-NETPR&amp; &lt;&gt; &amp;VARPOSR-XYPREIS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>,, - al precio neto de &amp;ekko-waers&amp;: &amp;varposr-xypreis&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_ABW_NETPR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>Pos.&amp;varposr-ebelp(Z)&amp; en &amp;varposr-xwert&amp;,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> &amp;varposr-ywert&amp; - cantidad pedida: &amp;varposr-xymenge(C)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE> - se suministra,, - al precio neto de &amp;ekko-waers&amp;:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>=</TDFORMAT>
+     <TDLINE> &amp;varposr-xypreis&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_NEUEZEILE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CHANGE_TXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>WH</TDFORMAT>
+     <TDLINE>** &amp;T166T-CHTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CHANGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE> para pos.&amp;varposr-ebelp(Z)&amp;, en &amp;varposr-ywert&amp;-&amp;varposr-xwert&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CHANGE_LDAT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>, para &amp;pekpo-eindt&amp; **</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_STERN</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE> **</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_CHANGE_LOT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE> p.las variantes relacionadas más arriba, corresponde a artículo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>prepack</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_USTRICH</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;uline(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Título para la posición de artículo genérico</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_SATNR_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Posición principal con artículo genérico</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Título para las posiciones de variantes del artículo genérico</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_HEADER_VATNR_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;1&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>La posición &amp;EKPO-UEBPO&amp; se subdivide en las siguientes variantes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;2&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>A la posición &amp;EKPO-UEBPO&amp; le corresponden las posiciones de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>bonificación en especie:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;3&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>A la posición &amp;EKPO-UEBPO&amp; le corresponden las posiciones de envases:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;4&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>A la posición &amp;EKPO-UEBPO&amp; le corresponden las posiciones de</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>bonificación en especie:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;5&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>La posición &amp;EKPO-UEBPO&amp; se subdivide en las siguientes variantes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;6&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>La posición de set &amp;EKPO-UEBPO&amp; se compone de las siguientes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>subposiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;7&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>La posición de set &amp;EKPO-UEBPO&amp; se compone de las siguientes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>subposiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;8&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>La posición &amp;EKPO-UEBPO&amp; se compone de las siguientes subposiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-UPTYP&amp; EQ &apos;9&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>La posición &amp;EKPO-UEBPO&amp; se compone de las siguientes subposiciones:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Título de cada posición de variante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_1_VAR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>- &amp;EKPO-EBELP&amp;,,&amp;PEKPOV-SMBEZ1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,  &amp;PEKPOV-SMBEZ2&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,  &amp;PEKPOV-SMBEZ3&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Edición detallada de particularidades de característica de la variante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_LINE_1_VAR_CONF_OUT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>En caso de que las características para creación de variantes deban</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>imprimirse justo después del texto breve, active las líneas siguientes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>IF &amp;ECONF_OUT-RELEV&amp; EQ &apos;2&apos; AND &amp;EKPO-ATTYP&amp; eq &apos;02&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>,,&amp;ECONF_OUT-ATBEZ&amp;,,&amp;ECONF_OUT-ATWTB&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Título sobre condiciones diferentes de variante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_VAR_COND</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,La variante presenta condiciones diferentes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Título sobre condiciones de la posición del artículo genérico</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_SATNR_COND</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;PEKPOV-PRMNG&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,de ello &amp;PEKPOV-PRMNG&amp; &amp;T006A-MSEHT&amp; con las siguientes condiciones</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>----------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Compra configurable</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>----------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Edición detallada de la valoración del material</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INFO_CONF_OUT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>En el caso de las variantes de Retail sólo se imprimen las</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>características para creación de variantes. Si deben imprimirse todas</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>las características, deberá eliminarse la condición IF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ECONF_OUT-RELEV&amp; EQ &apos;2&apos; AND &amp;EKPO-ATTYP&amp; EQ &apos;02&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CO</TDFORMAT>
+     <TDLINE>,,&amp;ECONF_OUT-ATBEZ&amp;,,&amp;ECONF_OUT-ATWTB&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-ATTYP&amp; NE &apos;02&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>CO</TDFORMAT>
+     <TDLINE>,,&amp;ECONF_OUT-ATBEZ&amp;,,&amp;ECONF_OUT-ATWTB&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>-----------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Componentes de subcontratación</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>COMP_HEADER_1</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>Le facilitamos los siguientes componentes:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>COMP_HEADER_2</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>Con referencia a la fecha de entrega &amp;RM06P-PRITX&amp; &amp;RM06P-LFDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>COMP_LINE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>,,&amp;MDPM-MAKTX&amp;,,&amp;RM06P-PRMG1&amp;&amp;MDPM-SHKZG(1)&amp; &amp;T006A-MSEHT(6)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Gestión de números de piezas de fabricante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MPN_LISTHEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MP</TDFORMAT>
+     <TDLINE> Número de pieza de fabricante            Fabricante Ce.fabr.   St.rev.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_MPN_LISTLINE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MP</TDFORMAT>
+     <TDLINE>,,&amp;V_HTNM-MFRPN&amp;,,&amp;V_HTNM-EMNFR&amp;,,&amp;V_HTNM-MFRNR&amp;,,&amp;RAMPL-REVLV&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Documentos SGD enlazados</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_DVS_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>A esta posición pertenecen los siguientes documentos:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_DVS_DOCUMENT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>,,&amp;drad-doknr&amp; &amp;drad-dokvr&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;drat-dktxt&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Accesorios &amp; compra : Elemento ficticio que deben completar los clientes</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>están a disposición las estructuras &apos;wtad_buying_print_addi&apos; y</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>                                    &apos;wtad_buying_print_extra_text&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_ADDI_EXTRA_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Pedido de prestación de servicios</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SRV_CHANGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&lt;B&gt;los siguientes servicios se han modificado:&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SRV</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&lt;B&gt;la posición contiene los siguientes servicios:&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ZIELWERT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>valor previsto por servicios no planificados: &amp;ESUH-COMMITMENT(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>CZIELWERT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>val.prev.servicios no planificados modificado: &amp;ESUH-COMMITMENT(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SERVICES</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;0&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE> ,,&lt;B&gt;&amp;ML_ESLL-EXTGROUP&amp;&lt;/&gt;,,&lt;B&gt;&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;1&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;* ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;2&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;3&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;*** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;4&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;**** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BASIC&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición base</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-ALTERNAT&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición alternativa de posición &amp;ESLL-EXTROW(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BIDDER&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición del licitante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SUPPLE&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición suplementaria</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-FREEQTY&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición con cantidad libre</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-INFORM&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición informativa</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-PAUSCH&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición global</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-EVENTUAL&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición de reserva</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-BSTYP&amp; NE &apos;A&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-EXTGROUP&amp; EQ &apos; &apos; AND  &amp;ML_ESLL-RANG(C)&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; NE &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,&amp;ML_ESLL-SRVPOS&amp;,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,Nº CP estándar.,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM11P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; NE &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,,,&amp;ML_ESLL-SRVPOS&amp;,,,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,Nº CP estándar,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; EQ &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG&amp; EQ &apos;  0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,,,,,,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,Nº CP estándar,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Datos de orden de entrega</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SRV_ABRUF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>,,&amp;&apos;llamado del grupo&apos;RM11P-PLN_GRP(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;RM11P-PLN_GRP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Línea &apos;RM11P-PLN_EXTROW(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;llamado de la línea &apos;RM11P-PLN_EXTROW(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TIME_DATA</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,Datos de tiempos del servicio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-PERNR&amp; NE &apos;00000000&apos; OR &amp;ML_ESLL-PERSEXT&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;&apos;nº pers.&apos;ML_ESLL-PERNR&apos; &apos;&amp;&amp;&apos;nº pers.ext.&apos;ML_ESLL-PERSEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SDATE&amp; NE &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&apos;día laborable &apos;&amp;ML_ESLL-SDATE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BEGTIME&amp; NE &apos;          &apos; OR  &amp;ML_ESLL-ENDTIME&amp; NE &apos;         &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;&apos;de&apos;ML_ESLL-BEGTIME&amp;&apos; &apos;&amp;&apos;hst.&apos;ML_ESLL-ENDTIME&apos; hora&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>FORMEL_KOPF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,Fórmula para servicio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;FORMEL-FORMELBEZ&apos;:&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;FORMEL-FORMEL&amp;  &amp;&apos;en&apos;FORMEL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>FORMEL_BODY</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>FO</TDFORMAT>
+     <TDLINE>,,&amp;VARIABLEN-VARNO&amp;,,=,,&amp;ML_ESLL-FRMVAL1&amp;,,&amp;VARIABLEN-MEINS&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;&apos;(&apos;VARIABLEN-VARBEZ&apos;)&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DEL_SERVICE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ml_esll-extrow&amp;,,&amp;ml_esll-ktext1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>DEL_GLIEDR</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>,,La línea de estructura &lt;B&gt; &amp;ml_esll-ktext1&amp; &lt;/&gt; se ha borrado.</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>CHANGE_SERVICE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>*** &amp;t166t-chtxt&amp; ***</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INV_SCHED_PERIODIC</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Facturación &amp;FPLTDR-PETXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;FPLTDR-BETXT&amp;,,&amp;&apos;de&apos;FPLTDR-BEDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;FPLTDR-ENTXT&amp;,,&amp;&apos;a&apos;FPLTDR-ENDAT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INV_SCHED_PERCENT_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Facturas parciales &amp;FPLTDR-FPROZ&amp; % con &amp;FPLTDR-TMTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INV_SCHED_PERCENT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE> &amp;FPLTDR-FPROZ&amp; % con &amp;FPLTDR-TMTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INV_SCHED_VALUE_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Facturas parciales &amp;FPLTDR-FAKWR&amp; &amp;FPLTDR-WAERS&amp; con &amp;FPLTDR-TMTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ITEM_INV_SCHED_VALUE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE> &amp;FPLTDR-FAKWR&amp; &amp;FPLTDR-WAERS&amp; con &amp;FPLTDR-TMTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>MAINTANCE_SCHED_HEADER</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Mantenimiento de posición de pedido según plan de mantenimiento</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ZYKL_TAB-WARPL&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Descripción de ciclo:&apos;ZYKL_TAB-PAK_TEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;Realizar mantenimiento cada&apos;RMIPM-ZYKL1&amp; &amp;ZYKL_TAB-ZEIEH&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ZYKL_TAB-OFFSET&amp; NE &apos;0,0000000000000000E+00&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,&amp;&apos;primero tras&apos;RMIPM-OFFS1&amp; &amp;ZYKL_TAB-ZEIEH&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>MAINTANCE_SCHED_POS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>*</TDFORMAT>
+     <TDLINE>Posición</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;MPOS_TAB-WPPOS&amp; &amp;MPOS_TAB-PSTXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Pedido de prestación de servicio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SRV_WS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&lt;B&gt;el plan de mantenimiento incluye los siguientes servicios:&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SERVICES_WS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;0&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;1&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;* ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;2&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;3&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;*** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG(C)&amp; EQ &apos;4&apos; AND &amp;ML_ESLL-EXTGROUP&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>MG</TDFORMAT>
+     <TDLINE>&lt;B&gt;**** ,,&amp;ML_ESLL-EXTGROUP&amp;,,&amp;ML_ESLL-KTEXT1&amp;&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BASIC&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición base</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-ALTERNAT&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición alternativa a la posición &amp;ESLL-EXTROW(Z)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BIDDER&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición del licitante</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SUPPLE&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición suplementaria</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-FREEQTY&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición con cantidad libre</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-INFORM&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición informativa</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-PAUSCH&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición global</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-EVENTUAL&amp; EQ &apos;X&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>Posición eventual</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKPO-BSTYP&amp; NE &apos;A&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-EXTGROUP&amp; EQ &apos; &apos; AND  &amp;ML_ESLL-RANG(C)&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; NE &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,&amp;ML_ESLL-SRVPOS&amp;,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,N° CP estándar,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; NE &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,,,&amp;ML_ESLL-SRVPOS&amp;,,,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,N° CP estándar,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SRVPOS&amp; EQ &apos; &apos; AND &amp;ML_ESLL-KTEXT1&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-RANG&amp; EQ &apos;  0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IA</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-EXTROW(Z)&amp;,,,,,,,,&amp;ML_ESLL-KTEXT1&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-STLVPOS(C)&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>SL</TDFORMAT>
+     <TDLINE>,,N° CP estándar,,&amp;ml_esll-ausgb(I)&apos;/&apos;&amp;&amp;ml_esll-lbnum(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE> &amp;ml_esll-stlvpos&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;EKKO-BSTYP&amp; EQ &apos;A&apos; AND &amp;ML_ESLL-TBTWR&amp; EQ &apos;0&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ELSE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ML</TDFORMAT>
+     <TDLINE>&amp;ML_ESLL-MENGE&amp;,,&amp;ML_ESLL-MEINS&amp;,,&amp;ML_ESLL-TBTWR(I)&amp;&amp;RM06P-PRPEI&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;ML_ESLL-BRTWR(I)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TIME_DATA_WS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,Datos de tiempos para servicio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-PERNR&amp; NE &apos;00000000&apos; OR &amp;ML_ESLL-PERSEXT&amp; NE &apos; &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;&apos;N° pers.&apos;ML_ESLL-PERNR&apos;&apos;&amp;&amp;&apos;Nº pers.ext.&apos;ML_ESLL-PERSEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-SDATE&amp; NE &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&apos;Día laborable &apos;&amp;ML_ESLL-SDATE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;ML_ESLL-BEGTIME&amp; NE &apos;          &apos; OR  &amp;ML_ESLL-ENDTIME&amp; NE &apos;          &apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;&apos;de&apos;ML_ESLL-BEGTIME&amp;&apos; &apos;&amp;&apos;a&apos;ML_ESLL-ENDTIME&apos; hora&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>FORMEL_KOPF_WS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,Fórmula del servicio</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;FORMEL-FORMELBEZ&apos;:&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>ZL</TDFORMAT>
+     <TDLINE>,,&amp;FORMEL-FORMEL&amp;  &amp;&apos;en&apos;FORMEL-MEINS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>FORMEL_BODY_WS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>FO</TDFORMAT>
+     <TDLINE>,,&amp;VARIABLEN-VARNO&amp;,,=,,&amp;ML_ESLL-FRMVAL1&amp;,,&amp;VARIABLEN-MEINS&amp;,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDLINE>&amp;&apos;(&apos;VARIABLEN-VARBEZ&apos;)&apos;&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Total global de la posición</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TOTAL_AMOUNT_ITEMS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+     <TDLINE>,,Valor neto posición total &amp;EKKO-WAERS&amp;,,&amp;KOMK-SUPOS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>TOTAL_AMOUNT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>UL</TDFORMAT>
+     <TDLINE>&amp;ULINE(71)&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+     <TDLINE>,,Valor neto total sin IVA &amp;EKKO-WAERS&amp;,,&amp;KOMK-FKWRT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;SUM-EURO-PRICE&amp; NE &apos;                0,00&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>IF &amp;SUM-EURO-PRICE&amp; NE &apos;                0.00&apos;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>,,                          EURO,,&amp;SUM-EURO-PRICE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDIF</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Anexo</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>------------------------------------------------------------------------</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>SUPPL_TEXT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>IN</TDFORMAT>
+     <TDLINE>&amp;TTXIT-TDTEXT&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T166A-TXNAM&amp; OBJECT &amp;T166A-TDOBJECT&amp; ID &amp;T166A-TDID&amp; LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>LAST</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>INCLUDE &amp;T024E-TXGRU&amp; OBJECT TEXT ID ADRS LANGUAGE &amp;EKKO-SPRAS&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>PROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/:</TDFORMAT>
+     <TDLINE>ENDPROTECT</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>MS_SERVICE_HEADER_CONDITIONS</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+     <TDLINE>* Los siguientes servicios tienen estas condiciones en común:</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/E</TDFORMAT>
+     <TDLINE>MS_TOTAL_AMOUNT_ITEM</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>TO</TDFORMAT>
+     <TDLINE>,,          Valor neto de posición total &amp;EKKO-WAERS&amp; &amp;EKPO-NETPR&amp; ,,</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/W</TDFORMAT>
+     <TDLINE>PAGE</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>AS</TDFORMAT>
+     <TDLINE>&lt;S&gt;Pág.&lt;/&gt;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/</TDFORMAT>
+     <TDLINE>&amp;PAGE&amp;</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>Puede editar el número de página como X de Y</TDLINE>
+    </TLINE>
+    <TLINE>
+     <TDFORMAT>/*</TDFORMAT>
+     <TDLINE>&amp;PAGE&amp; / &amp;SAPSCRICT-FORMPAGES&amp;</TDLINE>
+    </TLINE>
+   </TDLINES>
+  </asx:values>
+ </asx:abap>
+</abapGit>

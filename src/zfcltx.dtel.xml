@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZFCLTX</ROLLNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <DOMNAME>TEXT15</DOMNAME>
+    <HEADLEN>10</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>15</SCRLEN2>
+    <SCRLEN3>20</SCRLEN3>
+    <DDTEXT>Texto explicativo de mes</DDTEXT>
+    <REPTEXT>Mes</REPTEXT>
+    <SCRTEXT_S>Mes</SCRTEXT_S>
+    <SCRTEXT_M>Mes</SCRTEXT_M>
+    <SCRTEXT_L>Mes</SCRTEXT_L>
+    <APPLCLASS>SCAL</APPLCLASS>
+    <DTELMASTER>D</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+   <I18N_LANGS>
+    <LANGU>D</LANGU>
+    <LANGU>E</LANGU>
+   </I18N_LANGS>
+   <DD04_TEXTS>
+    <item>
+     <DDLANGUAGE>D</DDLANGUAGE>
+     <DDTEXT>Monatslangtext</DDTEXT>
+     <REPTEXT>Monat</REPTEXT>
+     <SCRTEXT_S>Monat</SCRTEXT_S>
+     <SCRTEXT_M>Monat</SCRTEXT_M>
+     <SCRTEXT_L>Monat</SCRTEXT_L>
+    </item>
+    <item>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DDTEXT>Month long text</DDTEXT>
+     <REPTEXT>Month</REPTEXT>
+     <SCRTEXT_S>Month</SCRTEXT_S>
+     <SCRTEXT_M>Month</SCRTEXT_M>
+     <SCRTEXT_L>Month</SCRTEXT_L>
+    </item>
+   </DD04_TEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

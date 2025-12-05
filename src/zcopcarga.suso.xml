@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SUSO" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <TOBJ>
+    <OBJCT>ZCOPCARGA</OBJCT>
+    <FIEL1>BTCUNAME</FIEL1>
+    <FIEL2>ACTVT</FIEL2>
+    <OCLSS>ZCO</OCLSS>
+   </TOBJ>
+   <TOBJT>
+    <LANGU>S</LANGU>
+    <OBJECT>ZCOPCARGA</OBJECT>
+    <TTEXT>Objeto Autorización Carga Presupuesto.</TTEXT>
+   </TOBJT>
+   <TOBJVORFLG>
+    <OBJCT>ZCOPCARGA</OBJCT>
+   </TOBJVORFLG>
+   <TACTZ>
+    <TACTZ>
+     <BROBJ>ZCOPCARGA</BROBJ>
+     <ACTVT>07</ACTVT>
+    </TACTZ>
+   </TACTZ>
+  </asx:values>
+ </asx:abap>
+</abapGit>

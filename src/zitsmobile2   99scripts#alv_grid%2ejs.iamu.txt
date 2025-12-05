@@ -1,0 +1,224 @@
+/* ------------------------------------------- */
+/* javascript for ITSmobile ALV Grid control   */
+/* --------------------------------------------*/
+
+var alvs = [];
+
+function alv_grid_cell_press(name, id, row, col)
+{
+  raiseEvent(id, "ButtonClickRowCol", "&strRowID="+row+ "&strColID="+col+ "&nRowID=0&nRowIDSub=0&nColID=0");
+}
+
+function alv_grid_cell_click(name, id, row, col)
+{
+  raiseEvent(id, "ClickRowCol", "&strRowID="+row+ "&strColID="+col+ "&nRowID=0&nRowIDSub=0&nColID=0");
+}
+
+function alv_grid_nextpage(id)
+{
+  raiseEvent(id, "PageDown");
+}
+
+function alv_grid_prevpage(id)
+{
+  raiseEvent(id, "PageUp");
+}
+
+/** <addClass>
+  *
+  *   add a class to an elements class attribute
+  *
+  *   params:
+  *     el              - DOM element
+  *     cls             - the class to be added to the class attribute
+  *
+  */
+function addClass(el, cls)
+{
+  if (el == null)
+    return;
+  var className = el.className;
+  if (typeof className == "undefined")
+    return;
+  var classes = className.split(" ");
+  for (var i in classes) {
+    if (classes[i] == cls)
+      return className;
+  }
+  classes.unshift(cls);
+  el.className = classes.join(" ");
+}
+
+/** <removeClass>
+  *
+  *   remove a class from an elements class attribute
+  *
+  *   params:
+  *     el              - DOM element
+  *     cls             - the class to be remove to the class attribute
+  *
+  */
+function removeClass(el, cls)
+{
+  if (el == null)
+    return;
+  var className = el.className;
+  if (typeof className == "undefined")
+    return;
+  var classes = className.split(" ");
+  newClasses = new Array();
+  for (var i in classes) {
+    if (classes[i] != cls)
+      newClasses.push(classes[i]);
+  }
+  el.className = newClasses.join(" ");
+}
+
+function isClassApplied(el, cls)
+{
+  if (el == null)
+    return;
+  var className = el.className;
+  if (typeof className == "undefined")
+    return;
+  var classes = className.split(" ");
+  return (classes.indexOf(cls) > -1);
+}
+
+function alv_grid_highlight_row(id, n)
+{
+  var el = document.getElementById(id + "_" + n);
+  if (el != null)
+    addClass(el, "MobileALVGridRowSelected");
+}
+
+function alv_grid_reset_row(id, n)
+{
+  var el = document.getElementById(id + "_" + n);
+  if (el != null)
+    removeClass(el, "MobileALVGridRowSelected");
+}
+
+function is_row_highlighted(id, n)
+{
+  var el = document.getElementById(id + "_" + n);
+  if (el != null)
+    return isClassApplied(el, "MobileALVGridRowSelected");
+  return false;
+}
+
+function alv_grid_highlight_rows(id, str)
+{
+  var x = str.split(';').filter(function(e){return e!='';});
+  for (i in x) {
+    if (x[i].indexOf('-') > -1) {
+      var start = parseInt(x[i].split('-')[0]);
+      var end   = parseInt(x[i].split('-')[1]);
+      for (var j = start; j <= end; j++)
+        alv_grid_highlight_row(id, j);
+    } else
+      alv_grid_highlight_row(id, x[i]);
+  }
+}
+
+function alv_grid_deselect_all_rows(id)
+{
+  /* no more than 100 visible rows */
+  for (var i = 1; i <= 100; i++)
+    alv_grid_reset_row(id, i);
+  setValue(id + "xSelectedRows", ";");
+}
+
+function remove_from(n, x)
+{
+  var r = [];
+  for (i in x) {
+    if (x[i].indexOf('-') > -1) {
+      /* check the range */
+      var l1 = parseInt(x[i].split('-')[0]);
+      var l2 = parseInt(x[i].split('-')[1]);
+      if (l1 <= n && n <= l2) {
+        if (l1 == n) { r.push((n+1) + '-' + l2); continue; }
+        if (n == l2) { r.push(l1 + '-' + (n-1)); continue; }
+
+        /* break the range in two parts */
+        if (l1 == n-1) r.push(l1);
+        else r.push(l1 + '-' + (n-1));
+
+        if (n+1 == l2) r.push(l2);
+        else r.push((n+1) + '-' + l2);
+      } else // unrelated range, take as is
+        r.push(x[i]);
+    } else if (x[i] != '' && x[i] != n)
+      r.push(x[i]);
+  }
+  return r;
+}
+
+function add_to(n, x) {
+  var r = x.filter(function(e){return e!='';}); x = r;
+  for (i in x) {
+    if (x[i].indexOf('-') > -1) {
+      /* check the range */
+      var l1 = parseInt(x[i].split('-')[0]);
+      var l2 = parseInt(x[i].split('-')[1]);
+      if (l1 <= n && n <= l2)
+        return r; // nothing to do
+      else if (l1 == n+1) {
+        r.splice(i, 1, n + '-' + l2);
+        return r;
+      } else if (l2 == n-1) {
+        r.splice(i, 1, l1 + '-' + n);
+        return r;
+      }
+    } else if (x[i] == n-1) {
+      /* make a new range */
+      r.splice(i, 1, x[i] + '-' + n);
+      return r;
+    } else if (x[i] == n+1) {
+      /* make a new range */
+      r.splice(i, 1, n + '-' + x[i]);
+      return r;
+    } else if (x[i] == n)
+      return r; // nothing to do, elements already there
+  }
+  r.push(n);
+  return r;
+}
+
+function alv_grid_select_row(id, n)
+{
+  switch (alvs[id].selection_mode) {
+  case "singlerows":
+    alv_grid_deselect_all_rows(id);
+    setValue(id + "xSelectedRows", ";" + n + ";");
+    alv_grid_highlight_row(id, n);
+    break;
+  case "multirows":
+    if (is_row_highlighted(id, n)) {
+      // selected => deselect
+      var new_arr = remove_from(n, getValue(id + "xSelectedRows").split(";"));
+      setValue(id + "xSelectedRows", ";" + new_arr.join(';') + ";");
+      alv_grid_reset_row(id, n);
+    } else {
+      // not selected => select
+      var new_arr = add_to(n, getValue(id + "xSelectedRows").split(";"));
+      setValue(id + "xSelectedRows", ";" + new_arr.join(';') + ";");
+      alv_grid_highlight_row(id, n);
+    }
+    break;
+  }
+}
+
+// used for both selecting and deselecting all rows.
+function alv_grid_select_rows(id, start, end)
+{
+  if (getValue(id + "xSelectedRows") == ";" + start + "-" + end + ";") {
+    // all rows are currently selected, deselect
+    alv_grid_deselect_all_rows(id);
+  } else {
+    // not all rows selected, select them
+    setValue(id + "xSelectedRows", ";" + start + "-" + end + ";");
+    alv_grid_highlight_rows(id, ";" + start + "-" + end + ";");
+  }
+}

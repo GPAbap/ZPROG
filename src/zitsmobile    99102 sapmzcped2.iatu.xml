@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_IATU" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <ATTR>
+    <SERVICE>ZITSMOBILE</SERVICE>
+    <THEME>99</THEME>
+    <DYNPRO>102</DYNPRO>
+    <MODULPOOL>SAPMZCPED2</MODULPOOL>
+    <PROGRAMM>SAPMZCPED2</PROGRAMM>
+    <ORIGLANG>S</ORIGLANG>
+    <MODIFLANG>S</MODIFLANG>
+   </ATTR>
+  </asx:values>
+ </asx:abap>
+</abapGit>

@@ -1,0 +1,2042 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xfa generator="AdobeLiveCycleDesigner_V11.0.9.20240701.1.52_SAP" APIVersion="3.6.24183.0"?><xdp:xdp xmlns:xdp="http://ns.adobe.com/xdp/" timeStamp="2025-12-04T19:55:02Z" uuid="2b1d2163-59a1-4e26-8d8e-1a5d6d071b39">
+<template xmlns:xliff="urn:oasis:names:tc:xliff:document:1.1" xmlns="http://www.xfa.org/schema/xfa-template/3.3/">
+   <?formServer defaultPDFRenderFormat acrobat10.0dynamic?>
+   <subform layout="tb" locale="es_MX" name="data" restoreState="auto" x="0.125in">
+      <pageSet>
+         <pageArea id="Page1" name="Página1">
+            <contentArea h="53.975mm" id="contentArea_ID" name="Contenido" w="273.05mm" x="3.175mm" y="3.175mm"/>
+            <medium long="279.4mm" orientation="landscape" short="215.9mm" stock="letter"/>
+            <subform columnWidths="30mm 30mm 30mm" layout="table" name="Tabla1" x="184.15mm" y="6.35mm">
+               <border>
+                  <edge/>
+               </border>
+               <subform layout="row" name="Fila1">
+                  <assist role="TR"/>
+                  <draw h="3.896mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial" weight="bold"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                        <edge/>
+                        <edge/>
+                        <edge presence="hidden"/>
+                        <corner thickness="0.1778mm"/>
+                        <corner thickness="0.1778mm"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <value>
+                        <text xliff:rid="D74A09F1-6A84-48A8-87F2-172DFD08BE56">SEMAFORO</text>
+                     </value>
+                  </draw>
+                  <draw h="3.896mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial" weight="bold"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                        <edge/>
+                        <edge/>
+                        <edge presence="hidden"/>
+                        <corner thickness="0.1778mm"/>
+                        <corner thickness="0.1778mm"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <value>
+                        <text xliff:rid="8E08E69F-6D63-4292-92C8-962E70755413">CRITERIO</text>
+                     </value>
+                  </draw>
+                  <draw h="3.896mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial" weight="bold"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                        <edge presence="hidden"/>
+                        <edge/>
+                        <edge presence="hidden"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                        <corner thickness="0.1778mm"/>
+                        <corner presence="hidden" thickness="0.1778mm"/>
+                     </border>
+                     <value>
+                        <text xliff:rid="DAB7340A-B8FD-4BDE-93C8-71D903EC855D">NIVEL</text>
+                     </value>
+                  </draw>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila1">
+                  <assist role="TR"/>
+                  <draw h="4.064mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                        <fill>
+                           <color value="0,255,0"/>
+                           <pattern type="horizontal">
+                              <color value="0,255,0"/>
+                           </pattern>
+                        </fill>
+                     </border>
+                     <value>
+                        <text xliff:rid="73A6F8FF-3369-4583-81CE-633F96C189D5">SIN RIESGO</text>
+                     </value>
+                     <assist>
+                        <speak priority="toolTip"/>
+                     </assist>
+                  </draw>
+                  <draw h="4.064mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <value>
+                        <text xliff:rid="92154948-A28B-4AA8-BB86-57D329C61A46">&lt;=</text>
+                     </value>
+                  </draw>
+                  <draw h="4.064mm">
+                     <ui>
+                        <textEdit>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <value>
+                        <text xliff:rid="CBE282C0-B6A6-426C-9D1B-782BF36EEE2F">5.00 %</text>
+                     </value>
+                  </draw>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila2">
+                  <assist role="TR"/>
+                  <draw h="4.064mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                        <fill>
+                           <pattern type="horizontal">
+                              <color value="255,255,0"/>
+                           </pattern>
+                           <color value="255,255,0"/>
+                        </fill>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="F6119B64-4271-420D-BC1A-9E34F74C703F">RIESGO MENOR</text>
+                     </value>
+                  </draw>
+                  <draw h="4.064mm" name="Celda2">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="A263B96D-FBAE-49DF-BAA1-17F29F87AE2F">&lt;=</text>
+                     </value>
+                  </draw>
+                  <draw h="4.064mm" name="Celda3">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="E4D9EFD0-952A-403D-BB80-16D5A8D0CBF9">10.00%</text>
+                     </value>
+                  </draw>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila3">
+                  <assist role="TR"/>
+                  <draw h="3.896mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                        <fill>
+                           <pattern type="horizontal">
+                              <color value="255,0,0"/>
+                           </pattern>
+                           <color value="255,0,0"/>
+                        </fill>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="BF4DC8E3-4293-43CD-93A9-D8F8BA7E918C">RIESGO MAYOR</text>
+                     </value>
+                  </draw>
+                  <draw h="3.896mm" name="Celda2">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="023A0DF4-A47E-4E9A-8372-F197A55780E2">&gt;=</text>
+                     </value>
+                  </draw>
+                  <draw h="3.896mm" name="Celda3">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                     <value>
+                        <text xliff:rid="AB377512-E6D2-4F46-9285-6E858709E02F">10.01%</text>
+                     </value>
+                  </draw>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <bind match="none"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <?templateDesigner expand 0?></subform>
+            <subform columnWidths="45.623mm 25.6118mm 25.1676mm 1.198569in 20.305mm" layout="table" name="Tabla3" x="127mm" y="25.4mm">
+               <border>
+                  <edge/>
+               </border>
+               <subform id="FilaEncabezado_ID" layout="row" name="FilaEncabezado">
+                  <assist role="TH"/>
+                  <draw h="5.022mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="C88391DA-86FB-4186-87F4-B6A8ABEB4DDA">ETAPA</text>
+                     </value>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <draw h="5.022mm" name="Celda2">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="B7109D7C-91DD-4143-93E6-6F95190307AA">FECHA</text>
+                     </value>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <draw h="5.022mm" name="Celda3">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="94545F26-54C6-4E99-A033-0D731A8A74F5">DURACIÓN	</text>
+                     </value>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <draw h="5.022mm" name="Celda4">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="822D789D-24D7-4981-9D79-F2A1AEA458A7">TRANSCURRIDOS</text>
+                     </value>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <draw h="5.022mm" name="Celda5">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="A7444D2C-1642-4ACF-82C3-07097999882F">HOLGURA</text>
+                     </value>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" vAlign="middle"/>
+                  </draw>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <occur max="-1"/>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila1">
+                  <assist role="TR"/>
+                  <draw h="4.66mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="8DB7B38E-871B-4988-9E64-00BEB4199CD6">Termino de la Zafra</text>
+                     </value>
+                     <font baselineShift="0pt" size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  </draw>
+                  <field access="readOnly" h="4.66mm" name="TERMINO_ZAFRA" w="62mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TERMINO_ZAFRA">
+                        <picture>date{YYYY-MM-DD}</picture>
+                     </bind>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de tipo DATS</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.66mm" name="DURACION1" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.DURACION1"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.66mm" name="TRANSCURRIDOS1" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TRANSCURRIDOS1"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field minH="4.66mm" name="HOLGURA1" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.HOLGURA1"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila2">
+                  <assist role="TR"/>
+                  <draw h="4.8mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="0B7D6636-4B32-42D7-A103-CC9FA52AD9D8">Inicio Receso (Limpieza):</text>
+                     </value>
+                     <font baselineShift="0pt" size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  </draw>
+                  <field access="readOnly" h="4.8mm" name="LIMPIEZA" w="62mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.LIMPIEZA">
+                        <picture>date{YYYY-MM-DD}</picture>
+                     </bind>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de tipo DATS</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.8mm" name="DURACION2" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.DURACION2"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <calculate override="error"/>
+                  </field>
+                  <field access="readOnly" h="4.8mm" name="TRANSCURRIDOS2" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TRANSCURRIDOS2"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <calculate override="error"/>
+                  </field>
+                  <field access="readOnly" minH="4.8mm" name="HOLGURA2" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.HOLGURA2"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <calculate override="error"/>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila3">
+                  <assist role="TR"/>
+                  <draw h="4.66mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="1B5F1F40-0AED-4F9E-AE2F-19ACCC184667">Inicio Mantto. Mayor:</text>
+                     </value>
+                     <font baselineShift="0pt" size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  </draw>
+                  <field access="readOnly" h="4.66mm" name="INICIO_MTTO_MAY" w="62mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.INICIO_MTTO_MAY">
+                        <picture>date{YYYY-MM-DD}</picture>
+                     </bind>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de tipo DATS</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.66mm" name="DURACION3" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.DURACION3"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.66mm" name="TRANSCURRIDOS3" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TRANSCURRIDOS3"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" minH="4.66mm" name="HOLGURA3" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.HOLGURA3"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila4">
+                  <assist role="TR"/>
+                  <draw h="5.08mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="43299F73-54BF-40CD-AEB8-BD7E0657ABBA">Inicio Pruebas:</text>
+                     </value>
+                     <font baselineShift="0pt" size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  </draw>
+                  <field access="readOnly" h="5.08mm" name="INICIO_PRUEBAS" w="62mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.INICIO_PRUEBAS">
+                        <picture>date{YYYY-MM-DD}</picture>
+                     </bind>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de tipo DATS</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="5.08mm" name="DURACION4" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.DURACION4"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="5.08mm" name="TRANSCURRIDOS4" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TRANSCURRIDOS4"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" minH="5.08mm" name="HOLGURA4" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.HOLGURA4"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <subform layout="row" name="Fila5">
+                  <assist role="TR"/>
+                  <draw h="4.8mm" name="Celda1">
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                     <ui>
+                        <textEdit/>
+                     </ui>
+                     <value>
+                        <text xliff:rid="B798EBAB-F210-4986-BE64-53A450AF49DE">Inicio de la Zafra:</text>
+                     </value>
+                     <font baselineShift="0pt" size="8pt" typeface="Arial"/>
+                     <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                     <para hAlign="center" marginLeft="0pt" marginRight="0pt" spaceAbove="0pt" spaceBelow="0pt" textIndent="0pt" vAlign="middle"/>
+                  </draw>
+                  <field access="readOnly" h="4.8mm" name="INICIO_ZAFRA" w="62mm">
+                     <ui>
+                        <dateTimeEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </dateTimeEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <date/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.INICIO_ZAFRA">
+                        <picture>date{YYYY-MM-DD}</picture>
+                     </bind>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de tipo DATS</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.8mm" name="DURACION5" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.DURACION5"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" h="4.8mm" name="TRANSCURRIDOS5" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.TRANSCURRIDOS5"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <field access="readOnly" minH="4.8mm" name="HOLGURA5" w="64.516mm">
+                     <ui>
+                        <textEdit>
+                           <border presence="hidden"/>
+                           <margin/>
+                        </textEdit>
+                     </ui>
+                     <font size="8pt" typeface="Arial"/>
+                     <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                     <para vAlign="middle"/>
+                     <value>
+                        <text maxChars="10"/>
+                     </value>
+                     <bind match="dataRef" ref="$.P_ST_HEADER.HOLGURA5"/>
+                     <desc>
+                        <text name="Anotación de esquema">Campo de texto, longitud 10</text>
+                     </desc>
+                     <border>
+                        <edge/>
+                        <corner thickness="0.1778mm"/>
+                     </border>
+                  </field>
+                  <border>
+                     <edge presence="hidden"/>
+                  </border>
+                  <bind match="none"/>
+                  <?templateDesigner expand 0?></subform>
+               <bind match="none"/>
+               <?templateDesigner rowpattern first:1, next:1, firstcolor:f0f0f0, nextcolor:ffffff, apply:0?>
+               <overflow leader="FilaEncabezado"/>
+               <?templateDesigner expand 0?></subform>
+            <contentArea h="158.75mm" id="Ta_ID" name="Ta" w="273.05mm" x="3.175mm" y="57.15mm"/>
+            <occur min="1"/>
+            <field access="readOnly" minH="6.35mm" minW="57.15mm" name="SEMANAS_MTTO" x="6.35mm" y="6.35mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <integer/>
+               </value>
+               <caption reserve="40.0152mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="A8E31693-F38B-42B4-A423-5A69E7A48126">Semanas de Mantenimiento:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.SEMANAS_MTTO"/>
+               <desc>
+                  <text name="Anotación de esquema">Entero sin signo de 1 byte</text>
+               </desc>
+               <validate>
+                  <script contentType="application/x-javascript">this.isNull || (this.rawValue &gt;= 0 &amp;&amp; this.rawValue &lt;= 255);
+
+</script>
+               </validate>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" minH="6.35mm" minW="57.15mm" name="SEMANAS_TRANS" x="6.35mm" y="12.7mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <integer/>
+               </value>
+               <caption reserve="40.0733mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="9089F72A-AA3C-490B-AF1E-E09BF3BACD7D">Semanas Transcurridas:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.SEMANAS_TRANS"/>
+               <desc>
+                  <text name="Anotación de esquema">Entero sin signo de 1 byte</text>
+               </desc>
+               <validate>
+                  <script contentType="application/x-javascript">this.isNull || (this.rawValue &gt;= 0 &amp;&amp; this.rawValue &lt;= 255);
+
+</script>
+               </validate>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" minH="6.35mm" minW="57.15mm" name="SEMANAS_HOLGURA" x="6.35mm" y="19.05mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <integer/>
+               </value>
+               <caption reserve="40.0733mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="C96EC601-09F3-4C11-9A1D-9B1F94E7C8CB">Semanas de Holgura:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.SEMANAS_HOLGURA"/>
+               <desc>
+                  <text name="Anotación de esquema">Entero sin signo de 1 byte</text>
+               </desc>
+               <validate>
+                  <script contentType="application/x-javascript">this.isNull || (this.rawValue &gt;= 0 &amp;&amp; this.rawValue &lt;= 255);
+
+</script>
+               </validate>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" h="6.35mm" name="VERSION_PLAN" w="57.15mm" x="6.35mm" y="25.4mm">
+               <ui>
+                  <numericEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </numericEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <integer/>
+               </value>
+               <caption reserve="40.0733mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="31CF069A-1198-4FCF-9C6B-D2892B02F411">Versión del Plan de Mtto:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.VERSION_PLAN"/>
+               <desc>
+                  <text name="Anotación de esquema">Entero sin signo de 1 byte</text>
+               </desc>
+               <validate>
+                  <script contentType="application/x-javascript">this.isNull || (this.rawValue &gt;= 0 &amp;&amp; this.rawValue &lt;= 255);
+
+</script>
+               </validate>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" h="6.35mm" name="FECHA_ELABORA" w="57.15mm" x="6.35mm" y="31.75mm">
+               <ui>
+                  <dateTimeEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </dateTimeEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <date/>
+               </value>
+               <caption reserve="40.22mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="6E89092B-E9D4-4C12-AAD4-942F06B41FE2">Elaboración Plan de Mtto:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.FECHA_ELABORA">
+                  <picture>date{YYYY-MM-DD}</picture>
+               </bind>
+               <desc>
+                  <text name="Anotación de esquema">Campo de tipo DATS</text>
+               </desc>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" h="6.35mm" name="INICIO_SEM" w="57.15mm" x="6.35mm" y="38.1mm">
+               <ui>
+                  <dateTimeEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </dateTimeEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <date/>
+               </value>
+               <caption reserve="40.22mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="D23D1E21-A3A4-4D3E-BBFC-FC6B2F6141DA">Inicio de Semana:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.INICIO_SEM">
+                  <picture>date{YYYY-MM-DD}</picture>
+               </bind>
+               <desc>
+                  <text name="Anotación de esquema">Campo de tipo DATS</text>
+               </desc>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" h="6.35mm" name="CORTE_SEM" w="57.15mm" x="6.35mm" y="44.45mm">
+               <ui>
+                  <dateTimeEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </dateTimeEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <date/>
+               </value>
+               <caption reserve="40.22mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="766A9A89-EFBD-4F83-AF1C-576910801FCD">Corte de Semana:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.CORTE_SEM">
+                  <picture>date{YYYY-MM-DD}</picture>
+               </bind>
+               <desc>
+                  <text name="Anotación de esquema">Campo de tipo DATS</text>
+               </desc>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" h="6.35mm" name="EMISION_REPORTE" w="57.15mm" x="6.35mm" y="50.8mm">
+               <ui>
+                  <dateTimeEdit>
+                     <border>
+                        <edge/>
+                     </border>
+                     <margin/>
+                  </dateTimeEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <value>
+                  <date/>
+               </value>
+               <caption reserve="40.22mm">
+                  <para vAlign="middle"/>
+                  <value>
+                     <text xliff:rid="C79349CB-6485-4D85-A741-B2FE7E73065C">Emisión Reporte:</text>
+                  </value>
+               </caption>
+               <bind match="dataRef" ref="$.P_ST_HEADER.EMISION_REPORTE">
+                  <picture>date{YYYY-MM-DD}</picture>
+               </bind>
+               <desc>
+                  <text name="Anotación de esquema">Campo de tipo DATS</text>
+               </desc>
+               <calculate override="error"/>
+            </field>
+            <field access="readOnly" minH="9mm" minW="82.55mm" name="HEADER" x="69.85mm" y="6.35mm">
+               <ui>
+                  <textEdit/>
+               </ui>
+               <font size="20pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="0.069444in">
+                  <para vAlign="middle"/>
+               </caption>
+               <desc>
+                  <text name="Anotación de esquema">Comentario</text>
+               </desc>
+               <value>
+                  <text maxChars="50"/>
+               </value>
+               <bind match="dataRef" ref="$.P_ST_HEADER.HEADER"/>
+            </field>
+            <field access="readOnly" h="9mm" name="SUBHEADER" w="82.55mm" x="69.85mm" y="15.875mm">
+               <ui>
+                  <textEdit>
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font size="14pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="1.8333mm">
+                  <para vAlign="middle"/>
+               </caption>
+               <value>
+                  <text maxChars="50"/>
+               </value>
+               <bind match="dataRef" ref="$.P_ST_HEADER.SUBHEADER"/>
+               <desc>
+                  <text name="Anotación de esquema">Comentario</text>
+               </desc>
+            </field>
+            <?templateDesigner expand 1?></pageArea>
+         <occur min="1"/>
+         <?templateDesigner expand 1?></pageSet>
+      <subform layout="tb" w="269.875mm">
+         <bind match="none"/>
+         <subform columnWidths="40.922mm 43.511mm 35.882mm 13.842mm 11.756mm 11.522mm 12.233mm 12.44mm 13.644mm 26.344mm 13.649mm 15.079mm 17.4mm" layout="table" name="P_IT_DATOS">
+            <subform id="overflowLeader_ID" layout="row" name="overflowLeader">
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="CC7FA346-2D67-4F1E-AC10-16DBCA0A0E47"/>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="E4A48D3E-207A-48D4-97E4-E38EBEA6BBB0">Centro de Costos</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="842FFC8B-7BEE-425E-95FC-8D032597C28E">Descripción</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="BD09697F-2F84-4846-8E16-AC6A8A568C89">PLAN TOTAL	</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="C46D2B7B-D25A-47BE-80ED-F584A1B416D0">PLAN ACUM</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="9EB074C6-37D3-43C1-B3CA-1866F34A3C97">REAL ACUM	</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="F74CB2C1-81DD-4139-AA74-774FF4C8F640">DIFER. ACUM</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="CAC0304A-A70C-4947-AA54-954D5F918828">% AVANCE</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="391C8A9A-E118-458C-B9B6-321ECDB55DE0">% ATRASO</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="5E83C202-AF40-4218-8E81-3802E408D88A">SEMAFORO</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="FC5C23D9-B062-4653-A96C-861AABD0BC2D">% AVANCE</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="2EAC6BB6-5D2B-4F95-8E32-00EDDB6FA968">% POR EJERCER</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <draw h="7.862mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <value>
+                     <text xliff:rid="1B6E55D5-2000-4898-A6EA-426317794B8F">TRABAJO A REALIZAR</text>
+                  </value>
+                  <font size="8pt" typeface="Arial"/>
+                  <para vAlign="middle"/>
+                  <margin bottomInset="0.5mm" leftInset="0.5mm" rightInset="0.5mm" topInset="0.5mm"/>
+                  <border>
+                     <edge/>
+                  </border>
+                  <keep intact="none"/>
+               </draw>
+               <assist role="TH"/>
+               <occur max="-1"/>
+               <bind match="none"/>
+               <breakAfter/>
+               <breakBefore target="Página1.Ta" targetType="contentArea"/>
+               <?templateDesigner expand 0?>
+               <keep intact="none" previous="contentArea"/>
+            </subform>
+            <subform layout="row" name="DATA">
+               <field h="7.0518mm" name="HEADER" w="64.516mm">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="30"/>
+                  </value>
+                  <bind match="dataRef" ref="$.HEADER"/>
+                  <desc>
+                     <text name="Anotación de esquema">30 caracteres</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="KOSTL" w="64.516mm" x="2.54in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="30"/>
+                  </value>
+                  <bind match="dataRef" ref="$.KOSTL"/>
+                  <desc>
+                     <text name="Anotación de esquema">30 caracteres</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="LTEXT" w="64.516mm" x="5.08in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="40"/>
+                  </value>
+                  <bind match="dataRef" ref="$.LTEXT"/>
+                  <desc>
+                     <text name="Anotación de esquema">Texto explicativo</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="PLAN_TOTAL" w="64.516mm" y="0.354333in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="8"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PLAN_TOTAL"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="PLAN_ACUM" w="64.516mm" x="2.54in" y="0.354333in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PLAN_ACUM"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="REAL_ACUM" w="64.516mm" x="5.08in" y="0.354333in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.REAL_ACUM"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="DIFE_ACUM" w="64.516mm" y="0.708667in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.DIFE_ACUM"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="PORC_AVANCE" w="64.516mm" x="2.54in" y="0.708667in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PORC_AVANCE"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="PORC_ATRASO" w="64.516mm" x="5.08in" y="0.708667in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PORC_ATRASO"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field minH="7.052mm" name="SEMAFORO" w="64.516mm" y="1.063in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="13"/>
+                  </value>
+                  <bind match="dataRef" ref="$.SEMAFORO"/>
+                  <desc>
+                     <text name="Anotación de esquema">Campo de texto, 13 posiciones</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+                  <caption reserve="0.01in"/>
+                  <event activity="exit" name="event__exit">
+                     <script contentType="application/x-javascript">//if (this.resolveNode("$").rawValue == "SINRIESGO") {
+//  if (xfa.host.version &lt; 8) {
+//  	this.resolveNode("$").fontColor = "51, 153, 102";
+//  }
+//  else {
+//  	var CaptionColorBackup = this.resolveNode("$").caption.font.fill.color.value;	
+//  	this.resolveNode("$").font.fill.color.value = "51, 153, 102";
+//  	this.resolveNode("$").caption.font.fill.color.value = CaptionColorBackup;
+//  }
+//} 
+</script>
+                  </event>
+                  <event activity="initialize" name="event__initialize">
+                     <script contentType="application/x-javascript">//+ GENERATED - DO NOT EDIT (ID:B4D1D2D2-71D3-4B7C-82DB-E964F260154A CRC:2649852617)
+//+ Type: Action
+//+ Result1: SetFillColor("$Node1","255, 0, 0")
+//+ Node1: data[0].#subform[0].P_IT_DATOS[0].DATA[0].SEMAFORO[0]
+//+ Condition2: TextField("$Node1","equalto","RIESGO MAYOR")
+//+ Condition1: TextField("$Node1","initialized","")
+//+ ActionName: SEMAFORO.inicializar, SEMAFORO.salir
+if (this.resolveNode("$").rawValue == "RIESGO MAYOR") {
+  this.resolveNode("$").ui.oneOfChild.border.fill.color.value = "255, 0, 0";
+}
+//-
+//+ GENERATED - DO NOT EDIT (ID:1B25516B-ADB8-472E-906A-73A65970E1A2 CRC:1422681412)
+//+ Type: Action
+//+ Result1: SetFillColor("$Node1","255, 255, 0")
+//+ Node1: data[0].#subform[0].P_IT_DATOS[0].DATA[0].SEMAFORO[0]
+//+ Condition2: TextField("$Node1","equalto","RIESGO MENOR")
+//+ Condition1: TextField("$Node1","initialized","")
+//+ ActionName: SEMAFORO.inicializar, SEMAFORO.salir
+if (this.resolveNode("$").rawValue == "RIESGO MENOR") {
+  this.resolveNode("$").ui.oneOfChild.border.fill.color.value = "255, 255, 0";
+}
+//-
+//+ GENERATED - DO NOT EDIT (ID:A1918A3F-F840-4F27-8615-D57C801A907E CRC:1673258859)
+//+ Type: Action
+//+ Result1: SetFillColor("$Node1","0, 255, 0")
+//+ Node1: data[0].#subform[0].P_IT_DATOS[0].DATA[0].SEMAFORO[0]
+//+ Condition2: TextField("$Node1","equalto","SIN RIESGO")
+//+ Condition1: TextField("$Node1","initialized","")
+//+ ActionName: SEMAFORO.inicializar, SEMAFORO.salir
+if (this.resolveNode("$").rawValue == "SIN RIESGO") {
+  this.resolveNode("$").ui.oneOfChild.border.fill.color.value = "0, 255, 0";
+}
+//-
+if (this.resolveNode("$").rawValue == "SINRIESGO") {
+  this.resolveNode("$").ui.oneOfChild.border.fill.color.value = "0, 255, 0";
+}
+</script>
+                  </event>
+               </field>
+               <field h="7.0518mm" name="PORC_AVA_TOTAL" w="64.516mm" x="2.54in" y="1.063in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PORC_AVA_TOTAL"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="PORC_X_EJERCER" w="64.516mm" x="5.08in" y="1.063in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="6"/>
+                  </value>
+                  <bind match="dataRef" ref="$.PORC_X_EJERCER"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <field h="7.0518mm" name="TRABAJO_REALZAR" w="64.516mm" y="1.417333in">
+                  <ui>
+                     <textEdit>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="8pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para vAlign="middle"/>
+                  <value>
+                     <text maxChars="8"/>
+                  </value>
+                  <bind match="dataRef" ref="$.TRABAJO_REALZAR"/>
+                  <desc>
+                     <text name="Anotación de esquema">Tabla R/2</text>
+                  </desc>
+                  <border>
+                     <edge/>
+                  </border>
+               </field>
+               <assist role="TR"/>
+               <occur max="-1"/>
+               <bind match="dataRef" ref="$.DATA[*]"/>
+               <breakBefore/>
+               <breakAfter target="Página1.Ta" targetType="contentArea"/>
+               <?templateDesigner expand 1?></subform>
+            <bind match="dataRef" ref="$.P_IT_DATOS"/>
+            <desc>
+               <text name="Anotación de esquema">Tipo Tabla para Adobe Forms Mtto Mayor</text>
+            </desc>
+            <breakBefore target="Página1" targetType="pageArea"/>
+            <breakAfter target="Página1.Ta" targetType="contentArea"/>
+            <overflow leader="overflowLeader"/>
+            <keep previous="contentArea"/>
+            <?templateDesigner expand 1?></subform>
+         <breakBefore target="Página1" targetType="pageArea"/>
+         <overflow leader="" target="Página1.Ta" trailer=""/>
+         <breakAfter target="Página1.Ta" targetType="contentArea"/>
+         <breakBefore startNew="1" targetType="contentArea">
+            <script contentType="application/x-javascript">
+
+</script>
+         </breakBefore>
+         <?templateDesigner expand 1?></subform>
+      <proto/>
+      <desc>
+         <text name="version">11.0.9.20240702.1.7.0</text>
+      </desc>
+      <proto>
+         <subform name="designer__stylesheet">
+            <field minH="7.052mm" name="semaforo" w="64.516mm">
+               <ui>
+                  <textEdit>
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font size="8pt" typeface="Arial"/>
+               <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+               <para vAlign="middle"/>
+               <caption reserve="0.254mm">
+                  <para hAlign="center"/>
+               </caption>
+               <border>
+                  <edge/>
+               </border>
+               <value>
+                  <text maxChars="13"/>
+               </value>
+            </field>
+         </subform>
+      </proto>
+      <?templateDesigner expand 1?>
+      <?renderCache.subset "Arial" 0 0 ISO-8859-1 4 220 57 00030008000B000C0011001300140018001D001F00200021002400250026002700280029002A002B002C002D002F003000310032003300350036003700380039003C003D004400450046004700480049004A004C004F00500051005200530055005600570058005C005D007900CF %().015:<=>ABCDEFGHIJLMNOPRSTUVYZabcdefgilmnoprstuyzóÓ?>
+      <?renderCache.subset "Arial" 1 0 ISO-8859-1 4 52 13 0024002600280029002C002F0030003100320035003600370039ACEFILMNORSTV?></subform>
+   <?templateDesigner DefaultPreviewDynamic 1?>
+   <?templateDesigner DefaultRunAt client?>
+   <?templateDesigner WidowOrphanControl 0?>
+   <?templateDesigner DefaultCaptionFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultValueFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultLanguage JavaScript?>
+   <?acrobat JavaScript strictScoping?>
+   <?templateDesigner Grid show:1, snap:1, units:1, color:ff8080, origin:(0,0), interval:(79375,79375), objsnap:0, guidesnap:0, pagecentersnap:0?>
+   <?templateDesigner SaveTaggedPDF 1?>
+   <?templateDesigner SavePDFWithEmbeddedFonts 1?>
+   <?templateDesigner FormTargetVersion 33?>
+   <?templateDesigner Rulers horizontal:1, vertical:1, guidelines:1, crosshairs:0?>
+   <?templateDesigner Zoom 90?></template>
+<config xmlns="http://www.xfa.org/schema/xci/3.0/">
+   <agent name="designer">
+      <!--  [0..n]  -->
+      <destination>pdf</destination>
+      <pdf>
+         <!--  [0..n]  -->
+         <fontInfo/>
+      </pdf>
+      <common>
+         <template>
+            <base>https://netdevap.gporres.com.mx:1443/sap/bc/fp/form/layout/</base>
+         </template>
+      </common>
+   </agent>
+   <present>
+      <!--  [0..n]  -->
+      <pdf>
+         <!--  [0..n]  -->
+         <version>1.7</version>
+         <adobeExtensionLevel>8</adobeExtensionLevel>
+      </pdf>
+      <common>
+         <data>
+            <xsl>
+               <uri/>
+            </xsl>
+            <outputXSL>
+               <uri/>
+            </outputXSL>
+         </data>
+      </common>
+      <xdp>
+         <packets>*</packets>
+      </xdp>
+   </present>
+</config>
+<connectionSet xmlns="http://www.xfa.org/schema/xfa-connection-set/2.8/">
+   <xsdConnection dataDescription="data" name="ZFORM_MTTO_MAYOR1">
+      <uri/>
+      <rootElement>data</rootElement>
+   </xsdConnection>
+</connectionSet>
+<xfa:datasets xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/">
+   <xfa:data xfa:dataNode="dataGroup"/>
+   <dd:dataDescription xmlns:dd="http://ns.adobe.com/data-description/" dd:name="data">
+      <data>
+         <P_IT_DATOS dd:minOccur="0">
+            <DATA dd:maxOccur="-1">
+               <HEADER/>
+               <KOSTL/>
+               <LTEXT/>
+               <PLAN_TOTAL/>
+               <PLAN_ACUM/>
+               <REAL_ACUM/>
+               <DIFE_ACUM/>
+               <PORC_AVANCE/>
+               <PORC_ATRASO/>
+               <SEMAFORO/>
+               <PORC_AVA_TOTAL/>
+               <PORC_X_EJERCER/>
+               <TRABAJO_REALZAR/>
+            </DATA>
+         </P_IT_DATOS>
+         <P_ST_HEADER>
+            <HEADER/>
+            <SUBHEADER/>
+            <SEMANAS_MTTO/>
+            <SEMANAS_TRANS/>
+            <SEMANAS_HOLGURA/>
+            <VERSION_PLAN/>
+            <FECHA_ELABORA/>
+            <INICIO_SEM/>
+            <CORTE_SEM/>
+            <EMISION_REPORTE/>
+            <TERMINO_ZAFRA/>
+            <DURACION1/>
+            <TRANSCURRIDOS1/>
+            <HOLGURA1/>
+            <LIMPIEZA/>
+            <DURACION2/>
+            <TRANSCURRIDOS2/>
+            <HOLGURA2/>
+            <INICIO_MTTO_MAY/>
+            <DURACION3/>
+            <TRANSCURRIDOS3/>
+            <HOLGURA3/>
+            <INICIO_PRUEBAS/>
+            <DURACION4/>
+            <TRANSCURRIDOS4/>
+            <HOLGURA4/>
+            <INICIO_ZAFRA/>
+            <DURACION5/>
+            <TRANSCURRIDOS5/>
+            <HOLGURA5/>
+         </P_ST_HEADER>
+      </data>
+   </dd:dataDescription>
+</xfa:datasets>
+<localeSet xmlns="http://www.xfa.org/schema/xfa-locale-set/2.7/">
+   <locale desc="Español (México)" name="es_MX">
+      <calendarSymbols name="gregorian">
+         <monthNames>
+            <month>enero</month>
+            <month>febrero</month>
+            <month>marzo</month>
+            <month>abril</month>
+            <month>mayo</month>
+            <month>junio</month>
+            <month>julio</month>
+            <month>agosto</month>
+            <month>septiembre</month>
+            <month>octubre</month>
+            <month>noviembre</month>
+            <month>diciembre</month>
+         </monthNames>
+         <monthNames abbr="1">
+            <month>ene</month>
+            <month>feb</month>
+            <month>mar</month>
+            <month>abr</month>
+            <month>may</month>
+            <month>jun</month>
+            <month>jul</month>
+            <month>ago</month>
+            <month>sep</month>
+            <month>oct</month>
+            <month>nov</month>
+            <month>dic</month>
+         </monthNames>
+         <dayNames>
+            <day>domingo</day>
+            <day>lunes</day>
+            <day>martes</day>
+            <day>miércoles</day>
+            <day>jueves</day>
+            <day>viernes</day>
+            <day>sábado</day>
+         </dayNames>
+         <dayNames abbr="1">
+            <day>dom</day>
+            <day>lun</day>
+            <day>mar</day>
+            <day>mié</day>
+            <day>jue</day>
+            <day>vie</day>
+            <day>sáb</day>
+         </dayNames>
+         <meridiemNames>
+            <meridiem>AM</meridiem>
+            <meridiem>PM</meridiem>
+         </meridiemNames>
+         <eraNames>
+            <era>a.C.</era>
+            <era>d.C.</era>
+         </eraNames>
+      </calendarSymbols>
+      <datePatterns>
+         <datePattern name="full">EEEE D' de 'MMMM' de 'YYYY</datePattern>
+         <datePattern name="long">D' de 'MMMM' de 'YYYY</datePattern>
+         <datePattern name="med">DD/MM/YYYY</datePattern>
+         <datePattern name="short">DD/MM/YY</datePattern>
+      </datePatterns>
+      <timePatterns>
+         <timePattern name="full">hh:MM:SS A Z</timePattern>
+         <timePattern name="long">hh:MM:SS A Z</timePattern>
+         <timePattern name="med">hh:MM:SS A</timePattern>
+         <timePattern name="short">hh:MM A</timePattern>
+      </timePatterns>
+      <dateTimeSymbols>GuMtkhmsSEDFwWahKzZ</dateTimeSymbols>
+      <numberPatterns>
+         <numberPattern name="numeric">z,zz9.zzz</numberPattern>
+         <numberPattern name="currency">$z,zz9.99|($z,zz9.99)</numberPattern>
+         <numberPattern name="percent">z,zz9%</numberPattern>
+      </numberPatterns>
+      <numberSymbols>
+         <numberSymbol name="decimal">.</numberSymbol>
+         <numberSymbol name="grouping">,</numberSymbol>
+         <numberSymbol name="percent">%</numberSymbol>
+         <numberSymbol name="minus">-</numberSymbol>
+         <numberSymbol name="zero">0</numberSymbol>
+      </numberSymbols>
+      <currencySymbols>
+         <currencySymbol name="symbol">$</currencySymbol>
+         <currencySymbol name="isoname">MXN</currencySymbol>
+         <currencySymbol name="decimal">.</currencySymbol>
+      </currencySymbols>
+      <typefaces>
+         <typeface name="Myriad Pro"/>
+         <typeface name="Minion Pro"/>
+         <typeface name="Courier Std"/>
+         <typeface name="Adobe Pi Std"/>
+         <typeface name="Adobe Hebrew"/>
+         <typeface name="Adobe Arabic"/>
+         <typeface name="Adobe Thai"/>
+         <typeface name="Kozuka Gothic Pro-VI M"/>
+         <typeface name="Kozuka Mincho Pro-VI R"/>
+         <typeface name="Adobe Ming Std L"/>
+         <typeface name="Adobe Song Std L"/>
+         <typeface name="Adobe Myungjo Std M"/>
+         <typeface name="Adobe Devanagari"/>
+      </typefaces>
+   </locale>
+</localeSet>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 9.0-c000 79.cca54b0, 2022/11/26-09:29:55        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:desc="http://ns.adobe.com/xfa/promoted-desc/" rdf:about="">
+         <xmp:MetadataDate>2025-12-04T19:55:02Z</xmp:MetadataDate>
+         <xmp:CreatorTool>Adobe LiveCycle Designer 11.0</xmp:CreatorTool>
+         <pdfuaid:part>1</pdfuaid:part>
+         <pdf:Producer>Adobe LiveCycle Designer 11.0</pdf:Producer>
+         <xmpMM:DocumentID>uuid:2b1d2163-59a1-4e26-8d8e-1a5d6d071b39</xmpMM:DocumentID>
+         <desc:version rdf:parseType="Resource">
+            <rdf:value>11.0.9.20240702.1.7.0</rdf:value>
+            <desc:ref>/template/subform[1]</desc:ref>
+         </desc:version>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta></xdp:xdp>
