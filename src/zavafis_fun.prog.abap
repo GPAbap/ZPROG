@@ -49,17 +49,19 @@ FORM get_datos.
         lv_fefin   TYPE dats,
         lv_femin   TYPE dats,
         lv_femax   TYPE dats,
+        o_fecha type sy-datum,
         lv_sem     TYPE i,
         str_concat TYPE string,
         lv_lines   TYPE i.
 
- data: rg_stat type ranGE OF jest-stat,
-       wrg_stat like liNE OF rg_stat.
+  DATA: rg_stat  TYPE RANGE OF jest-stat,
+        wrg_stat LIKE LINE OF rg_stat.
 
 
 
   DATA: lv_fecha TYPE datum,
-        lv_flag.
+        lv_flag, vl_noday TYPE i,
+        vl_mhdhb TYPE mhdhb.
 
   DATA: vl_opera1 TYPE menge_d, vl_opera2 TYPE menge_d.
 
@@ -73,6 +75,21 @@ FORM get_datos.
       PERFORM get_jerarquia
         USING
           'HXTRA'.
+
+    WHEN 'MDIN'.
+    PERFORM get_jerarquia
+        USING
+          'MDTRA'.
+
+    when 'SCIN'.
+    PERFORM get_jerarquia
+        USING
+          'SCTRA'.
+
+    when 'SPIN'.
+    PERFORM get_jerarquia
+        USING
+          'SPTRA'.
 
   ENDCASE.
 
@@ -123,15 +140,36 @@ FORM get_datos.
   READ TABLE it_datos INTO DATA(wa_min) INDEX 1.
   lv_femin = wa_min-gstrs. "fecha inicial programado primer orden
 
+
+
   "se obtienen las semanas de la consulta de limitadap por planeación en el año
-  SORT it_datos BY gltrs DESCENDING. "se ordena por FIN programado para obtener
+  " SORT it_datos BY gltrs DESCENDING. "se ordena por FIN programado para obtener
+
+  "fin de mtto.
+  SORT it_datos BY gstrs DESCENDING. "se ordena por inicio programado para obtener
   "fin de mtto.
 
-
   READ TABLE it_datos INTO DATA(wa_max) INDEX 1.
-  lv_femax = wa_max-gltrs.
+  lv_femax = wa_max-gstrs.
+  "lv_femax = wa_max-gstrs.
 
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  """se obtiene la diferencia de dias entre el 01.01.YYYY y la fecha inicial de la primer orden
+
+  CALL FUNCTION 'HR_SGPBS_YRS_MTHS_DAYS'
+    EXPORTING
+      beg_da        = lv_feini
+      end_da        = lv_femin
+    IMPORTING
+      no_day        = vl_noday
+    EXCEPTIONS
+      dateint_error = 1
+      OTHERS        = 2.
+
+  lv_femax = lv_femax - vl_noday.
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
   CALL FUNCTION 'GET_NUMBER_WEEKS'
     EXPORTING
       p_fecha  = lv_femax
@@ -207,33 +245,33 @@ FORM get_datos.
   SORT it_aufnr BY aufnr.
   DELETE ADJACENT DUPLICATES FROM it_aufnr COMPARING aufnr.
 
-wrg_stat-low = 'I0009'.
-wrg_stat-sign = 'I'.
-wrg_stat-option = 'EQ'.
-appeND wrg_stat to rg_stat.
+  wrg_stat-low = 'I0009'.
+  wrg_stat-sign = 'I'.
+  wrg_stat-option = 'EQ'.
+  APPEND wrg_stat TO rg_stat.
 
-wrg_stat-low = 'I0010'.
-wrg_stat-sign = 'I'.
-wrg_stat-option = 'EQ'.
-appeND wrg_stat to rg_stat.
+  wrg_stat-low = 'I0010'.
+  wrg_stat-sign = 'I'.
+  wrg_stat-option = 'EQ'.
+  APPEND wrg_stat TO rg_stat.
 
-wrg_stat-low = 'I0002'.
-wrg_stat-sign = 'I'.
-wrg_stat-option = 'EQ'.
-appeND wrg_stat to rg_stat.
+  wrg_stat-low = 'I0002'.
+  wrg_stat-sign = 'I'.
+  wrg_stat-option = 'EQ'.
+  APPEND wrg_stat TO rg_stat.
 
-wrg_stat-low = 'I0001'.
-wrg_stat-sign = 'I'.
-wrg_stat-option = 'EQ'.
-appeND wrg_stat to rg_stat.
+  wrg_stat-low = 'I0001'.
+  wrg_stat-sign = 'I'.
+  wrg_stat-option = 'EQ'.
+  APPEND wrg_stat TO rg_stat.
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-delete it_datos where stat not in rg_stat.
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  DELETE it_datos WHERE stat NOT IN rg_stat.
 
-sort it_datos bY aufnr objnr stat.
+  SORT it_datos BY aufnr objnr stat.
 
-delete adJACENT DUPLICATES FROM it_datos cOMPARING aufnr objnr.
-"""""""""""""""""""""""""""03-12-2025
+  DELETE ADJACENT DUPLICATES FROM it_datos COMPARING aufnr objnr.
+  """""""""""""""""""""""""""03-12-2025
 *  LOOP AT it_aufnr INTO DATA(wa_aufnr).
 *
 *
@@ -380,11 +418,14 @@ delete adJACENT DUPLICATES FROM it_datos cOMPARING aufnr objnr.
         CONDENSE <fs_struct>-porc_atraso NO-GAPS.
       ENDIF.
 
-      IF <fs_struct>-porc_atraso LE 5.
+      DATA vl_por_atraso type p deCIMALS 1.
+      vl_por_atraso = <fs_struct>-porc_atraso.
+
+      IF vl_por_atraso LE 5.
         <fs_struct>-semaforo = 'SIN RIESGO'.
-      ELSEIF <fs_struct>-porc_atraso GT 5 AND <fs_struct>-porc_atraso LE 10.
+      ELSEIF vl_por_atraso GT 5 AND vl_por_atraso LE 10.
         <fs_struct>-semaforo = 'RIESGO MENOR'.
-      ELSEIF <fs_struct>-porc_atraso GT 10.
+      ELSEIF vl_por_atraso GT 10.
         <fs_struct>-semaforo = 'RIESGO MAYOR'.
       ENDIF.
       CONDENSE <fs_struct>-semaforo.
@@ -425,11 +466,12 @@ delete adJACENT DUPLICATES FROM it_datos cOMPARING aufnr objnr.
   <fs_struct>-porc_atraso = 100 - ( ( vl_total_real_a / vl_total_plan_a ) * 100 ).
   CONDENSE <fs_struct>-porc_atraso NO-GAPS.
 
-  IF <fs_struct>-porc_atraso LE 5.
+  vl_por_atraso = <fs_struct>-porc_atraso.
+  IF vl_por_atraso LE 5.
     <fs_struct>-semaforo = 'SIN RIESGO'.
-  ELSEIF <fs_struct>-porc_atraso GT 5 AND <fs_struct>-porc_atraso LE 10.
+  ELSEIF vl_por_atraso GT 5 AND vl_por_atraso LE 10.
     <fs_struct>-semaforo = 'RIESGO MENOR'.
-  ELSEIF <fs_struct>-porc_atraso GT 10.
+  ELSEIF vl_por_atraso GT 10.
     <fs_struct>-semaforo = 'RIESGO MAYOR'.
   ENDIF.
   CONDENSE <fs_struct>-semaforo.

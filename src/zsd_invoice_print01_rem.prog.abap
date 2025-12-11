@@ -49,6 +49,8 @@ DATA: bd_sd_bil                  TYPE REF TO badi_sd_bil_print01.
 DATA it_remision TYPE STANDARD TABLE OF zsd_st_data_cli.
 DATA it_bascula  TYPE STANDARD TABLE OF zbascula_rem_pv.
 
+  DATA: vl_ZM02, vl_ZM03.
+
 DATA gv_bascula TYPE tdbool.
 FIELD-SYMBOLS:
   <gs_vbdkr>      TYPE vbdkr,
@@ -150,6 +152,8 @@ FORM get_data.
         vl_posnr       TYPE posnr,
         vl_tdname      TYPE tdobname.
 
+
+
   DATA: vl_cant10     TYPE char20,vl_cant20 TYPE char20,vl_cant30 TYPE char20,
         vl_pp10       TYPE char20,vl_pp20 TYPE char20,vl_pp30 TYPE char20,
         vl_pigmento10 TYPE char20,vl_pigmento20 TYPE char20,vl_pigmento30 TYPE char20,
@@ -237,6 +241,7 @@ FORM get_data.
          vl_pigmento10, vl_pigmento20, vl_pigmento30, vl_posnr,
          vl_pp10, vl_pp20, vl_pp30,vl_total_aves.
 
+
   REFRESH: it_remision, it_bascula.
 
   """""""""""query"""""""""""""""""""""""
@@ -283,9 +288,35 @@ WHERE v~vbeln = @nast-objky
   INTO  TABLE @it_remision.
 
 
-select single vbeln into @data(wa_vbeln)
-  from vbfa
-where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
+  SELECT SINGLE vbeln INTO @DATA(wa_vbeln)
+    FROM vbfa
+  WHERE vbelv EQ @nast-objky AND vbtyp_n = 'J'.
+
+  SELECT vbeln, kschl
+    INTO TABLE @DATA(it_condPago)
+  FROM vbak AS v
+  INNER JOIN prcd_elements AS p
+    ON p~knumv = v~knumv
+  WHERE v~vbeln = @nast-objky.
+
+  IF it_condPago IS NOT INITIAL.
+    READ TABLE it_condPago INTO DATA(WA_zm02) WITH KEY kschl = 'ZM02'.
+    IF sy-subrc EQ 0.
+      vl_zm02 = abap_true.
+    ELSE.
+      vl_zm02 = abap_false.
+    ENDIF.
+
+    READ TABLE it_condPago INTO DATA(WA_zm03) WITH KEY kschl = 'ZM03'.
+    IF sy-subrc EQ 0.
+      vl_zm03 = abap_true.
+    ELSE.
+      vl_zm03 = abap_false.
+    ENDIF.
+
+  ENDIF.
+
+
 
 
 
@@ -294,9 +325,9 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
     ASSIGN COMPONENT 'TXID' OF STRUCTURE <fs_wa> TO FIELD-SYMBOL(<fs_field>).
     vl_tdname = <fs_field>.
 
-  IF wa_vbeln is not INITIAL.
-    ASSIGN COMPONENT 'ZID_PORTAL' OF STRUCTURE <fs_wa> TO <fs_field>.
-    CONCATENATE <fs_field>  wa_vbeln into <fs_field> SEPARATED BY '/'.
+    IF wa_vbeln IS NOT INITIAL.
+      ASSIGN COMPONENT 'ZID_PORTAL' OF STRUCTURE <fs_wa> TO <fs_field>.
+      CONCATENATE <fs_field>  wa_vbeln INTO <fs_field> SEPARATED BY '/'.
     ENDIF.
 
     ASSIGN COMPONENT 'POSNR' OF STRUCTURE <fs_wa> TO <fs_field>.
@@ -308,6 +339,7 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
     CONCATENATE lv_timestamp+0(2)':' lv_timestamp+2(2) INTO lv_timestamp.
     <fs_field> = lv_timestamp.
 
+    CLEAR vl_valor.
     PERFORM get_textos USING 'TX18' vl_tdname 'VBBP'"caseta
                        CHANGING vl_valor.
     CASE vl_posnr.
@@ -324,6 +356,7 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
     ENDCASE.
     .
 
+    CLEAR vl_valor.
     PERFORM get_textos USING 'TX19' vl_tdname 'VBBP'"ZONA de carga
                        CHANGING vl_valor.
 
@@ -341,7 +374,7 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
       WHEN OTHERS.
     ENDCASE.
 
-
+    CLEAR vl_valor.
     PERFORM get_textos USING 'TX20' vl_tdname 'VBBP'"Peso Prom
                        CHANGING vl_valor.
     CASE vl_posnr.
@@ -357,6 +390,7 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
       WHEN OTHERS.
     ENDCASE.
 
+    CLEAR vl_valor.
     PERFORM get_textos USING 'TX21' vl_tdname 'VBBP'"Peso Prom
                        CHANGING vl_valor.
 
@@ -373,6 +407,7 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
       WHEN OTHERS.
     ENDCASE.
 
+    CLEAR vl_valor.
     PERFORM get_textos USING 'TX22' vl_tdname 'VBBP'"Edad
                        CHANGING vl_valor.
     CASE vl_posnr.
@@ -394,7 +429,11 @@ where vbelv EQ @nast-objky AND vbtyp_n = 'J'.
     ASSIGN COMPONENT 'ZPEDIDO_SAP' OF STRUCTURE <fs_wa> TO <fs_field>.
     vl_tdname = <fs_field>.
 
+    CLEAR vl_valor.
     PERFORM get_textos USING 'ZS06' vl_tdname 'VBBK'
+                       CHANGING vl_valor.
+
+    PERFORM get_textos USING 'ZS12' vl_tdname 'VBBK'
                        CHANGING vl_valor.
 
     ASSIGN COMPONENT 'ZOBSERVACIONES' OF STRUCTURE <fs_wa> TO <fs_field>.
@@ -625,6 +664,8 @@ FORM print_data.
     CALL FUNCTION lv_fm_name
       EXPORTING
         gv_datos_bascula = gv_bascula
+        gv_zm02 = vl_zm02
+        gv_zm03 = vl_zm03
       TABLES
         it_datos_cli     = it_remision
         it_datos_bas     = it_bascula
@@ -670,7 +711,8 @@ FORM get_textos USING td_id TYPE tdid
 
 
   READ TABLE it_lines INTO DATA(wa_lines) INDEX 1.
-  p_valor = wa_lines-tdline.
+  CONCATENATE p_valor wa_lines-tdline INTO p_valor SEPARATED BY space.
+  "p_valor = .
 ENDFORM.
 *&---------------------------------------------------------------------*
 *&      Form  get_item_details
