@@ -817,12 +817,26 @@ FORM get_Data .
 
 *        "Datos de la factura (Documento Provision)
     CLEAR lv_exist_prov.
+
     LOOP AT it_bseg2 INTO DATA(wa_bseg2) WHERE augbl = wa_bkpf-belnr.
+
+      IF wa_bseg2-h_blart EQ 'NM'.
+        " lv_exist_prov = abap_true.
+        EXIT.
+      ENDIF.
+
+
       IF wa_bseg2-augbl EQ wa_bseg2-belnr.
         CONTINUE.
       ENDIF.
+
+      IF wa_bseg2-gjahr IS INITIAL AND wa_bseg2-h_blart = 'KA'.
+        CONTINUE.
+      ENDIF.
+
       APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_body>.
       lv_exist_prov = abap_true.
+
       <fs_body>-rbukrs = wa_bkpf-bukrs.
       <fs_body>-cheque = wa_bkpf-bktxt.
       <fs_body>-gjahr = wa_bkpf-gjahr.
@@ -1040,31 +1054,20 @@ FORM get_Data .
               <fs_body>-tasa = wa_tasa1-kbetr / 10.
             ENDIF.
           ENDIF.
-          "si trae doble impuesto
-*        ELSEIF  wa_bseg2-shkzg  EQ 'H' AND ( wa_bseg2-mwskz EQ 'X3' OR wa_bseg2-mwskz EQ 'X7' ) AND   AND wa_bseg2-buzid NE 'T'. "BASE 16
-*          <fs_body>-base16 = ( <fs_body>-base16 + wa_bseg2-dmbtr ) - wa_bseg2-perutil.
-*          <fs_body>-iva = <fs_body>-iva + wa_bseg2-hwbas.
-*
-*          IF wa_bseg2-ctaperutil EQ '0701001001'. "perdida
-*            <fs_body>-perdida = wa_bseg2-perutil.
-*          ELSEIF wa_bseg2-ctaperutil EQ '0702001001'. "utilidad
-*            <fs_body>-utilidad = wa_bseg2-perutil.
-*          ENDIF.
-*
-*          READ TABLE it_a003 INTO wa_a0031 WITH KEY mwskz = wa_bseg2-mwskz.
-*          IF sy-subrc EQ 0.
-*            READ TABLE it_indiva INTO wa_tasa1 WITH KEY knumh = wa_a0031-knumh.
-*            IF sy-subrc EQ 0.
-*              <fs_body>-tasa = wa_tasa1-kbetr / 10.
-*            ENDIF.
-*          ENDIF.
-*
+
+          """"""""""""""""""""""""""""""
+          IF <fs_body>-iva EQ 0.
+            <fs_body>-base16 = '0.00'.
+          ENDIF. "17/12/2025 1900001273
+
+          <fs_body>-tasa = '0.00'.
+          """"""""""""""""""""""""""""""""""
         ENDIF.
 
         IF wa_bseg2-mwskz IS INITIAL.
           <fs_body>-wsl = wa_bseg2-dmbtr. "No tienen base, por lo regular SA
-          if wa_bseg2-h_blart EQ 'KZ'.
-          <fs_body>-no_considerado = '0.00'. "wa_bseg2-dmbtr. "No considerado.
+          IF wa_bseg2-h_blart EQ 'KZ' OR wa_bseg2-h_blart EQ 'GV'.
+            <fs_body>-no_considerado = '0.00'. "wa_bseg2-dmbtr. "No considerado.
           ELSE.
             <fs_body>-no_considerado = wa_bseg2-dmbtr. "No considerado.
           ENDIF.
@@ -1228,36 +1231,36 @@ FORM get_Data .
           IF wa_bseg2-bschl = '36'.
             <fs_body>-total = <fs_body>-base16 + <fs_body>-base8 +
                             <fs_body>-iva + <fs_body>-utilidad + <fs_body>-perdida.
-         ELSE.
+          ELSE.
             <fs_body>-total = <fs_body>-base16 +  <fs_body>-no_considerado + <fs_body>-base8 +
                            <fs_body>-iva + <fs_body>-utilidad + <fs_body>-perdida.
-          endif.
           ENDIF.
         ENDIF.
+      ENDIF.
 
 
-        CLEAR wa_ZFI_XML_COMPLEM.
-        READ TABLE it_valida INTO DATA(wa_valida) WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr bukrs = wa_bkpf-bukrs gjahr = wa_bseg2-gjahr.
+      CLEAR wa_ZFI_XML_COMPLEM.
+      READ TABLE it_valida INTO DATA(wa_valida) WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr bukrs = wa_bkpf-bukrs gjahr = wa_bseg2-gjahr.
+      IF sy-subrc EQ 0.
+        <fs_body>-tipo_comprobante = wa_valida-tipo_comprobante.
+        <fs_body>-f_pago_xml = wa_valida-formadepago.
+        <fs_body>-metpago_xml = wa_valida-metododepago.
+        <fs_body>-usocfdi = wa_valida-usocfdi.
+        <fs_body>-codigo_sat = wa_valida-claveprodserv.
+        "<fs_body>-uuid_pago = WA_valida-uuid_pago.
+
+
+        READ TABLE it_cuentassat INTO wa_ctasat WITH KEY cvesat = wa_valida-claveprodserv.
         IF sy-subrc EQ 0.
-          <fs_body>-tipo_comprobante = wa_valida-tipo_comprobante.
-          <fs_body>-f_pago_xml = wa_valida-formadepago.
-          <fs_body>-metpago_xml = wa_valida-metododepago.
-          <fs_body>-usocfdi = wa_valida-usocfdi.
-          <fs_body>-codigo_sat = wa_valida-claveprodserv.
-          "<fs_body>-uuid_pago = WA_valida-uuid_pago.
-
-
-          READ TABLE it_cuentassat INTO wa_ctasat WITH KEY cvesat = wa_valida-claveprodserv.
-          IF sy-subrc EQ 0.
-            <fs_body>-concep_sat = wa_ctasat-descsat.
-          ENDIF.
-          <fs_body>-moneda_xml = wa_valida-moneda.
-          <fs_body>-folio_xml = wa_valida-folio.
-          <fs_body>-emisor = wa_valida-emisor.
-          <fs_body>-descripprod = wa_valida-descripcion.
-          <fs_body>-fecpago_xml = wa_valida-fecha.
-          <fs_body>-fectimbxml = wa_valida-fechatimbrado.
+          <fs_body>-concep_sat = wa_ctasat-descsat.
         ENDIF.
+        <fs_body>-moneda_xml = wa_valida-moneda.
+        <fs_body>-folio_xml = wa_valida-folio.
+        <fs_body>-emisor = wa_valida-emisor.
+        <fs_body>-descripprod = wa_valida-descripcion.
+        <fs_body>-fecpago_xml = wa_valida-fecha.
+        <fs_body>-fectimbxml = wa_valida-fechatimbrado.
+      ENDIF.
 
 *      "acceso al XML de doc. proveedor
 *      CLEAR wa_xml.
@@ -1320,229 +1323,217 @@ FORM get_Data .
 *
 *      ENDIF.
 *
-        IF <fs_body>-iva_ret NE 0 OR <fs_body>-isr_ret NE 0 OR <fs_body>-nom_ret NE 0.
-          <fs_body>-total = <fs_body>-total + <fs_body>-iva_ret + <fs_body>-isr_ret + <fs_body>-nom_ret + <fs_body>-utilidad + <fs_body>-perdida.
-        ENDIF.
+      IF <fs_body>-iva_ret NE 0 OR <fs_body>-isr_ret NE 0 OR <fs_body>-nom_ret NE 0.
+        <fs_body>-total = <fs_body>-total + <fs_body>-iva_ret + <fs_body>-isr_ret + <fs_body>-nom_ret + <fs_body>-utilidad + <fs_body>-perdida.
+      ENDIF.
 
 *
-      ENDLOOP.
+    ENDLOOP.
 *
-      """""""""""""""kz sobre los kz"""""""""""""""jhv
-      IF lv_exist_prov EQ abap_false. "si no hubo provisiones
-        LOOP AT it_bseg INTO DATA(wa_bsegkz) WHERE belnr = wa_bkpf-belnr
-                                             AND bukrs = wa_bkpf-bukrs
-                                             AND gjahr = wa_bkpf-gjahr.
-          IF wa_bsegkz-xzahl EQ 'X'.
-            APPEND INITIAL LINE TO it_ingresos ASSIGNING FIELD-SYMBOL(<fs_bodykz>).
-            MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
-            IF wa_bsegkz-mwskz = 'Z0'.
-              <fs_bodykz>-exento = wa_bsegkz-dmbtr.
-            ELSE.
-              <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
-            ENDIF.
-            <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
-            <fs_bodykz>-gkont = wa_bsegkz-hkont.
-            READ TABLE it_skat INTO DATA(wa_hkont) WITH KEY saknr = wa_bsegkz-hkont.
-            IF sy-subrc EQ 0.
-              <fs_bodykz>-sgtxt = wa_hkont-txt50.
-            ENDIF.
+    """""""""""""""kz sobre los kz"""""""""""""""jhv
+    IF lv_exist_prov EQ abap_false. "si no hubo provisiones
+      LOOP AT it_bseg INTO DATA(wa_bsegkz) WHERE belnr = wa_bkpf-belnr
+                                           AND bukrs = wa_bkpf-bukrs
+                                           AND gjahr = wa_bkpf-gjahr.
+        IF wa_bsegkz-xzahl EQ 'X'.
+          APPEND INITIAL LINE TO it_ingresos ASSIGNING FIELD-SYMBOL(<fs_bodykz>).
+          MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
+          IF wa_bsegkz-mwskz = 'Z0'.
+            <fs_bodykz>-exento = wa_bsegkz-dmbtr.
+          ELSE.
+            <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
           ENDIF.
-          "ZD
-          UNASSIGN <fs_bodykz>.
-          IF wa_bsegkz-fdlev EQ 'ZD'.
-            APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_bodykz>.
-            MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
-            IF wa_bsegkz-mwskz = 'Z0'.
-              <fs_bodykz>-exento = wa_bsegkz-dmbtr.
-            ELSE.
-              <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
-            ENDIF.
+
+          IF wa_bseg2-h_blart = 'NM'.
             <fs_bodykz>-total = wa_bsegkz-dmbtr.
-             <fs_bodykz>-tot_egreso = 0.
-            CLEAR wa_hkont.
-            READ TABLE it_skat INTO wa_hkont WITH KEY saknr = wa_bsegkz-hkont.
-            IF sy-subrc EQ 0.
-              <fs_bodykz>-sgtxt = wa_hkont-txt50.
-            ENDIF.
-
-            READ TABLE it_kna1 INTO DATA(wa_kna1) WITH KEY kunnr = wa_bsegkz-kunnr.
-            IF sy-subrc EQ 0.
-              <fs_bodykz>-lifnr = wa_kna1-kunnr.
-              <fs_bodykz>-stcd1 = wa_kna1-stcd1.
-              <fs_bodykz>-name1 = wa_kna1-name1.
-              <fs_head>-lifnr = wa_kna1-kunnr.
-              <fs_head>-stcd1 = wa_kna1-stcd1.
-              <fs_head>-name1 = wa_kna1-name1.
-
-            ENDIF.
-
+            <fs_bodykz>-tot_egreso = 0.
+            <fs_bodykz>-blart = 'NM'.
+          ELSE.
+            <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
           ENDIF.
 
-          "ZK
-          CLEAR wa_ZFI_XML_COMPLEM.
-          "READ TABLE it_zfi_xml_complem INTO wa_ZFI_XML_COMPLEM WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr .
-          READ TABLE it_valida INTO wa_valida WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr bukrs = wa_bkpf-bukrs gjahr = wa_bseg2-gjahr.
+          <fs_bodykz>-gkont = wa_bsegkz-hkont.
+          READ TABLE it_skat INTO DATA(wa_hkont) WITH KEY saknr = wa_bsegkz-hkont.
           IF sy-subrc EQ 0.
-            <fs_body>-tipo_comprobante = wa_valida-tipo_comprobante.
-            <fs_body>-f_pago_xml = wa_valida-formadepago.
-            <fs_body>-metpago_xml = wa_valida-metododepago.
-            <fs_body>-usocfdi = wa_valida-usocfdi.
-            <fs_body>-codigo_sat = wa_valida-claveprodserv.
-            READ TABLE it_cuentassat INTO wa_ctasat WITH KEY cvesat = wa_valida-claveprodserv.
-            IF sy-subrc EQ 0.
-              <fs_body>-concep_sat = wa_ctasat-descsat.
-            ENDIF.
-            <fs_body>-moneda_xml = wa_valida-moneda.
-            <fs_body>-folio_xml = wa_valida-folio.
-            <fs_body>-emisor = wa_valida-emisor.
-            <fs_body>-descripprod = wa_valida-descripcion.
-            <fs_body>-fecpago_xml = wa_valida-fecha.
-            <fs_body>-fectimbxml = wa_valida-fechatimbrado.
+            <fs_bodykz>-sgtxt = wa_hkont-txt50.
+            <fs_bodykz>-banco = wa_hkont-txt50.
           ENDIF.
-          "acceso al XML de doc. proveedor
-          "DATA ruta_xml1  TYPE zaxnare_el034.
-*        READ TABLE it_xml INTO wa_xml WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr .
-*        IF sy-subrc EQ 0.
-*          <fs_body>-tipo_comprobante = WA_xml-tipo_comprobante.
-*          <fs_body>-f_pago_xml = wa_xml-formadepago.
-*          <fs_body>-metpago_xml = wa_xml-metododepago.
-*
-*          "se lee el complemento de datos del xml
-*          " sruta_xml = wa_xml-xml_dir.
-*          "ruta_xml = sruta_xml.
-*
-*          ruta_xml1 = wa_xml-xml_dir.
-*          REFRESH it_xmlsaT.
-*          PERFORM transformar_xml TABLES it_xmlsat[] USING ruta_xml1.
-*          IF it_xmlsat[] IS NOT INITIAL.
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'UsoCFDI'.
-*            <fs_body>-usocfdi = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'ClaveProdServ'.
-*            <fs_body>-codigo_sat = wa_xmlsat-cvalue.
-*
-*            READ TABLE it_cuentassat INTO wa_ctasat WITH KEY cvesat = wa_xmlsat-cvalue.
-*            IF sy-subrc EQ 0.
-*              <fs_body>-concep_sat = wa_ctasat-descsat.
-*            ENDIF.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'Moneda'.
-*            <fs_body>-moneda_xml = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'MetodoPago'.
-*            <fs_body>-metpago_xml = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'Folio'.
-*            <fs_body>-folio_xml = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'Emisor'.
-*            <fs_body>-emisor = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'Descripcion'.
-*            <fs_body>-descripprod = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'Fecha'.
-*            <fs_body>-fecpago_xml = wa_xmlsat-cvalue.
-*
-*            CLEAR wa_xmlsat.
-*            READ TABLE it_xmlsat INTO wa_xmlsat WITH KEY cname = 'FechaTimbrado'.
-*            <fs_body>-fectimbxml = wa_xmlsat-cvalue.
-*
-*          ENDIF.
-*
-*        ENDIF.
-
-        ENDLOOP.
-      ENDIF.
-      """"""""""""""""""""""""""""""""""""""""""""""""""
-
-      LOOP AT it_ingresos ASSIGNING <fs_headgv> WHERE belnr = wa_bkpf-belnr AND gkont = '0701001001' . "PERDIDA CAMBIARIA REALIZADA
-        vl_perdida = vl_perdida + <fs_headgv>-base0.
-      ENDLOOP.
-
-      READ TABLE it_ingresos ASSIGNING <fs_headgv> WITH KEY belnr = wa_bkpf-belnr  gkont = '0701001001'.
-      IF sy-subrc EQ 0.
-        <fs_headgv>-perdida = vl_perdida.
-        <fs_headgv>-total = vl_perdida.
-      ENDIF.
-
-      IF <fs_headgv> IS ASSIGNED.
-        IF <fs_headgv>-perdida NE 0 .
-          APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_headgvadd>.
-          MOVE-CORRESPONDING <fs_headgv> TO <fs_headgvadd>.
-
-          <fs_headgvadd>-lifnr = <fs_head>-lifnr.
-          <fs_headgvadd>-stcd1 = <fs_head>-stcd1.
-          <fs_headgvadd>-name1 = <fs_head>-name1.
-          <fs_headgvadd>-base0 = 0.
-          <fs_headgvadd>-del_alv = space.
         ENDIF.
-      ENDIF.
+        "ZD
+        "UNASSIGN <fs_bodykz>.
+        IF wa_bsegkz-fdlev EQ 'ZD'.
+          APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_bodykz>.
+          MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
+          IF wa_bsegkz-mwskz = 'Z0'.
+            <fs_bodykz>-exento = wa_bsegkz-dmbtr.
+          ELSE.
+            <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
+          ENDIF.
+          <fs_bodykz>-total = wa_bsegkz-dmbtr.
+          <fs_bodykz>-tot_egreso = 0.
+          CLEAR wa_hkont.
+          READ TABLE it_skat INTO wa_hkont WITH KEY saknr = wa_bsegkz-hkont.
+          IF sy-subrc EQ 0.
+            <fs_bodykz>-sgtxt = wa_hkont-txt50.
+          ENDIF.
 
-      LOOP AT it_ingresos ASSIGNING <fs_headgv> WHERE belnr = wa_bkpf-belnr AND gkont = '0702001001'. "UTILIDAD CAMBIARIA REALIZADA
-        vl_utilidad = vl_utilidad + <fs_headgv>-base0.
-      ENDLOOP.
 
-      READ TABLE it_ingresos ASSIGNING <fs_headgv> WITH KEY belnr = wa_bkpf-belnr  gkont = '0702001001'.
-      IF sy-subrc EQ 0.
-        <fs_headgv>-utilidad = vl_utilidad.
-        <fs_headgv>-total = vl_utilidad.
-      ENDIF.
-
-      IF <fs_headgv> IS ASSIGNED.
-        IF <fs_headgv>-utilidad NE 0.
-
-
-          APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_headgvadd>.
-          MOVE-CORRESPONDING <fs_headgv> TO <fs_headgvadd>.
-          <fs_headgvadd>-lifnr = <fs_head>-lifnr.
-          <fs_headgvadd>-stcd1 = <fs_head>-stcd1.
-          <fs_headgvadd>-name1 = <fs_head>-name1.
-          <fs_headgvadd>-base0 = 0.
-          <fs_headgvadd>-del_alv = space.
         ENDIF.
-      ENDIF.
 
-      DELETE it_ingresos WHERE del_alv = 'X'.
-      CLEAR: vl_perdida, vl_utilidad.
-
-      "linea para obtener la siguiente linea de los cheques de nomina
-      IF wa_bkpf-tcode EQ 'FBZ2' AND wa_bkpf-xblnr CP 'CH*'.
-        READ TABLE it_bseg INTO DATA(w_nomina) WITH KEY belnr = wa_bkpf-belnr bschl = '25' fdlev = 'ZK'.
+        READ TABLE it_kna1 INTO DATA(wa_kna1) WITH KEY kunnr = wa_bsegkz-kunnr.
         IF sy-subrc EQ 0.
-          "--------inicio
-          IF <fs_head>-tot_egreso NE w_nomina-dmbtr.
-            APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_body>.
-            <fs_body> = <fs_head>.
-            <fs_body>-total = w_nomina-dmbtr.
-            <fs_body>-base0 = w_nomina-dmbtr.
-            <fs_body>-tot_egreso = 0.
+          <fs_bodykz>-lifnr = wa_kna1-kunnr.
+          <fs_bodykz>-stcd1 = wa_kna1-stcd1.
+          <fs_bodykz>-name1 = wa_kna1-name1.
+          <fs_head>-lifnr = wa_kna1-kunnr.
+          <fs_head>-stcd1 = wa_kna1-stcd1.
+          <fs_head>-name1 = wa_kna1-name1.
+        ELSE.
+          SELECT kunnr, lifnr INTO TABLE @DATA(it_prov)
+            FROM bseg
+          WHERE belnr = @wa_bsegkz-belnr AND bukrs = @wa_bsegkz-bukrs
+            AND gjahr = @wa_bsegkz-gjahr
+            AND fdlev = 'ZK' AND fdgrp = 'Z2'.
+
+          IF it_prov[] IS NOT INITIAL.
+            READ TABLE it_prov INTO DATA(wa_prov) INDEX 1.
+            IF wa_prov-kunnr IS NOT INITIAL.
+              SELECT stcd1, name1
+                FROM kna1
+                INTO (@<fs_bodykz>-stcd1, @<fs_bodykz>-name1)
+               WHERE kunnr = @wa_prov-kunnr.
+              ENDSELECT.
+              <fs_bodykz>-lifnr = wa_prov-kunnr.
+
+              <fs_head>-lifnr = <fs_bodykz>-lifnr.
+              <fs_head>-stcd1 = <fs_bodykz>-stcd1.
+              <fs_head>-name1 = <fs_bodykz>-name1.
+
+
+            ELSE.
+
+              SELECT stcd1, name1
+                FROM lfa1
+                INTO (@<fs_bodykz>-stcd1, @<fs_bodykz>-name1)
+               WHERE lifnr = @wa_prov-lifnr.
+              ENDSELECT.
+              <fs_bodykz>-lifnr = wa_prov-lifnr.
+
+              <fs_head>-lifnr = <fs_bodykz>-lifnr.
+              <fs_head>-stcd1 = <fs_bodykz>-stcd1.
+              <fs_head>-name1 = <fs_bodykz>-name1.
+            ENDIF.
+
           ENDIF.
-          "---------fin
 
         ENDIF.
-      ENDIF.
-      "------------------------------------------------------------------
-      APPEND INITIAL LINE TO it_ingresos.
-      UNASSIGN <fs_head>.
-      UNASSIGN <fs_body>.
-      UNASSIGN <fs_headgv>.
 
 
+        "ZK
+        CLEAR wa_ZFI_XML_COMPLEM.
+        "READ TABLE it_zfi_xml_complem INTO wa_ZFI_XML_COMPLEM WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr .
+        READ TABLE it_valida INTO wa_valida WITH KEY doc_comp = wa_bkpf-belnr doc_contable = wa_bseg2-belnr bukrs = wa_bkpf-bukrs gjahr = wa_bseg2-gjahr.
+        IF sy-subrc EQ 0.
+          <fs_body>-tipo_comprobante = wa_valida-tipo_comprobante.
+          <fs_body>-f_pago_xml = wa_valida-formadepago.
+          <fs_body>-metpago_xml = wa_valida-metododepago.
+          <fs_body>-usocfdi = wa_valida-usocfdi.
+          <fs_body>-codigo_sat = wa_valida-claveprodserv.
+          READ TABLE it_cuentassat INTO wa_ctasat WITH KEY cvesat = wa_valida-claveprodserv.
+          IF sy-subrc EQ 0.
+            <fs_body>-concep_sat = wa_ctasat-descsat.
+          ENDIF.
+          <fs_body>-moneda_xml = wa_valida-moneda.
+          <fs_body>-folio_xml = wa_valida-folio.
+          <fs_body>-emisor = wa_valida-emisor.
+          <fs_body>-descripprod = wa_valida-descripcion.
+          <fs_body>-fecpago_xml = wa_valida-fecha.
+          <fs_body>-fectimbxml = wa_valida-fechatimbrado.
+        ENDIF.
+
+      ENDLOOP.
+    ENDIF.
+    """"""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT it_ingresos ASSIGNING <fs_headgv> WHERE belnr = wa_bkpf-belnr AND gkont = '0701001001' . "PERDIDA CAMBIARIA REALIZADA
+      vl_perdida = vl_perdida + <fs_headgv>-base0.
     ENDLOOP.
 
+    READ TABLE it_ingresos ASSIGNING <fs_headgv> WITH KEY belnr = wa_bkpf-belnr  gkont = '0701001001'.
+    IF sy-subrc EQ 0.
+      <fs_headgv>-perdida = vl_perdida.
+      <fs_headgv>-total = vl_perdida.
+    ENDIF.
 
-    "se eliminan todos los deudores diversion
-    DELETE it_ingresos WHERE gkont = '0107005001'.
-    "DELETE it_ingresos WHERE rbukrs IS INITIAL.
+    IF <fs_headgv> IS ASSIGNED.
+      IF <fs_headgv>-perdida NE 0 .
+        APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_headgvadd>.
+        MOVE-CORRESPONDING <fs_headgv> TO <fs_headgvadd>.
+
+        <fs_headgvadd>-lifnr = <fs_head>-lifnr.
+        <fs_headgvadd>-stcd1 = <fs_head>-stcd1.
+        <fs_headgvadd>-name1 = <fs_head>-name1.
+        <fs_headgvadd>-base0 = 0.
+        <fs_headgvadd>-del_alv = space.
+      ENDIF.
+    ENDIF.
+
+    LOOP AT it_ingresos ASSIGNING <fs_headgv> WHERE belnr = wa_bkpf-belnr AND gkont = '0702001001'. "UTILIDAD CAMBIARIA REALIZADA
+      vl_utilidad = vl_utilidad + <fs_headgv>-base0.
+    ENDLOOP.
+
+    READ TABLE it_ingresos ASSIGNING <fs_headgv> WITH KEY belnr = wa_bkpf-belnr  gkont = '0702001001'.
+    IF sy-subrc EQ 0.
+      <fs_headgv>-utilidad = vl_utilidad.
+      <fs_headgv>-total = vl_utilidad.
+    ENDIF.
+
+    IF <fs_headgv> IS ASSIGNED.
+      IF <fs_headgv>-utilidad NE 0.
+
+
+        APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_headgvadd>.
+        MOVE-CORRESPONDING <fs_headgv> TO <fs_headgvadd>.
+        <fs_headgvadd>-lifnr = <fs_head>-lifnr.
+        <fs_headgvadd>-stcd1 = <fs_head>-stcd1.
+        <fs_headgvadd>-name1 = <fs_head>-name1.
+        <fs_headgvadd>-base0 = 0.
+        <fs_headgvadd>-del_alv = space.
+      ENDIF.
+    ENDIF.
+
+    DELETE it_ingresos WHERE del_alv = 'X'.
+    CLEAR: vl_perdida, vl_utilidad.
+
+    "linea para obtener la siguiente linea de los cheques de nomina
+    IF wa_bkpf-tcode EQ 'FBZ2' AND wa_bkpf-xblnr CP 'CH*'.
+      READ TABLE it_bseg INTO DATA(w_nomina) WITH KEY belnr = wa_bkpf-belnr bschl = '25' fdlev = 'ZK'.
+      IF sy-subrc EQ 0.
+        "--------inicio
+        IF <fs_head>-tot_egreso NE w_nomina-dmbtr.
+          APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_body>.
+          <fs_body> = <fs_head>.
+          <fs_body>-total = w_nomina-dmbtr.
+          <fs_body>-base0 = w_nomina-dmbtr.
+          <fs_body>-tot_egreso = 0.
+        ENDIF.
+        "---------fin
+
+      ENDIF.
+    ENDIF.
+    "------------------------------------------------------------------
+    APPEND INITIAL LINE TO it_ingresos.
+    UNASSIGN <fs_head>.
+    UNASSIGN <fs_body>.
+    UNASSIGN <fs_headgv>.
+
+
+  ENDLOOP.
+
+
+  "se eliminan todos los deudores diversion
+  DELETE it_ingresos WHERE gkont = '0107005001'.
+  "DELETE it_ingresos WHERE rbukrs IS INITIAL.
 
 
 ENDFORM.
@@ -1711,8 +1702,8 @@ FORM create_fieldcat.
         wa_fieldcat-no_out = 'X'.
       WHEN 'T_MON_EXT_XML'.
         wa_fieldcat-no_out = 'X'.
-      WHEN 'F_PAGO_XML'.
-        wa_fieldcat-no_out = 'X'.
+*      WHEN 'F_PAGO_XML'.
+*        wa_fieldcat-no_out = 'X'.
       WHEN 'F_P_DESC_XML'.
         wa_fieldcat-no_out = 'X'.
       WHEN 'I_MON_EXTR_xml'.
@@ -1779,40 +1770,40 @@ FORM get_texto.
     INTO gtext
     FROM t001
     WHERE bukrs = s_bukrs.
-    ENDIF.
+  ENDIF.
 
 
-    IF S_monat-low IS NOT INITIAL.
-      CASE s_monat-low.
-        WHEN '01'.
-          gtext3 = 'ENERO '.
-        WHEN '02'.
-          gtext3 = 'FEBRERO '.
-        WHEN '03'.
-          gtext3 = 'MARZO '.
-        WHEN '04'.
-          gtext3 = 'ABRIL '.
-        WHEN '05'.
-          gtext3 = 'MAYO '.
-        WHEN '06'.
-          gtext3 = 'JUNIO '.
-        WHEN '07'.
-          gtext3 = 'JULIO '.
-        WHEN '08'.
-          gtext3 = 'AGOSTO '.
-        WHEN '09'.
-          gtext3 = 'SEPTIEMBRE '.
-        WHEN '10'.
-          gtext3 = 'OCTUBRE '.
-        WHEN '11'.
-          gtext3 = 'NOVIEMBRE '.
-        WHEN '12'.
-          gtext3 = 'DICIEMBRE '.
-        WHEN OTHERS.
-      ENDCASE.
-      CONCATENATE gtext3 p_gjahr INTO gtext3 SEPARATED BY space      .
+  IF S_monat-low IS NOT INITIAL.
+    CASE s_monat-low.
+      WHEN '01'.
+        gtext3 = 'ENERO '.
+      WHEN '02'.
+        gtext3 = 'FEBRERO '.
+      WHEN '03'.
+        gtext3 = 'MARZO '.
+      WHEN '04'.
+        gtext3 = 'ABRIL '.
+      WHEN '05'.
+        gtext3 = 'MAYO '.
+      WHEN '06'.
+        gtext3 = 'JUNIO '.
+      WHEN '07'.
+        gtext3 = 'JULIO '.
+      WHEN '08'.
+        gtext3 = 'AGOSTO '.
+      WHEN '09'.
+        gtext3 = 'SEPTIEMBRE '.
+      WHEN '10'.
+        gtext3 = 'OCTUBRE '.
+      WHEN '11'.
+        gtext3 = 'NOVIEMBRE '.
+      WHEN '12'.
+        gtext3 = 'DICIEMBRE '.
+      WHEN OTHERS.
+    ENDCASE.
+    CONCATENATE gtext3 p_gjahr INTO gtext3 SEPARATED BY space      .
 *         GTEXT3 = 'JULIO 2017'.
-    ENDIF.
+  ENDIF.
 
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -1846,153 +1837,153 @@ FORM get_inversiones .
   b~sgtxt IS NOT INITIAL
   AND bk~xreversed NE 'X' "si es X son documentos de Anulación
   "AND b~fdlev = 'F2' "solo egresos
-  AND bk~tcode NOT in ( 'KO88', 'KO8G' )
+  AND bk~tcode NOT IN ( 'KO88', 'KO8G' )
   INTO CORRESPONDING FIELDS OF TABLE @it_inversiones.
-    "AND b~hkont NOT IN ('0504025014', '0504025192', '0601001020', '0601001073'). "Inversiones
+  "AND b~hkont NOT IN ('0504025014', '0504025192', '0601001020', '0601001073'). "Inversiones
 
-    DELETE it_inversiones WHERE saknr CP '06*'. " gastos
-    DELETE it_inversiones WHERE saknr CP '0109*'. " Rentas seguros y fianzas
-    DELETE it_inversiones WHERE saknr CP '05*'. " Liquidaciones
-    DELETE it_inversiones WHERE saknr CP '01190*'. "IVA
-    DELETE it_inversiones WHERE saknr CP '01180*'. "IVA
-    DELETE it_inversiones WHERE saknr CP '02090*'. "IVA
-    DELETE it_inversiones WHERE saknr CP '02080*'. "IVA
-    DELETE it_inversiones WHERE saknr CP '01150*'. "Liquidaciones
-    delete it_inversiones where saknr cp '0704023003'.
-    DELETE it_inversiones WHERE fdlev EQ 'ZK'.
-    DELETE it_inversiones WHERE fdlev EQ 'ZD' AND bschl NE '11'.
+  DELETE it_inversiones WHERE saknr CP '06*'. " gastos
+  DELETE it_inversiones WHERE saknr CP '0109*'. " Rentas seguros y fianzas
+  DELETE it_inversiones WHERE saknr CP '05*'. " Liquidaciones
+  DELETE it_inversiones WHERE saknr CP '01190*'. "IVA
+  DELETE it_inversiones WHERE saknr CP '01180*'. "IVA
+  DELETE it_inversiones WHERE saknr CP '02090*'. "IVA
+  DELETE it_inversiones WHERE saknr CP '02080*'. "IVA
+  DELETE it_inversiones WHERE saknr CP '01150*'. "Liquidaciones
+  DELETE it_inversiones WHERE saknr CP '0704023003'.
+  DELETE it_inversiones WHERE fdlev EQ 'ZK'.
+  DELETE it_inversiones WHERE fdlev EQ 'ZD' AND bschl NE '11'.
 *    delete it_inversiones where usnam eq 'JOBSAP'.
 *  delete it_inversiones where usnam eq 'TR01'.
 
 
 
-    IF it_inversiones[] IS NOT INITIAL.
+  IF it_inversiones[] IS NOT INITIAL.
 
 
-      SELECT bukrs, belnr, gjahr, augbl,dmbtr, zuonr, sgtxt, hkont, fdlev
-      INTO TABLE @DATA(it_docBancotmp)
+    SELECT bukrs, belnr, gjahr, augbl,dmbtr, zuonr, sgtxt, hkont, fdlev
+    INTO TABLE @DATA(it_docBancotmp)
+          FROM bseg
+          FOR ALL ENTRIES IN @it_inversiones
+          WHERE belnr = @it_inversiones-belnr
+          AND bukrs = @it_inversiones-rbukrs
+          AND gjahr = @it_inversiones-gjahr
+          AND bschl IN ( '50' )
+          AND augbl NE ''.
+
+
+    IF it_docBancotmp[] IS NOT INITIAL.
+      SELECT bukrs, belnr, gjahr, augbl,dmbtr, zuonr, sgtxt, hkont, fdlev, h_bldat
+      INTO TABLE @DATA(it_docBanco)
             FROM bseg
-            FOR ALL ENTRIES IN @it_inversiones
-            WHERE belnr = @it_inversiones-belnr
-            AND bukrs = @it_inversiones-rbukrs
-            AND gjahr = @it_inversiones-gjahr
-            AND bschl IN ( '50' )
-            AND augbl NE ''.
+            FOR ALL ENTRIES IN @it_docBancotmp
+            WHERE augbl = @it_docBancotmp-augbl
+            AND bukrs = @it_docBancotmp-bukrs
+            AND gjahr = @it_docBancotmp-gjahr
+            AND belnr NE @it_docBancotmp-belnr
+            AND bschl = '40'
+            AND h_blart EQ 'ZA'.
+
+    ENDIF.
+  ENDIF.
 
 
-        IF it_docBancotmp[] IS NOT INITIAL.
-          SELECT bukrs, belnr, gjahr, augbl,dmbtr, zuonr, sgtxt, hkont, fdlev, h_bldat
-          INTO TABLE @DATA(it_docBanco)
-                FROM bseg
-                FOR ALL ENTRIES IN @it_docBancotmp
-                WHERE augbl = @it_docBancotmp-augbl
-                AND bukrs = @it_docBancotmp-bukrs
-                AND gjahr = @it_docBancotmp-gjahr
-                AND belnr NE @it_docBancotmp-belnr
-                AND bschl = '40'
-                AND h_blart EQ 'ZA'.
+  SORT it_inversiones BY cpudt belnr blart.
 
-          ENDIF.
+  DATA: hkont_ingreso TYPE hkont,
+        hkont_egreso  TYPE hkont.
+
+  LOOP AT it_inversiones ASSIGNING <fs_inversiones>.
+
+    <fs_inversiones>-gkont = <fs_inversiones>-saknr.
+    <fs_inversiones>-banco = <fs_inversiones>-banco2.
+
+    READ TABLE it_docBancotmp INTO DATA(wa_za) WITH KEY belnr = <fs_inversiones>-belnr.
+    IF sy-subrc EQ 0.
+      READ TABLE it_docbanco INTO DATA(wa_za2) WITH KEY augbl = wa_za-augbl.
+      IF sy-subrc EQ 0.
+        <fs_inversiones>-doc_banco = wa_za2-belnr.
+        <fs_inversiones>-valut = wa_za2-h_bldat.
+        IF <fs_inversiones>-sgtxt CP '*DOLAR*'.
+          APPEND INITIAL LINE TO it_inversionesadd ASSIGNING <fs_inversionesadd>.
+          MOVE-CORRESPONDING <fs_inversiones> TO <fs_inversionesadd>.
+          <fs_inversionesadd>-doc_banco = wa_za2-belnr.
+          <fs_inversionesadd>-valut = wa_za2-h_bldat.
+          <fs_inversionesadd>-total = wa_za2-dmbtr.
+          <fs_inversionesadd>-base0 = wa_za2-dmbtr.
         ENDIF.
+      ENDIF.
+    ENDIF.
 
+    CASE <fs_inversiones>-bschl.
+      WHEN '50'.
+        IF <fs_inversiones>-fdlev = 'F2'. "bandera egreso transpaso
 
-        SORT it_inversiones BY cpudt belnr blart.
-
-        DATA: hkont_ingreso TYPE hkont,
-              hkont_egreso  TYPE hkont.
-
-        LOOP AT it_inversiones ASSIGNING <fs_inversiones>.
-
-          <fs_inversiones>-gkont = <fs_inversiones>-saknr.
-          <fs_inversiones>-banco = <fs_inversiones>-banco2.
-
-          READ TABLE it_docBancotmp INTO DATA(wa_za) WITH KEY belnr = <fs_inversiones>-belnr.
+          IF <fs_inversiones>-sgtxt CP '*DOLAR*'.
+            <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
+            "<fs_inversiones>-base0 = <fs_inversiones>-base0.
+            "<fs_inversiones>-total = <fs_inversiones>-base0.
+          ELSE.
+            <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
+            <fs_inversiones>-base0 = <fs_inversiones>-base0.
+            <fs_inversiones>-total = <fs_inversiones>-base0.
+          ENDIF.
+          READ TABLE it_inversiones INTO DATA(wa_F) WITH KEY belnr = <fs_inversiones>-belnr fdlev = 'F1' bschl = '40'.
           IF sy-subrc EQ 0.
-            READ TABLE it_docbanco INTO DATA(wa_za2) WITH KEY augbl = wa_za-augbl.
-            IF sy-subrc EQ 0.
-              <fs_inversiones>-doc_banco = wa_za2-belnr.
-              <fs_inversiones>-valut = wa_za2-h_bldat.
-              IF <fs_inversiones>-sgtxt CP '*DOLAR*'.
-                APPEND INITIAL LINE TO it_inversionesadd ASSIGNING <fs_inversionesadd>.
-                MOVE-CORRESPONDING <fs_inversiones> TO <fs_inversionesadd>.
-                <fs_inversionesadd>-doc_banco = wa_za2-belnr.
-                <fs_inversionesadd>-valut = wa_za2-h_bldat.
-                <fs_inversionesadd>-total = wa_za2-dmbtr.
-                <fs_inversionesadd>-base0 = wa_za2-dmbtr.
+            <fs_inversiones>-gkont = wa_F-saknr.
+            <fs_inversiones>-banco = wa_F-banco2.
+            DELETE it_inversiones WHERE ( fdlev EQ 'F1' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '40'. "se elimina la bandera de Ingresos
+          ELSE. "Por bug de cuando crean inversiones manuales, simula ser un traspaso.
+            READ TABLE it_inversiones INTO DATA(wa_Fx) WITH KEY belnr = <fs_inversiones>-belnr fdlev = '' bschl = '40'.
+            IF sy-subrc = 0.
+              <fs_inversiones>-gkont = wa_Fx-saknr.
+              <fs_inversiones>-banco = wa_Fx-banco2.
+              DELETE it_inversiones WHERE ( fdlev EQ 'F1' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '40'. "se elimina la bandera de Egresos.
+            ELSE. "SPEI DEVOLUCION
+              READ TABLE it_inversiones INTO DATA(wa_Fd) WITH KEY belnr = <fs_inversiones>-belnr fdlev = 'ZD' bschl = '11'.
+              IF sy-subrc EQ 0.
+                <fs_inversiones>-gkont = wa_Fd-saknr.
+                <fs_inversiones>-banco = wa_Fd-banco2.
+                DELETE it_inversiones WHERE ( fdlev EQ 'ZD' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '11'. "se elimina la bandera de Egresos.
               ENDIF.
             ENDIF.
           ENDIF.
+        ELSE. "inversion ingreso
+          <fs_inversiones>-base0 = <fs_inversiones>-base0.
+          <fs_inversiones>-total = <fs_inversiones>-base0.
+          <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
 
-          CASE <fs_inversiones>-bschl.
-            WHEN '50'.
-              IF <fs_inversiones>-fdlev = 'F2'. "bandera egreso transpaso
+          READ TABLE it_inversiones INTO DATA(wa_I) WITH KEY belnr = <fs_inversiones>-belnr xauto = 'X' bschl =  '50'. "indicador creado automatico inv. egresos.
 
-                IF <fs_inversiones>-sgtxt CP '*DOLAR*'.
-                  <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
-                  "<fs_inversiones>-base0 = <fs_inversiones>-base0.
-                  "<fs_inversiones>-total = <fs_inversiones>-base0.
-                ELSE.
-                  <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
-                  <fs_inversiones>-base0 = <fs_inversiones>-base0.
-                  <fs_inversiones>-total = <fs_inversiones>-base0.
-                ENDIF.
-                READ TABLE it_inversiones INTO DATA(wa_F) WITH KEY belnr = <fs_inversiones>-belnr fdlev = 'F1' bschl = '40'.
-                IF sy-subrc EQ 0.
-                  <fs_inversiones>-gkont = wa_F-saknr.
-                  <fs_inversiones>-banco = wa_F-banco2.
-                  DELETE it_inversiones WHERE ( fdlev EQ 'F1' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '40'. "se elimina la bandera de Ingresos
-                ELSE. "Por bug de cuando crean inversiones manuales, simula ser un traspaso.
-                  READ TABLE it_inversiones INTO DATA(wa_Fx) WITH KEY belnr = <fs_inversiones>-belnr fdlev = '' bschl = '40'.
-                  IF sy-subrc = 0.
-                    <fs_inversiones>-gkont = wa_Fx-saknr.
-                    <fs_inversiones>-banco = wa_Fx-banco2.
-                    DELETE it_inversiones WHERE ( fdlev EQ 'F1' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '40'. "se elimina la bandera de Egresos.
-                  ELSE. "SPEI DEVOLUCION
-                    READ TABLE it_inversiones INTO DATA(wa_Fd) WITH KEY belnr = <fs_inversiones>-belnr fdlev = 'ZD' bschl = '11'.
-                    IF sy-subrc EQ 0.
-                      <fs_inversiones>-gkont = wa_Fd-saknr.
-                      <fs_inversiones>-banco = wa_Fd-banco2.
-                      DELETE it_inversiones WHERE ( fdlev EQ 'ZD' OR fdlev EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '11'. "se elimina la bandera de Egresos.
-                    ENDIF.
-                  ENDIF.
-                ENDIF.
-              ELSE. "inversion ingreso
-                <fs_inversiones>-base0 = <fs_inversiones>-base0.
-                <fs_inversiones>-total = <fs_inversiones>-base0.
-                <fs_inversiones>-tot_egreso = <fs_inversiones>-base0.
-
-                READ TABLE it_inversiones INTO DATA(wa_I) WITH KEY belnr = <fs_inversiones>-belnr xauto = 'X' bschl =  '50'. "indicador creado automatico inv. egresos.
-
-                IF sy-subrc EQ 0.
-                  <fs_inversiones>-gkont = wa_I-saknr.
-                  <fs_inversiones>-banco = wa_I-banco2.
-                  "DELETE it_inversiones WHERE ( xauto EQ 'X' OR xauto EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '50'. "se elimina la bandera de Egresos.
-                ENDIF.
-              ENDIF.
-            WHEN '40'.
-              <fs_inversiones>-no_considerado =  <fs_inversiones>-base0.
-              <fs_inversiones>-total = <fs_inversiones>-base0.
-              "linea borrada en tiempo de ejecución
-            WHEN OTHERS.
-          ENDCASE.
-
-
-
-
-        ENDLOOP.
-
-
-        DELETE it_inversiones WHERE fdlev EQ 'F1'.
-        APPEND LINES OF it_inversiones    TO it_ordenainvers.
-        APPEND LINES OF it_inversionesadd TO it_ordenainvers.
-        SORT it_ordenainvers BY budat belnr.
-
-        APPEND LINES OF it_ordenainvers TO it_ingresos.
-
-
-        IF it_ingresos[] IS INITIAL.
-          MESSAGE 'No hay Información que mostrar' TYPE 'S' DISPLAY LIKE 'E'.
+          IF sy-subrc EQ 0.
+            <fs_inversiones>-gkont = wa_I-saknr.
+            <fs_inversiones>-banco = wa_I-banco2.
+            "DELETE it_inversiones WHERE ( xauto EQ 'X' OR xauto EQ '' )  AND belnr = <fs_inversiones>-belnr AND bschl = '50'. "se elimina la bandera de Egresos.
+          ENDIF.
         ENDIF.
+      WHEN '40'.
+        <fs_inversiones>-no_considerado =  <fs_inversiones>-base0.
+        <fs_inversiones>-total = <fs_inversiones>-base0.
+        "linea borrada en tiempo de ejecución
+      WHEN OTHERS.
+    ENDCASE.
+
+
+
+
+  ENDLOOP.
+
+
+  DELETE it_inversiones WHERE fdlev EQ 'F1'.
+  APPEND LINES OF it_inversiones    TO it_ordenainvers.
+  APPEND LINES OF it_inversionesadd TO it_ordenainvers.
+  SORT it_ordenainvers BY budat belnr.
+
+  APPEND LINES OF it_ordenainvers TO it_ingresos.
+
+
+  IF it_ingresos[] IS INITIAL.
+    MESSAGE 'No hay Información que mostrar' TYPE 'S' DISPLAY LIKE 'E'.
+  ENDIF.
 
 
 

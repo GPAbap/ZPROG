@@ -49,9 +49,10 @@ DATA: bd_sd_bil                  TYPE REF TO badi_sd_bil_print01.
 DATA it_remision TYPE STANDARD TABLE OF zsd_st_data_cli.
 DATA it_bascula  TYPE STANDARD TABLE OF zbascula_rem_pv.
 
-  DATA: vl_ZM02, vl_ZM03.
+DATA: vl_ZM02, vl_ZM03.
 
-DATA gv_bascula TYPE tdbool.
+DATA: gv_bascula   TYPE tdbool,
+      gv_nomgranja TYPE string.
 FIELD-SYMBOLS:
   <gs_vbdkr>      TYPE vbdkr,
   <gv_returncode> TYPE sysubrc.
@@ -147,21 +148,21 @@ FORM get_data.
         lv_sim_flag TYPE boolean.
 
 
-  DATA: vl_cantidad_mh TYPE char10, vl_valor TYPE string,
+  DATA: vl_cantidad_mh TYPE char10, vl_valor TYPE string,aux_pp type p DECIMALS 2,
         vl_zona        TYPE string,
         vl_posnr       TYPE posnr,
         vl_tdname      TYPE tdobname.
 
 
 
-  DATA: vl_cant10     TYPE char20,vl_cant20 TYPE char20,vl_cant30 TYPE char20,
-        vl_pp10       TYPE char20,vl_pp20 TYPE char20,vl_pp30 TYPE char20,
-        vl_pigmento10 TYPE char20,vl_pigmento20 TYPE char20,vl_pigmento30 TYPE char20,
-        vl_zona10     TYPE char20,vl_zona20 TYPE char20,vl_zona30 TYPE char20,
-        vl_caseta10   TYPE char20,vl_caseta20 TYPE char20,vl_caseta30 TYPE char20,
-        vl_edad10     TYPE char20,vl_edad20 TYPE char20,vl_edad30 TYPE char20,
-        vl_lote10     TYPE charg_d,vl_lote20 TYPE charg_d,vl_lote30 TYPE charg_d,
-        vl_vtext10    TYPE vtext, vl_vtext20 TYPE vtext, vl_vtext30 TYPE vtext,
+  DATA: vl_cant10     TYPE char20,vl_cant20 TYPE char20,vl_cant30 TYPE char20,vl_cant40 TYPE char20,
+        vl_pp10       TYPE char20,vl_pp20 TYPE char20,vl_pp30 TYPE char20,vl_pp40 TYPE char20,
+        vl_pigmento10 TYPE char20,vl_pigmento20 TYPE char20,vl_pigmento30 TYPE char20,vl_pigmento40 TYPE char20,
+        vl_zona10     TYPE char20,vl_zona20 TYPE char20,vl_zona30 TYPE char20,vl_zona40 TYPE char20,
+        vl_caseta10   TYPE char20,vl_caseta20 TYPE char20,vl_caseta30 TYPE char20,vl_caseta40 TYPE char20,
+        vl_edad10     TYPE char20,vl_edad20 TYPE char20,vl_edad30 TYPE char20,vl_edad40 TYPE char20,
+        vl_lote10     TYPE charg_d,vl_lote20 TYPE charg_d,vl_lote30 TYPE charg_d,vl_lote40 TYPE charg_d,
+        vl_vtext10    TYPE vtext, vl_vtext20 TYPE vtext, vl_vtext30 TYPE vtext,vl_vtext40 TYPE vtext,
         lv_timestamp  TYPE char10,
         vl_total_aves TYPE menge_d,
         vl_peso_prom  TYPE zpesop.
@@ -235,11 +236,11 @@ FORM get_data.
 
 *  ENHANCEMENT-POINT EHP3_GET_DATA_01 SPOTS ES_SD_INVOICE_PRINT01.
 
-  CLEAR: gv_bascula, vl_cant10,vl_cant20, vl_cant30, vl_cantidad_mh,
-         vl_caseta10, vl_caseta20, vl_caseta30, vl_edad10, vl_edad20,
-         vl_edad30, vl_lote10, vl_lote20, vl_lote30, vl_peso_prom,
-         vl_pigmento10, vl_pigmento20, vl_pigmento30, vl_posnr,
-         vl_pp10, vl_pp20, vl_pp30,vl_total_aves.
+  CLEAR: gv_bascula, vl_cant10,vl_cant20, vl_cant30,vl_cant40, vl_cantidad_mh,
+         vl_caseta10, vl_caseta20, vl_caseta30,vl_caseta40, vl_edad10, vl_edad20,
+         vl_edad30,vl_edad40, vl_lote10, vl_lote20, vl_lote30,vl_lote40, vl_peso_prom,
+         vl_pigmento10, vl_pigmento20, vl_pigmento30,vl_pigmento40, vl_posnr,
+         vl_pp10, vl_pp20, vl_pp30,vl_pp40,vl_total_aves,gv_nomgranja.
 
 
   REFRESH: it_remision, it_bascula.
@@ -259,15 +260,15 @@ FORM get_data.
   v~vbeln AS zpedido_sap,
   v~vdatu AS zfecha_entr, l~lfuhr AS zhora_entr,
 
-  '000000' AS zcant_mh10,'000000' AS zcant_mh20,'000000' AS zcant_mh30,
-  '000.0' AS zpeso_prom10,'000.0' AS zpeso_prom20,'000.0' AS zpeso_prom30,
-  '25.5' AS zpigmento10,'25.5' AS zpigmento20,'25.5' AS zpigmento30,
+  '000000' AS zcant_mh10,'000000' AS zcant_mh20,'000000' AS zcant_mh30,'000000' AS zcant_mh40,
+  '000.0' AS zpeso_prom10,'000.0' AS zpeso_prom20,'000.0' AS zpeso_prom30,'000.0' AS zpeso_prom40,
+  '25.5' AS zpigmento10,'25.5' AS zpigmento20,'25.5' AS zpigmento30,'25.5' AS zpigmento40,
   l~lfuhr AS zhr_lleg_cte,
-  ' ' AS zzona_carga10,' ' AS zzona_carga20,' ' AS zzona_carga30,
-  p~werks AS zno_granja10,p~werks AS zno_granja20,p~werks AS zno_granja30,
-  'sin dato' AS zcaseta10,'sin dato' AS zcaseta20,'sin dato' AS zcaseta30,
-  p~charg AS zlote10,p~charg AS zlote20,p~charg AS zlote30,
-  'EDAD' AS zedad10,'EDAD' AS zedad20,'EDAD' AS zedad30,
+  ' ' AS zzona_carga10,' ' AS zzona_carga20,' ' AS zzona_carga30,' ' AS zzona_carga40,
+  p~werks AS zno_granja10,p~werks AS zno_granja20,p~werks AS zno_granja30,p~werks AS zno_granja40,
+  'sin dato' AS zcaseta10,'sin dato' AS zcaseta20,'sin dato' AS zcaseta30,'sin dato' AS zcaseta40,
+  p~charg AS zlote10,p~charg AS zlote20,p~charg AS zlote30,p~charg AS zlote40,
+  'EDAD' AS zedad10,'EDAD' AS zedad20,'EDAD' AS zedad30,'EDAD' AS zedad40,
   'zobservaciones del pedido a 50 caracteres' AS zobservaciones,p~kwmeng AS zkwmeng,
   concat( v~vbeln, p~posnr ) AS txid, p~posnr, v~spart,
   CASE WHEN p~spart EQ '92' THEN 'M' ELSE
@@ -322,7 +323,14 @@ WHERE v~vbeln = @nast-objky
 
   LOOP AT it_remision ASSIGNING FIELD-SYMBOL(<fs_wa>).
 
-    ASSIGN COMPONENT 'TXID' OF STRUCTURE <fs_wa> TO FIELD-SYMBOL(<fs_field>).
+    ASSIGN COMPONENT 'ZNO_GRANJA10' OF STRUCTURE <fs_wa> TO FIELD-SYMBOL(<fs_field>).
+
+    SELECT SINGLE name1
+      INTO gv_nomgranja
+      FROM t001w
+    WHERE Werks = <fs_field>.
+
+    ASSIGN COMPONENT 'TXID' OF STRUCTURE <fs_wa> TO <fs_field>.
     vl_tdname = <fs_field>.
 
     IF wa_vbeln IS NOT INITIAL.
@@ -352,6 +360,9 @@ WHERE v~vbeln = @nast-objky
       WHEN '000030'.
         ASSIGN COMPONENT 'ZCASETA30' OF STRUCTURE <fs_wa> TO <fs_field>.
         vl_caseta30 = vl_valor.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZCASETA40' OF STRUCTURE <fs_wa> TO <fs_field>.
+        vl_caseta40 = vl_valor.
       WHEN OTHERS.
     ENDCASE.
     .
@@ -371,12 +382,21 @@ WHERE v~vbeln = @nast-objky
       WHEN '000030'.
         ASSIGN COMPONENT 'ZZONA_CARGA30' OF STRUCTURE <fs_wa> TO <fs_field>.
         vl_zona30 = vl_valor.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZZONA_CARGA40' OF STRUCTURE <fs_wa> TO <fs_field>.
+        vl_zona40 = vl_valor.
       WHEN OTHERS.
     ENDCASE.
 
     CLEAR vl_valor.
     PERFORM get_textos USING 'TX20' vl_tdname 'VBBP'"Peso Prom
                        CHANGING vl_valor.
+    aux_pp = vl_valor.
+    aux_pp = vl_valor / '1000.0'.
+    IF aux_pp GT 0.
+     vl_valor = aux_pp.
+    ENDIF.
+
     CASE vl_posnr.
       WHEN '000010'.
         ASSIGN COMPONENT 'ZPESO_PROM10' OF STRUCTURE <fs_wa> TO <fs_field>.
@@ -387,6 +407,9 @@ WHERE v~vbeln = @nast-objky
       WHEN '000030'.
         vl_pp30 = vl_valor.
         ASSIGN COMPONENT 'ZPESO_PROM30' OF STRUCTURE <fs_wa> TO <fs_field>.
+      WHEN '000040'.
+        vl_pp40 = vl_valor.
+        ASSIGN COMPONENT 'ZPESO_PROM40' OF STRUCTURE <fs_wa> TO <fs_field>.
       WHEN OTHERS.
     ENDCASE.
 
@@ -397,13 +420,16 @@ WHERE v~vbeln = @nast-objky
     CASE vl_posnr.
       WHEN '000010'.
         ASSIGN COMPONENT 'ZPIGMENTO10' OF STRUCTURE <fs_wa> TO <fs_field>.
-        vl_pigmento10 = vl_valor.
+        "vl_pigmento10 = vl_valor.
       WHEN '000020'.
         ASSIGN COMPONENT 'ZPIGMENTO20' OF STRUCTURE <fs_wa> TO <fs_field>.
-        vl_pigmento20 = vl_valor.
+        "vl_pigmento20 = vl_valor.
       WHEN '000030'.
         ASSIGN COMPONENT 'ZPIGMENTO30' OF STRUCTURE <fs_wa> TO <fs_field>.
-        vl_pigmento30 = vl_valor.
+        "vl_pigmento30 = vl_valor.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZPIGMENTO40' OF STRUCTURE <fs_wa> TO <fs_field>.
+        "vl_pigmento40 = vl_valor.
       WHEN OTHERS.
     ENDCASE.
 
@@ -420,6 +446,9 @@ WHERE v~vbeln = @nast-objky
       WHEN '000030'.
         ASSIGN COMPONENT 'ZEDAD30' OF STRUCTURE <fs_wa> TO <fs_field>.
         vl_edad30 = vl_valor.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZEDAD40' OF STRUCTURE <fs_wa> TO <fs_field>.
+        vl_edad40 = vl_valor.
       WHEN OTHERS.
     ENDCASE.
     <fs_field> = vl_valor.
@@ -463,6 +492,13 @@ WHERE v~vbeln = @nast-objky
         SPLIT vl_cant30 AT '.' INTO vl_cant30 vl_cantidad_mh.
         " translate vl_cant30 using '.'.
         CONDENSE vl_cant30 NO-GAPS.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZKWMENG' OF STRUCTURE <fs_wa> TO <fs_field>.
+        vl_cant40 = <fs_field>.
+        vl_total_aves = vl_total_aves + <fs_field>.
+        SPLIT vl_cant40 AT '.' INTO vl_cant40 vl_cantidad_mh.
+        " translate vl_cant30 using '.'.
+        CONDENSE vl_cant40 NO-GAPS.
       WHEN OTHERS.
     ENDCASE.
 
@@ -479,6 +515,10 @@ WHERE v~vbeln = @nast-objky
         ASSIGN COMPONENT 'TXTSPART' OF STRUCTURE <fs_wa> TO <fs_field>.
         CONCATENATE vl_cant30 '-' <fs_field> INTO vl_cant30.
         CONDENSE vl_cant30 NO-GAPS.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'TXTSPART' OF STRUCTURE <fs_wa> TO <fs_field>.
+        CONCATENATE vl_cant40 '-' <fs_field> INTO vl_cant40.
+        CONDENSE vl_cant40 NO-GAPS.
       WHEN OTHERS.
     ENDCASE.
 
@@ -493,6 +533,9 @@ WHERE v~vbeln = @nast-objky
       WHEN '000030'.
         ASSIGN COMPONENT 'ZLOTE30' OF STRUCTURE <fs_wa> TO <fs_field>.
         vl_lote30 = <fs_field>.
+      WHEN '000040'.
+        ASSIGN COMPONENT 'ZLOTE40' OF STRUCTURE <fs_wa> TO <fs_field>.
+        vl_lote40 = <fs_field>.
       WHEN OTHERS.
     ENDCASE.
 
@@ -510,6 +553,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_cant20.
     ASSIGN COMPONENT 'ZCANT_MH30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_cant30.
+    ASSIGN COMPONENT 'ZCANT_MH40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_cant40.
 
     ASSIGN COMPONENT 'ZPESO_PROM10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_pp10.
@@ -517,6 +562,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_pp20.
     ASSIGN COMPONENT 'ZPESO_PROM30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_pp30.
+    ASSIGN COMPONENT 'ZPESO_PROM40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_pp40.
 
     ASSIGN COMPONENT 'ZPIGMENTO10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_pigmento10.
@@ -524,6 +571,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_pigmento20.
     ASSIGN COMPONENT 'ZPIGMENTO30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> =  vl_pigmento30.
+    ASSIGN COMPONENT 'ZPIGMENTO40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> =  vl_pigmento40.
 
     ASSIGN COMPONENT 'ZZONA_CARGA10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_zona10.
@@ -531,6 +580,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_zona20.
     ASSIGN COMPONENT 'ZZONA_CARGA30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_zona30.
+    ASSIGN COMPONENT 'ZZONA_CARGA40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_zona40.
 
     ASSIGN COMPONENT 'ZCASETA10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_caseta10.
@@ -538,6 +589,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_caseta20.
     ASSIGN COMPONENT 'ZCASETA30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_caseta30.
+    ASSIGN COMPONENT 'ZCASETA40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_caseta40.
 
     ASSIGN COMPONENT 'ZLOTE10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_lote10.
@@ -545,6 +598,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_lote20.
     ASSIGN COMPONENT 'ZLOTE30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_lote30.
+    ASSIGN COMPONENT 'ZLOTE40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_lote40.
 
     ASSIGN COMPONENT 'ZEDAD10' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_edad10.
@@ -552,6 +607,8 @@ WHERE v~vbeln = @nast-objky
     <fs_field> = vl_edad20.
     ASSIGN COMPONENT 'ZEDAD30' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_edad30.
+    ASSIGN COMPONENT 'ZEDAD40' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_edad40.
   ENDLOOP.
 
   """"""""buscamos los pesos en bascula
@@ -664,8 +721,9 @@ FORM print_data.
     CALL FUNCTION lv_fm_name
       EXPORTING
         gv_datos_bascula = gv_bascula
-        gv_zm02 = vl_zm02
-        gv_zm03 = vl_zm03
+        gv_zm02          = vl_zm02
+        gv_zm03          = vl_zm03
+        gv_granja        = gv_nomgranja
       TABLES
         it_datos_cli     = it_remision
         it_datos_bas     = it_bascula
