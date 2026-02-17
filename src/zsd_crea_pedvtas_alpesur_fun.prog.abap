@@ -4,6 +4,19 @@
 
 FORM get_parametros.
 
+  "obtener 5 dias de pedidos creados anteriormente a la fecha de ejecución
+  CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
+    EXPORTING
+      date      = sy-datum
+      days      = ndias
+      months    = 00
+      signum    = '-'
+      years     = 00
+    IMPORTING
+      calc_date = lv_datecrea.
+
+
+
   "se obtienen los depositos activos para generar pedidos de venta
   SELECT werks
     FROM zsd_tt_configsan
@@ -28,18 +41,10 @@ FORM get_parametros.
 
   """""
 
+  SELECT mandt, ruta_file, fechafile INTO TABLE @it_files
+    FROM zsd_tt_san_files
+  WHERE fechafile BETWEEN @lv_datecrea AND @sy-datum.
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-  "obtener 5 dias de pedidos creados anteriormente a la fecha de ejecución
-  CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
-    EXPORTING
-      date      = sy-datum
-      days      = ndias
-      months    = 00
-      signum    = '-'
-      years     = 00
-    IMPORTING
-      calc_date = lv_datecrea.
 
 
   "Se llena la tabla it_archivos para extraer los archivos del repositorio
@@ -62,20 +67,25 @@ FORM get_parametros.
       wa_archivos-fecha = lv_fecha.
       APPEND wa_archivos TO it_archivos.
 
+      w_rg_fechas-option = 'EQ'.
+      w_rg_fechas-sign = 'I'.
+      w_rg_fechas-low = lv_fecha.
+      APPEND w_rg_fechas TO rg_fechas.
+      CLEAR w_rg_fechas.
     ENDDO.
 
   ENDLOOP.
-
-
+  SORT rg_fechas BY low.
+  DELETE ADJACENT DUPLICATES FROM rg_fechas COMPARING ALL FIELDS.
 
 ENDFORM.
 
 FORM limpiar_tablas. "por cada revisión de deposito, se limpian todas las tablas para evitar
   "se queden datos de otro deposito
 
-  REFRESH: it_datos_pedidos,
+  REFRESH: "it_datos_pedidos,
            it_plantillaSAN,
-           it_tab, ifile.
+           it_tab.
 
   CLEAR: wa_datos_pedidos,
          wa_plantillasan,
@@ -83,15 +93,18 @@ FORM limpiar_tablas. "por cada revisión de deposito, se limpian todas las tabla
 ENDFORM.
 """""""""""""ruta y nombre de archivo pedidos con ruta
 
-FORM get_files_rutas USING p_werks TYPE werks_d
-                           p_fecha TYPE sy-datum.
+FORM get_files_rutas USING p_werks TYPE werks_d.
 
 
 
   DATA: vl_name(50)      TYPE c, vl_ext(6) TYPE c, vl_fecha TYPE string, vl_fecha_file(6) TYPE c.
   DATA: vl_long TYPE i.
   DATA: vl_directorioc TYPE eps2filnam.
+  DATA vl_ifile TYPE STANDARD TABLE OF eps2fili.
 
+
+  DATA: vl_rg_fechas TYPE RANGE OF string,
+        wa_rg_fechas LIKE LINE OF vl_rg_fechas.
 
   CONCATENATE lv_directorio
               p_werks '/RUTAS/'
@@ -99,11 +112,12 @@ FORM get_files_rutas USING p_werks TYPE werks_d
 
   vl_directorioc = lv_directoriocp.
 
-  CALL FUNCTION 'EPS2_GET_DIRECTORY_LISTING'
+  CALL FUNCTION 'ZEPS2_GET_DIRECTORY_LISTING'
     EXPORTING
       iv_dir_name            = vl_directorioc
     TABLES
-      dir_list               = ifile
+      dir_list               = vl_ifile
+      zrg_fechas             = rg_fechas
     EXCEPTIONS
       invalid_eps_subdir     = 1
       sapgparam_failed       = 2
@@ -114,36 +128,85 @@ FORM get_files_rutas USING p_werks TYPE werks_d
       empty_directory_list   = 7
       OTHERS                 = 8.
 
-  CONCATENATE  p_fecha+6(2) '.'
-               p_fecha+4(2) '.'
-               p_fecha+0(4)
-           INTO vl_fecha.
 
-  SORT ifile BY mtim ASCENDING.
-  LOOP AT ifile ASSIGNING FIELD-SYMBOL(<wa>).
-    <wa>-mtim = <wa>-mtim+0(10).
-    CONDENSE <wa>-mtim NO-GAPS.
-  ENDLOOP.
+*  LOOP AT rg_fechas INTO DATA(w_fechas).
+*
+*    CONCATENATE  w_fechas-low+6(2) '.'
+*                 w_fechas-low+4(2) '.'
+*                 w_fechas-low+0(4)
+*             INTO vl_fecha.
+*
+*    wa_rg_fechas-sign = 'I'.
+*    wa_rg_fechas-option = 'EQ'.
+*    wa_rg_fechas-low = vl_fecha.
+*    APPEND wa_rg_fechas TO vl_rg_fechas.
+*    CLEAR vl_fecha.
+*
+*  ENDLOOP.
 
-  DELETE ifile WHERE mtim NE vl_fecha.
 
+
+*  SORT vl_ifile BY mtim ASCENDING.
+*  LOOP AT vl_ifile ASSIGNING FIELD-SYMBOL(<wa>).
+*    <wa>-mtim = <wa>-mtim+0(10).
+*    CONDENSE <wa>-mtim NO-GAPS.
+*  ENDLOOP.
+
+*  DELETE vl_ifile WHERE mtim NOT IN vl_rg_fechas.
+  APPEND LINES OF vl_ifile TO ifile.
 ENDFORM.
 
 """""""""""""ruta y nombre de archivo pedidos normales
 
-FORM get_file USING p_directorio TYPE char80
-                    p_werks TYPE werks_d
-                    p_fecha TYPE sy-datum
-              CHANGING p_file_n.
+FORM get_file USING "p_directorio TYPE char80
+                    p_werks TYPE werks_d.
+*                    p_fecha TYPE sy-datum
+*              CHANGING p_file_n.
 
-  CONCATENATE p_directorio
+*  CONCATENATE p_directorio
+*              p_werks '/'
+*              p_werks '_'
+*              p_fecha+6(2)
+*              p_fecha+4(2)
+*              p_fecha+2(2)
+*              '.csv'
+*    INTO p_file_n.
+
+
+
+  DATA: vl_name(50)      TYPE c, vl_ext(6) TYPE c, vl_fecha TYPE string, vl_fecha_file(6) TYPE c.
+  DATA: vl_long TYPE i.
+  DATA: vl_directorioc TYPE eps2filnam.
+  DATA vl_ifile TYPE STANDARD TABLE OF eps2fili.
+
+
+  DATA: vl_rg_fechas TYPE RANGE OF string,
+        wa_rg_fechas LIKE LINE OF vl_rg_fechas.
+
+  CONCATENATE lv_directorio
               p_werks '/'
-              p_werks '_'
-              p_fecha+6(2)
-              p_fecha+4(2)
-              p_fecha+2(2)
-              '.csv'
-    INTO p_file_n.
+  INTO lv_directoriocp.
+
+  vl_directorioc = lv_directoriocp.
+
+  CALL FUNCTION 'ZEPS2_GET_DIRECTORY_LISTING'
+    EXPORTING
+      iv_dir_name            = vl_directorioc
+    TABLES
+      dir_list               = vl_ifile
+      zrg_fechas             = rg_fechas
+    EXCEPTIONS
+      invalid_eps_subdir     = 1
+      sapgparam_failed       = 2
+      build_directory_failed = 3
+      no_authorization       = 4
+      read_directory_failed  = 5
+      too_many_read_errors   = 6
+      empty_directory_list   = 7
+      OTHERS                 = 8.
+
+
+  APPEND LINES OF vl_ifile TO ifile.
 
 
 ENDFORM.
@@ -180,6 +243,7 @@ ENDFORM.
 
 FORM fill_it_pedidos USING p_werks TYPE werks_d
                            p_fecha TYPE sy-datum
+                           p_file_n TYPE localfile
                            p_bsark TYPE bsark.
 
   DATA lv_matnr TYPE matnr18.
@@ -447,10 +511,11 @@ FORM fill_it_pedidos USING p_werks TYPE werks_d
 *    IF wa_datos_pedidos-bsark EQ 'VTRU'.
 *      APPEND wa_datos_pedidos TO it_datos_pedidos_vtru.
 *    ELSE.
+    wa_datos_pedidos-p_file = p_file_n.
     APPEND wa_datos_pedidos TO it_datos_pedidos.
 *    ENDIF.
     cpedido = 0.
-
+    wa_plantillasan-p_file = p_file_n.
     APPEND wa_plantillasan TO it_plantillasan.
 
 
@@ -482,82 +547,215 @@ FORM fill_it_pedidos USING p_werks TYPE werks_d
 ENDFORM.
 
 FORM recorre_centros.
+  DATA vl_strmsg TYPE string.
+  DATA vl_werks TYPE werks_d.
 
+  GET TIME.
 
-  LOOP AT it_archivos INTO DATA(wa_archivos).
-    PERFORM limpiar_tablas.
+  initial_time = sy-uzeit.
 
-    """"Pedidos con Ruta
+  DATA(it_centros) = it_archivos[].
+
+  SORT it_centros BY werks.
+
+  DELETE ADJACENT DUPLICATES FROM it_centros COMPARING werks.
+
+  LOOP AT it_centros INTO DATA(wa_werks).
+
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     PERFORM get_files_rutas
       USING
-        wa_archivos-werks
-        wa_archivos-fecha.
+        wa_werks-werks.
+
+
+
+  ENDLOOP.
+
+
+  PERFORM limpiar_tablas.
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  LOOP AT it_centros INTO wa_werks.
 
     CLEAR lv_directoriocp.
     CONCATENATE lv_directorio
-                wa_archivos-werks '/RUTAS/'
+                wa_werks-werks '/RUTAS/'
    INTO lv_directoriocp.
+
+    LOOP AT ifile INTO wa_ifile WHERE name+4(4) EQ wa_werks-werks .
+      CLEAR: p_file_n.
+      p_file_n = wa_ifile-name.
+      "vl_werks = wa_ifile-name+5(4).
+      CONCATENATE lv_directoriocp p_file_n INTO p_file_n.
+
+      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
+      IF  sy-subrc NE 0.
+
+        REFRESH it_tab.
+        PERFORM set_data
+               USING p_file_n.
+
+
+
+        CLEAR wa_files.
+        wa_files-ruta_file = p_file_n.
+        CALL FUNCTION 'CONVERT_DATE_TO_INTERNAL'
+          EXPORTING
+            date_external            = wa_ifile-mtim
+*           accept_initial_date      =
+          IMPORTING
+            date_internal            = wa_files-fechafile
+          EXCEPTIONS
+            date_external_is_invalid = 1
+            OTHERS                   = 2.
+        TRY.
+            MODIFY zsd_tt_san_files FROM wa_files.
+            PERFORM fill_it_pedidos USING wa_werks-werks
+                                          wa_werks-fecha
+                                          p_file_n
+                                          'VTRU'.
+          CATCH cx_sy_sql_error .
+            MESSAGE 'No se grabo el registro' TYPE 'S'.
+        ENDTRY.
+
+
+      ENDIF.
+
+    ENDLOOP.
+
+  ENDLOOP.
+
+  GET TIME.
+  current_time = sy-uzeit.
+  DATA(vl_calc) = ( current_time - initial_time ) / 100.
+
+  IF vl_calc GE '4.5'.
+    MESSAGE e001(00) WITH 'Prog. interrumpido. Evita encolamiento. (VTRU)'.
+    EXIT.
+  ENDIF.
+
+  BREAK jhernandev.
+  """"""""pedidos normales
+  REFRESH ifile.
+  LOOP AT it_centros INTO wa_werks.
+
     """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    LOOP AT ifile INTO wa_ifile.
+    PERFORM get_file "get_files_rutas
+      USING
+        wa_werks-werks.
+
+  ENDLOOP.
+
+
+  "LOOP AT it_archivos INTO wa_archivos.
+
+  LOOP AT it_centros INTO wa_werks.
+
+    REFRESH it_tab.
+
+    CLEAR lv_directoriocp.
+    CONCATENATE lv_directorio
+                wa_werks-werks '/'
+   INTO lv_directoriocp.
+
+
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+*    PERFORM get_file
+*      USING
+*        lv_directorio
+*        wa_archivos-werks
+*        wa_archivos-fecha
+*      CHANGING
+*        p_file_n.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    LOOP AT ifile INTO wa_ifile WHERE name+0(4) EQ wa_werks-werks.
       CLEAR: p_file_n.
       p_file_n = wa_ifile-name.
 
       CONCATENATE lv_directoriocp p_file_n INTO p_file_n.
 
-      PERFORM set_data
-             USING p_file_n.
+      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
+      IF  sy-subrc NE 0.
 
+        """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        PERFORM set_data
+          USING
+            p_file_n
+          .
+
+        CLEAR wa_files.
+        wa_files-ruta_file = p_file_n.
+        CALL FUNCTION 'CONVERT_DATE_TO_INTERNAL'
+          EXPORTING
+            date_external            = wa_ifile-mtim
+*           accept_initial_date      =
+          IMPORTING
+            date_internal            = wa_files-fechafile
+          EXCEPTIONS
+            date_external_is_invalid = 1
+            OTHERS                   = 2.
+        TRY.
+            MODIFY zsd_tt_san_files FROM wa_files.
+            PERFORM fill_it_pedidos USING wa_werks-werks
+                              wa_werks-fecha
+                              p_file_n
+                              'VTMO'.
+          CATCH cx_sy_sql_error .
+            MESSAGE 'No se grabo el registro' TYPE 'S'.
+        ENDTRY.
+      ENDIF.
     ENDLOOP.
-
-
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    PERFORM fill_it_pedidos
-      USING
-        wa_archivos-werks
-        wa_archivos-fecha
-        'VTRU'
-      .
-
   ENDLOOP.
 
 
-*  BREAK jhernandev.
-  """"""""pedidos normales
+  GET TIME.
+  current_time = sy-uzeit.
+  vl_calc = ( current_time - initial_time ) / 100.
 
-  LOOP AT it_archivos INTO wa_archivos.
-  refresh it_tab.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    PERFORM get_file
-      USING
-        lv_directorio
-        wa_archivos-werks
-        wa_archivos-fecha
-      CHANGING
-        p_file_n.
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    PERFORM set_data
-      USING
-        p_file_n
-      .
-    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    PERFORM fill_it_pedidos
-      USING
-        wa_archivos-werks
-        wa_archivos-fecha
-        'VTMO'
-      .
-    """"
-    CLEAR lv_vpg.
-    SELECT SINGLE cliente
-   FROM zsd_tt_configvpg
-   INTO lv_vpg
-   WHERE werks = wa_archivos-werks.
-    ""clasifica y crea pedidos
+  IF vl_calc GE '4.5'.
+    MESSAGE e001(00) WITH 'Prog. interrumpido. Evita encolamiento. (VTRU)'.
+    EXIT.
+  ELSE.
+    vl_strmsg = vl_calc.
+    CONCATENATE 'Time Collect Files' vl_strmsg 'minutes' INTO vl_strmsg SEPARATED BY space.
+    MESSAGE s001(00) WITH  vl_strmsg.
+  ENDIF.
 
-    PERFORM crea_pedidos.
-    PERFORM limpiar_tablas.
-  ENDLOOP.
+  """"
+  CLEAR lv_vpg.
+  SELECT SINGLE cliente
+ FROM zsd_tt_configvpg
+ INTO lv_vpg
+ WHERE werks = wa_archivos-werks.
+  ""clasifica y crea pedidos
+
+  PERFORM crea_pedidos.
+  PERFORM limpiar_tablas.
+  REFRESH it_datos_pedidos.
+
+  GET TIME.
+  current_time = sy-uzeit.
+  vl_calc = ( current_time - initial_time ) / 100.
+  IF vl_calc GE '4.5'.
+    MESSAGE e001(00) WITH  'Prog. interrumpido. Evitar encolamiento. (PED)'.
+    EXIT.
+  ENDIF.
+
+
+  GET TIME.
+  current_time = sy-uzeit.
+  vl_calc = ( current_time - initial_time ) / 100.
+  IF vl_calc GE '4.5'.
+    MESSAGE e001(00) WITH  'Programa interrumpido para evitar encolamiento. (PED)'.
+    EXIT.
+  ELSE.
+    vl_strmsg = vl_calc.
+    CONCATENATE 'Job terminado en' vl_strmsg 'minutos' INTO vl_strmsg SEPARATED BY space.
+
+    MESSAGE s001(00) WITH  vl_strmsg.
+
+  ENDIF.
 
 ENDFORM.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

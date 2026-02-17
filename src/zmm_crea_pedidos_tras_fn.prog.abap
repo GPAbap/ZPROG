@@ -465,10 +465,22 @@ FORM set_crea_pedidos_trasl.
         ls_log-message_v2 = wa_inventario-lote.
         APPEND ls_log TO it_log.
 
+        "Texto de cabecera pedido traslado
+        CLEAR vl_string.
+        REFRESH it_lines.
+        wa_lines-tdline = exppurchaseorder.
+        APPEND wa_lines TO it_lines.
+        vl_string = exppurchaseorder.
+
+        PERFORM crea_textos TABLES it_lines
+                            USING 'EKKO' 'F01' 'S' vl_string.
+
+
         LOOP AT poitem INTO DATA(wa_item).
 
-           CLEAR vl_string.
-           CONCATENATE exppurchaseorder wa_item-po_item INTO vl_string. "tdname
+          CLEAR vl_string.
+          REFRESH it_lines.
+          CONCATENATE exppurchaseorder wa_item-po_item INTO vl_string. "tdname
           READ TABLE it_outtable INTO DATA(wa_txt) INDEX vl_indice.
 
           wa_lines-tdline = wa_txt-caseta.

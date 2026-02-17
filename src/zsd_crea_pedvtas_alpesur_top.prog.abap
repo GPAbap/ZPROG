@@ -16,6 +16,11 @@ CONSTANTS: c_comma VALUE ',',
            c_point VALUE '.',
            c_esc   VALUE '"'.
 
+ DATA: rg_fechas   TYPE RANGE OF sy-datum,
+        w_rg_fechas LIKE LINE OF rg_fechas.
+
+DATA: current_time TYPE t, initial_time type t.
+
 DATA: it_datos_pedidos   TYPE STANDARD TABLE OF zsd_st_datos_pedidos WITH NON-UNIQUE SORTED KEY pk COMPONENTS ticket werks posnr, "almacena los pedidos por archivo cargado.
       it_datos_pedidos_vtru   TYPE STANDARD TABLE OF zsd_st_datos_pedidos WITH NON-UNIQUE SORTED KEY pk COMPONENTS ticket werks posnr,
       wa_datos_pedidos   LIKE LINE OF it_datos_pedidos,
@@ -68,6 +73,10 @@ DATA: lv_datecrea TYPE sy-datum.
 
 DATA: it_valida TYPE STANDARD TABLE OF st_valida WITH NON-UNIQUE SORTED KEY Vl COMPONENTS ticket werks posnr,
       wa_valida LIKE LINE OF it_valida.
+
+DATA: it_files TYPE STANDARD TABLE OF zsd_tt_san_files,
+      wa_files LIKE LINE OF it_files.
+
 
 TYPES: BEGIN OF ty_archivos,
          werks TYPE werks_d,

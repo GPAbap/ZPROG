@@ -922,7 +922,7 @@ SELECT matnr,
     UNION ALL
 
     SELECT matnr,
-    CASE WHEN ( mbewh~matnr EQ '000000000000400145' OR mbewh~matnr EQ '000000000000400194' ) THEN
+    CASE WHEN ( mbewh~matnr EQ '000000000000400145' OR mbewh~matnr EQ '000000000000400194' OR mbewh~matnr EQ '000000000000300688' ) THEN
     CAST( '10Inv. Final del mes' AS CHAR( 40 ) ) ELSE 'BORRAR'
     END AS wgbez60,
     CAST( lbkum AS QUAN( 13,3 ) ) AS menge,
@@ -930,7 +930,7 @@ SELECT matnr,
     CAST( salk3 AS DEC( 13,2 ) ) AS  dmbtr, CAST( salk3 AS DEC( 13,2 ) ) AS dmbtr_st,'x' AS shkzg
     FROM mbewh
     WHERE bwkey IN @i_werks
-    AND matnr IN ('000000000000400145','000000000000400194')
+    AND matnr IN ('000000000000400145','000000000000400194','000000000000300688')
     AND lfgja EQ @vl_gjahr AND lfmon IN @rg_fechafin
 
     UNION ALL
@@ -1332,7 +1332,7 @@ METHOD estad_huevo_inc2.
     UNION ALL
 
     SELECT matnr,
-    CASE WHEN ( mbewh~matnr EQ '000000000000400145' OR mbewh~matnr EQ '000000000000400194' ) THEN
+    CASE WHEN ( mbewh~matnr EQ '000000000000400145' OR mbewh~matnr EQ '000000000000400194' OR mbewh~matnr EQ '000000000000300688' ) THEN
     CAST( '10Inv. Final del mes' AS CHAR( 40 ) ) ELSE 'BORRAR'
     END AS wgbez60,
     CAST( lbkum AS QUAN( 13,3 ) ) AS menge,
@@ -1340,7 +1340,7 @@ METHOD estad_huevo_inc2.
     CAST( salk3 AS DEC( 13,2 ) ) AS  dmbtr, CAST( salk3 AS DEC( 13,2 ) ) AS dmbtr_st,'x' AS shkzg
     FROM mbewh
     WHERE bwkey IN @i_werks
-    AND matnr IN ('000000000000400145','000000000000400194')
+    AND matnr IN ('000000000000400145','000000000000400194','000000000000300688')
     AND lfgja EQ @vl_gjahr AND lfmon IN @rg_fechafin
 
     UNION ALL

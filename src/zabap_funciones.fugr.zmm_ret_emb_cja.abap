@@ -25,13 +25,25 @@ FUNCTION zmm_ret_emb_cja.
 
 
   DATA: vl_kgs_dev  TYPE lfimg,
-        vl_pzas_dev TYPE i.
+        vl_pzas_dev TYPE p DECIMALS 2.
   DATA: gen_vbeln TYPE vbeln.
+
+  IF p_fecha IS INITIAL.
+    p_fecha-sign = 'I'.
+    p_fecha-option = 'BT'.
+    p_fecha-low = sy-datum.
+    p_fecha-high = sy-datum.
+
+  ENDIF.
 
   PERFORM get_data USING p_fecha p_vkorg
                          p_vtweg p_spart
                          p_vkbur p_kunnr
                    CHANGING it_pedidos it_entregas .
+
+  DATA: vl_strpiezas    TYPE string, vl_strentero(5) TYPE c,
+        vl_strdecim(5)  TYPE c,
+        vl_intentero    TYPE i, vl_intdec TYPE i.
 
 
   DELETE it_entregas WHERE ( disgr  NE '4002' AND disgr  NE '5001' ).
@@ -44,23 +56,38 @@ FUNCTION zmm_ret_emb_cja.
 
   LOOP AT it_single_entregas INTO DATA(wa_entregas).
 
-    vl_kgs_dev = REDUCE i( INIT x = '0.000'
+    vl_kgs_dev = REDUCE lfimg( INIT x = '0.000'
                               FOR wa IN it_entregas
                               WHERE ( vbeln = wa_entregas-vbeln AND disgr = '4002')
                               NEXT x = x + wa-lfimg ).
+    IF vl_kgs_dev EQ 0.
+      CONTINUE.
+    ENDIF.
+    vl_pzas_dev = vl_kgs_dev / '25.00'.
+    vl_strpiezas = vl_pzas_dev.
+    SPLIT vl_strpiezas AT '.' INTO vl_strentero vl_strdecim.
+    vl_intentero = vl_strentero.
+    vl_intdec = vl_strdecim.
 
-    vl_pzas_dev = vl_kgs_dev / '20.00'.
+    IF vl_intdec GE 70.
+      vl_intentero = vl_intentero + 1.
+    ELSE.
+      vl_pzas_dev = vl_intentero.
+    ENDIF.
 
-    vl_pzas_dev = ceil( vl_pzas_dev ).
+    "vl_pzas_dev = ceil( vl_pzas_dev ).
 
     READ TABLE it_pedidos INTO DATA(wa_pedidos) WITH KEY vbeln = wa_entregas-vgbel.
     IF sy-subrc EQ 0.
-      PERFORM devolucion_cajas TABLES it_entregas USING wa_pedidos
-                                                     'PP01'
-                                                     vl_pzas_dev
-                                                     vl_kgs_dev
+      IF vl_kgs_dev GT 0.
+        PERFORM devolucion_cajas TABLES it_entregas USING wa_pedidos
+                                                  'PP01'
+                                                  vl_pzas_dev
+                                                  vl_kgs_dev
 
-                             CHANGING gen_vbeln.
+                          CHANGING gen_vbeln.
+      ENDIF.
+
     ENDIF.
   ENDLOOP.
 
@@ -113,65 +140,50 @@ FORM f_pedido_venta TABLES pit_entregas TYPE STANDARD TABLE
   APPEND ls_partner TO lt_partners.
   posicion = '0'.
 
-  LOOP AT pit_entregas INTO detalle.
+  LOOP AT pit_entregas INTO detalle .
 
-    IF detalle-matnr EQ '000000000000250036' OR detalle-matnr EQ '000000000000250037'.
+    IF detalle-vbeln EQ ref_pedido-vbeln.
+      IF detalle-matnr EQ '000000000000250036' OR detalle-matnr EQ '000000000000250037'.
 
-      CLEAR: ls_item,
-             ls_condicion,
-             ls_schedule.
-      posicion = posicion + 10.
-      ls_item-itm_number = posicion.
-      ls_item-material = detalle-matnr.
-      ls_item-target_qty = vl_pzas_dev.
-      ls_item-plant = i_werks.
-      ls_item-store_loc = 'GPEP'.
-      IF detalle-matnr EQ '000000000000250036'.
-        ls_item-gross_wght  = vl_kgs_dev.
-        ls_item-net_weight  = vl_kgs_dev.
-      ELSE.
-        ls_item-gross_wght  = 0.
-        ls_item-net_weight  = 0.
+        CLEAR: ls_item,
+               ls_condicion,
+               ls_schedule.
+        posicion = posicion + 10.
+        ls_item-itm_number = posicion.
+        ls_item-material = detalle-matnr.
+        ls_item-target_qty = vl_pzas_dev.
+        ls_item-plant = i_werks.
+        ls_item-store_loc = 'GPEP'.
+        IF detalle-matnr EQ '000000000000250036'.
+          ls_item-gross_wght  = vl_kgs_dev.
+          ls_item-net_weight  = vl_kgs_dev.
+        ELSE.
+          ls_item-gross_wght  = 0.
+          ls_item-net_weight  = 0.
+        ENDIF.
+        ls_item-untof_wght  = 'KG'.
+        APPEND ls_item TO lt_items.
+
+        ti_itemx-itm_number  = posicion.
+        ti_itemx-material    = 'X'.
+        ti_itemx-target_qty  = 'X'.
+        ti_itemx-plant       = 'X'.
+        ti_itemx-store_loc   = 'X'.
+        ti_itemx-gross_wght  = 'X'.
+        ti_itemx-net_weight  = 'X'.
+        ti_itemx-untof_wght  = 'X'.
+        APPEND ti_itemx.
+        """""
+
+        ls_schedule-itm_number = posicion.
+        ls_schedule-req_qty = vl_pzas_dev.
+        APPEND ls_schedule TO lt_schedule.
+
+        ti_schex-itm_number = posicion.
+        ti_schex-req_qty = 'X'.
+
+
       ENDIF.
-      ls_item-untof_wght  = 'KG'.
-      APPEND ls_item TO lt_items.
-
-      ti_itemx-itm_number  = posicion.
-      ti_itemx-material    = 'X'.
-      ti_itemx-target_qty  = 'X'.
-      ti_itemx-plant       = 'X'.
-      ti_itemx-store_loc   = 'X'.
-      ti_itemx-gross_wght  = 'X'.
-      ti_itemx-net_weight  = 'X'.
-      ti_itemx-untof_wght  = 'X'.
-      APPEND ti_itemx.
-      """""
-
-
-*
-*      ls_condicion-itm_number = posicion.
-*      ls_condicion-cond_type = 'PCOND'.
-
-*      DATA ld_monto LIKE bapicurr-bapicurr.
-*      CALL FUNCTION 'BAPI_CURRENCY_CONV_TO_EXTERNAL'
-*        EXPORTING
-*          currency        = detalle-waerk
-*          amount_internal = detalle-kwert
-*        IMPORTING
-*          amount_external = ld_monto.
-*
-*      ls_condicion-cond_value = ld_monto.
-*      ls_condicion-currency = detalle-waerk.
-*      APPEND ls_condicion TO lt_condiciones.
-
-      ls_schedule-itm_number = posicion.
-      ls_schedule-req_qty = vl_pzas_dev.
-      APPEND ls_schedule TO lt_schedule.
-
-      ti_schex-itm_number = posicion.
-      ti_schex-req_qty = 'X'.
-
-
     ENDIF.
   ENDLOOP.
 

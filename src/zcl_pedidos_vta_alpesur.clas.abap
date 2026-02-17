@@ -346,6 +346,11 @@ METHOD bapi_crear_pedido.
         contador = contador + 1.
 
         IF v_vbeln IS NOT INITIAL.
+          TRY.
+            update zsd_tt_san_files set procesado = 'X' where ruta_file = wa_pedidos-p_file.
+          CATCH cx_sy_sql_error .
+              MESSAGE s001(00) WITH 'No update File in table'.
+          ENDTRY.
 
 **************
           LOOP AT it_pedvssan INTO wa_pedvssan.

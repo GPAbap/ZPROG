@@ -439,14 +439,14 @@ FORM get_Data .
   ENDIF.
   DELETE it_xml WHERE xml_dir NP '*.xml'.
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  SELECT   doc_comp ,  doc_contable, bukrs, gjahr,monat, tipo_comprobante, formadepago,
-  metododepago, usocfdi, claveprodserv,  moneda,  folio, emisor, descripcion,  fecha,
-  fechatimbrado,uuid_pago  FROM zfi_xml_complem
-  INTO TABLE @DATA(it_valida)
-  WHERE bukrs = @s_bukrs
-  AND monat IN @s_monat..
 
-  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  SELECT   doc_comp ,  doc_contable, bukrs, gjahr,monat, tipo_comprobante, formadepago,
+    metododepago, usocfdi, claveprodserv,  moneda,  folio, emisor, descripcion,  fecha,
+    fechatimbrado,uuid_pago  FROM zfi_xml_complem
+    INTO TABLE @DATA(it_valida)
+    WHERE bukrs = @s_bukrs
+    AND monat IN @s_monat.
+
   """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   it_xml = FILTER #( it_xml USING KEY pk EXCEPT IN it_valida WHERE doc_comp = doc_comp AND doc_contable = doc_contable ).
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -531,7 +531,17 @@ FORM get_Data .
     ENDTRY.
 
   ENDIF.
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  REFRESH it_valida.
 
+  SELECT   doc_comp ,  doc_contable, bukrs, gjahr,monat, tipo_comprobante, formadepago,
+    metododepago, usocfdi, claveprodserv,  moneda,  folio, emisor, descripcion,  fecha,
+    fechatimbrado,uuid_pago  FROM zfi_xml_complem
+    INTO TABLE @it_valida
+    WHERE bukrs = @s_bukrs
+    AND monat IN @s_monat..
+
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   """""""""""""""TABLA DE RETENCIONES"""""""""""""""""""""""""""""""""""""""""""""""""""""""
   IF it_bseg2 IS NOT INITIAL.
     SELECT belnr, augbl,gjahr, witht, wt_withcd, wt_qbshh
@@ -667,7 +677,9 @@ FORM get_Data .
 
     LOOP AT it_bseg INTO DATA(wa_bseg) WHERE belnr = wa_bkpf-belnr AND bukrs = wa_bkpf-bukrs AND gjahr = wa_bkpf-gjahr.
       IF wa_bseg-augbl EQ wa_bkpf-belnr. "pago proveedores Grupo Porres.
-        " <fs_head>-tot_egreso = wa_bseg-dmbtr.
+        IF wa_bkpf-blart = 'KD'.
+          <fs_head>-tot_egreso = wa_bseg-dmbtr.
+        ENDIF.
       ELSEIF wa_bseg-bschl EQ '50' AND ( wa_bseg-qsskz EQ 'IA' OR
                                          wa_bseg-qsskz EQ 'IH' OR
                                          wa_bseg-qsskz EQ 'IS' OR
@@ -722,12 +734,22 @@ FORM get_Data .
         "El tipo de cuenta de resultados determina para las cuentas de pérdidas y ganancias
         APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_headgv>.
         <fs_headgv> = <fs_head>.
-        <fs_headgv>-del_alv = 'X'.
+
+        IF wa_bseg-hkont EQ '0701001001' OR wa_bseg-hkont = '0702001001' .
+          <fs_headgv>-del_alv = 'X'.
+        ELSE.
+          <fs_headgv>-del_alv = space.
+        ENDIF.
+
 
         IF wa_bseg-shkzg EQ 'S'.
           <fs_headgv>-base0 = wa_bseg-dmbtr.
         ELSE.
-          <fs_headgv>-base0 = wa_bseg-dmbtr * -1.
+          IF wa_bkpf-blart = 'KD'.
+            <fs_headgv>-base0 = wa_bseg-dmbtr.
+          ELSE.
+            <fs_headgv>-base0 = wa_bseg-dmbtr * -1.
+          ENDIF.
         ENDIF.
 
         <fs_headgv>-total = <fs_headgv>-base0.
@@ -986,8 +1008,9 @@ FORM get_Data .
         SELECT SINGLE uuid_pago
         INTO @DATA(uuid_pago)
         FROM zaxnare_tb001 AS z1
-        INNER JOIN zaxnare_tb016 AS z2 ON z1~uuid = z2~uuid_padre
-        WHERE z1~doc_contable = @<fs_body>-rebzg.
+        INNER JOIN zaxnare_tb016 AS z2 ON z2~uuid_padre = z1~uuid
+        WHERE z1~doc_contable = @<fs_body>-rebzg AND z1~ejercicio = @<fs_body>-gjahr
+        AND z1~bukrs = @<fs_body>-rbukrs.
 
         <fs_body>-uuid_concep = wa_bseg2-sgtxt.
         <fs_body>-uuid_pago = uuid_pago.
@@ -1130,6 +1153,13 @@ FORM get_Data .
 *        ENDCASE.
         IF wa_bseg2-anln1 IS NOT INITIAL.
           <fs_body>-zkoart = wa_bseg2-anln1.
+        ELSE.
+
+          SELECT SINGLE anln1 INTO <fs_body>-zkoart
+            FROM bseg
+          WHERE belnr = <fs_body>-rebzg AND gjahr = <fs_body>-gjahr
+            AND koart IN ('A','M').
+
         ENDIF.
       ENDIF.
 
@@ -1158,7 +1188,10 @@ FORM get_Data .
               <fs_body>-iva_ret = 0.
             ENDIF.
           WHEN OTHERS.
-            <fs_body>-iva_ret = wa_reteniva-wt_qbshh.
+            IF  <fs_body>-iva_ret EQ 0.
+              <fs_body>-iva_ret = wa_reteniva-wt_qbshh.
+            ENDIF.
+
         ENDCASE.
 *        ENDIF.
 
@@ -1189,8 +1222,9 @@ FORM get_Data .
                  'RZ' OR
                  'F7' OR
                  'F5'.
-              <fs_body>-isr_ret = wa_retenisr-wt_qbshh.
-
+              IF <fs_body>-isr_ret EQ 0.
+                <fs_body>-isr_ret = wa_retenisr-wt_qbshh.
+              ENDIF.
             WHEN OTHERS.
               IF <fs_body>-isr_ret EQ 0.
                 <fs_body>-isr_ret = 0.
@@ -1361,7 +1395,7 @@ FORM get_Data .
         ENDIF.
         "ZD
         "UNASSIGN <fs_bodykz>.
-        IF wa_bsegkz-fdlev EQ 'ZD'.
+        IF wa_bsegkz-fdlev EQ 'ZD' OR wa_bsegkz-fdlev EQ 'ZK' .
           APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_bodykz>.
           MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
           IF wa_bsegkz-mwskz = 'Z0'.
@@ -1411,17 +1445,20 @@ FORM get_Data .
 
 
             ELSE.
+              IF <fs_bodykz> IS ASSIGNED.
 
-              SELECT stcd1, name1
-                FROM lfa1
-                INTO (@<fs_bodykz>-stcd1, @<fs_bodykz>-name1)
-               WHERE lifnr = @wa_prov-lifnr.
-              ENDSELECT.
-              <fs_bodykz>-lifnr = wa_prov-lifnr.
 
-              <fs_head>-lifnr = <fs_bodykz>-lifnr.
-              <fs_head>-stcd1 = <fs_bodykz>-stcd1.
-              <fs_head>-name1 = <fs_bodykz>-name1.
+                SELECT stcd1, name1
+                  FROM lfa1
+                  INTO (@<fs_bodykz>-stcd1, @<fs_bodykz>-name1)
+                 WHERE lifnr = @wa_prov-lifnr.
+                ENDSELECT.
+                <fs_bodykz>-lifnr = wa_prov-lifnr.
+
+                <fs_head>-lifnr = <fs_bodykz>-lifnr.
+                <fs_head>-stcd1 = <fs_bodykz>-stcd1.
+                <fs_head>-name1 = <fs_bodykz>-name1.
+              ENDIF.
             ENDIF.
 
           ENDIF.
@@ -1454,7 +1491,7 @@ FORM get_Data .
       ENDLOOP.
     ENDIF.
     """"""""""""""""""""""""""""""""""""""""""""""""""
-
+    UNASSIGN <fs_bodykz>.
     LOOP AT it_ingresos ASSIGNING <fs_headgv> WHERE belnr = wa_bkpf-belnr AND gkont = '0701001001' . "PERDIDA CAMBIARIA REALIZADA
       vl_perdida = vl_perdida + <fs_headgv>-base0.
     ENDLOOP.
