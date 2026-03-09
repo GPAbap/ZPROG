@@ -8,11 +8,12 @@ FORM get_data.
   DATA: vl_name    LIKE thead-tdname,
         vl_it_line TYPE STANDARD TABLE OF tline.
 
+
   SELECT v~vbeln,z1~uuid AS uuid_refac, v~fkdat AS fkdat_refac,v~kunrg AS kungrg_refac, k~name1 AS name1_refac, v~netwr AS netwr_refac, v~waerk AS waerk_refact, v~fksto,
   f~vbeln AS vbeln_aj, z2~uuid AS uuid_aj,
   CASE WHEN f~vbtyp_n = 'O' THEN 'NOTA DE CREDITO' ELSE CASE WHEN  f~vbtyp_n = 'N'
             THEN 'CANCELACION DE FACTURA' END END AS vbtyp_n, v2~netwr AS netwr_aj,
-  z1~mot_canc, p~aubel, va~abgru, t~bezei
+  z1~mot_canc, p~aubel, va~abgru, t~bezei,p~vgbel
   INTO TABLE @it_outtable
   FROM vbrk AS v
   INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
@@ -79,7 +80,11 @@ FORM get_data.
 
     READ TABLE vl_it_line INTO DATA(wa_line) INDEX 1.
     IF sy-subrc EQ 0.
-      <fs_outtable>-vbeln_frefac = wa_line-tdline.
+        <fs_outtable>-vbeln_frefac = wa_line-tdline.
+    else.
+       <fs_outtable>-vbeln_frefac = 'X'.
+    Endif.
+
 
       <fs_outtable>-vbeln_frefac = |{ <fs_outtable>-vbeln_frefac ALPHA = IN }|.
 
@@ -131,17 +136,19 @@ FORM get_data.
 
             SELECT p~vbeln, sfakn_ana,kunrg_ana,fkdat_ana,z~mot_canc, z~comentario, z~uuid,
               z~netwr, z~waers, k~name1,lpad( v~sfakn, 10, '0' ) AS sfakn
-
             FROM vbrk AS v
             INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
             INNER JOIN kna1 AS k ON k~kunnr = p~kunag_ana
             LEFT JOIN zsd_cfdi_timbre AS z  ON z~vbeln = p~sfakn_ana
-             WHERE aubel = @<fs_outtable>-aubel
+             WHERE aubel = @<fs_outtable>-aubel and vgbel = @<fs_outtable>-vgbel
               AND shkzg = 'X'
                INTO TABLE @DATA(it_fact_ana)
               .
 
             IF sy-subrc EQ 0.
+*              LOOP AT it_fact_ana into data(wa_ana).
+*
+*              ENDLOOP.
               READ TABLE it_fact_ana INTO DATA(wa_ana) INDEX 1.
 
               SELECT uuid, netwr, waers, mot_canc, erdat
@@ -194,7 +201,7 @@ FORM get_data.
           ENDIF.
         ENDIF.
       ENDIF.
-    ENDIF.
+
 
     IF <fs_outtable>-vbeln_canc IS NOT INITIAL.
       <fs_outtable>-vbtyp_n = 'REFACTURADO'.
@@ -224,6 +231,11 @@ FORM show_data.
        OR <fs_fcat>-fieldname = 'AUBEL' OR <fs_fcat>-fieldname = 'VBELN_FREFAC' OR
           <fs_fcat>-fieldname = 'VBELN_CANC'.
       <fs_fcat>-hotspot = 'X'.
+    ENDIF.
+
+    IF <fs_fcat>-fieldname = 'VGBEL' .
+      <fs_fcat>-no_out = 'X'.
+
     ENDIF.
   ENDLOOP.
 

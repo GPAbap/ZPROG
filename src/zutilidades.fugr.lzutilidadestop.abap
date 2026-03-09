@@ -4,7 +4,6 @@ FUNCTION-POOL ZUTILIDADES.                  "MESSAGE-ID ..  ........
 
 * INCLUDE LZUTILIDADESD...                   " Local class definition
 
-
 DATA : iheader_details TYPE abap_compdescr_tab,
       iitems_details  TYPE abap_compdescr_tab.
 DATA : ref_table_des TYPE REF TO cl_abap_structdescr.

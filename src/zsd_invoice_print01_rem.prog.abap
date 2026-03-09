@@ -288,6 +288,7 @@ LEFT JOIN adrc AS a ON a~addrnumber EQ k~adrnr
 WHERE v~vbeln = @nast-objky
   INTO  TABLE @it_remision.
 
+delete ADJACENT DUPLICATES FROM it_remision COMPARING ALL FIELDS.
 
   SELECT SINGLE vbeln INTO @DATA(wa_vbeln)
     FROM vbfa

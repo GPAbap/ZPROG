@@ -4,7 +4,8 @@
 
 FORM get_parametros.
 
-  "obtener 5 dias de pedidos creados anteriormente a la fecha de ejecución
+
+
   CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
     EXPORTING
       date      = sy-datum
@@ -588,7 +589,7 @@ FORM recorre_centros.
       "vl_werks = wa_ifile-name+5(4).
       CONCATENATE lv_directoriocp p_file_n INTO p_file_n.
 
-      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
+      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n procesado = '' TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
       IF  sy-subrc NE 0.
 
         REFRESH it_tab.
@@ -609,6 +610,7 @@ FORM recorre_centros.
             date_external_is_invalid = 1
             OTHERS                   = 2.
         TRY.
+
             MODIFY zsd_tt_san_files FROM wa_files.
             PERFORM fill_it_pedidos USING wa_werks-werks
                                           wa_werks-fecha
@@ -675,10 +677,11 @@ FORM recorre_centros.
 
       CONCATENATE lv_directoriocp p_file_n INTO p_file_n.
 
-      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
+      READ TABLE it_files WITH KEY mandt = sy-mandt ruta_file =  p_file_n procesado = '' TRANSPORTING NO FIELDS. "se busca si el archivo ya fue procesado.
       IF  sy-subrc NE 0.
 
         """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        REFRESH it_tab.
         PERFORM set_data
           USING
             p_file_n
@@ -730,7 +733,10 @@ FORM recorre_centros.
  WHERE werks = wa_archivos-werks.
   ""clasifica y crea pedidos
 
-  PERFORM crea_pedidos.
+LOOP AT it_centros into wa_werks.
+  PERFORM crea_pedidos USING wa_werks-werks.
+ENDLOOP.
+
   PERFORM limpiar_tablas.
   REFRESH it_datos_pedidos.
 
@@ -759,7 +765,7 @@ FORM recorre_centros.
 
 ENDFORM.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-FORM crea_pedidos.
+FORM crea_pedidos USING p_werks type werks_d.
 
   DATA: rg_sectores TYPE RANGE OF vbak-spart,
         rg_dzterm   TYPE RANGE OF zsd_tt_plantsan-dzterm.
@@ -769,10 +775,11 @@ FORM crea_pedidos.
         it_vpgi  TYPE STANDARD TABLE OF zsd_st_datos_pedidos.
   .
 
-  SORT it_datos_pedidos BY ticket werks posnr bsark.
-  DELETE ADJACENT DUPLICATES FROM it_Datos_pedidos COMPARING ticket werks posnr bsark.
-
-  DATA(it_pedidos_vtru) = it_datos_pedidos[].
+*  SORT it_datos_pedidos BY ticket werks posnr bsark.
+*  DELETE ADJACENT DUPLICATES FROM it_Datos_pedidos COMPARING ticket werks posnr bsark.
+  DATA(it_pedidos_by_werks) = it_datos_pedidos[].
+  DELETE it_pedidos_by_werks where werks ne p_werks.
+  DATA(it_pedidos_vtru) = it_pedidos_by_werks[].
 
   DELETE it_datos_pedidos WHERE bsark EQ 'VTRU'.
   DELETE it_pedidos_vtru WHERE bsark NE 'VTRU'.

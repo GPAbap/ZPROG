@@ -39,6 +39,35 @@
      </DOCUMENTATION>
     </item>
     <item>
+     <FUNCNAME>ZCO_GET_MONTHS_BY_DATE</FUNCNAME>
+     <SHORT_TEXT>Obtiene Meses a partir de una fecha</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>P_FECHA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZTY_DATE_RANGE</TYP>
+      </RSIMP>
+     </IMPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>NMESES</PARAMETER>
+       <TYP>ZCO_TT_MESES</TYP>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>P_FECHA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Estructura para datos fecha Rango</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NMESES</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Almacena los meses generados</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
      <FUNCNAME>ZFM_EXPORT_EXCEL_HIERSEQ</FUNCNAME>
      <SHORT_TEXT>Exporta a Excel ALV Jerarquico</SHORT_TEXT>
      <IMPORT>

@@ -359,7 +359,12 @@ FORM get_Data .
       ASSIGN COMPONENT 'MWSKZ' OF STRUCTURE <bseg2> TO <line>.
       IF <line> EQ '**'.
         ASSIGN COMPONENT 'MWSK1' OF STRUCTURE <bseg2> TO <line2>.
-        <line> =  <line2>.
+        "<line> =  <line2>.
+        IF bseg3-dmbtr GT 0.
+          <line> = 'X7'.
+        ELSE.
+          <line> =  <line2>.
+        ENDIF.
         UNASSIGN <line>.
         UNASSIGN <line2>.
       ELSE.
@@ -843,13 +848,18 @@ FORM get_Data .
     LOOP AT it_bseg2 INTO DATA(wa_bseg2) WHERE augbl = wa_bkpf-belnr.
 
       IF wa_bseg2-h_blart EQ 'NM'.
-        " lv_exist_prov = abap_true.
+        lv_exist_prov = abap_false.
         EXIT.
       ENDIF.
 
 
       IF wa_bseg2-augbl EQ wa_bseg2-belnr.
-        CONTINUE.
+        IF wa_bseg2-bschl EQ '25'.
+          "continua para agregar la fila del movimento no permitido por pago de anticipo.
+        ELSE.
+          CONTINUE.
+        ENDIF.
+
       ENDIF.
 
       IF wa_bseg2-gjahr IS INITIAL AND wa_bseg2-h_blart = 'KA'.
@@ -1013,7 +1023,11 @@ FORM get_Data .
         AND z1~bukrs = @<fs_body>-rbukrs.
 
         <fs_body>-uuid_concep = wa_bseg2-sgtxt.
-        <fs_body>-uuid_pago = uuid_pago.
+        IF uuid_pago IS NOT INITIAL.
+          <fs_body>-uuid_pago = uuid_pago.
+        ENDIF.
+
+        CLEAR uuid_pago.
 
 
         <fs_body>-cpudt = wa_bseg2-h_bldat.
@@ -1090,7 +1104,13 @@ FORM get_Data .
         IF wa_bseg2-mwskz IS INITIAL.
           <fs_body>-wsl = wa_bseg2-dmbtr. "No tienen base, por lo regular SA
           IF wa_bseg2-h_blart EQ 'KZ' OR wa_bseg2-h_blart EQ 'GV'.
-            <fs_body>-no_considerado = '0.00'. "wa_bseg2-dmbtr. "No considerado.
+            IF wa_bseg2-bschl EQ '25'. "GV que son Anticipos
+              <fs_body>-no_considerado = wa_bseg2-dmbtr. "No considerado.
+              <fs_body>-wsl = '0.00'.
+            ELSE.
+              <fs_body>-no_considerado = '0.00'. "wa_bseg2-dmbtr. "No considerado.
+            ENDIF.
+
           ELSE.
             <fs_body>-no_considerado = wa_bseg2-dmbtr. "No considerado.
           ENDIF.
@@ -1127,6 +1147,8 @@ FORM get_Data .
             <fs_body>-banco2 = <fs_head>-banco2.
           ENDIF.
         ENDIF.
+      ELSE.
+       <fs_body>-del_alv = 'X'.
       ENDIF.
 
       IF wa_bseg2-bschl NE '50' AND  wa_bseg2-buzid NE 'T' AND wa_bseg2-augbl IS INITIAL .
@@ -1365,12 +1387,14 @@ FORM get_Data .
     ENDLOOP.
 *
     """""""""""""""kz sobre los kz"""""""""""""""jhv
+    DATA add_line.
     IF lv_exist_prov EQ abap_false. "si no hubo provisiones
       LOOP AT it_bseg INTO DATA(wa_bsegkz) WHERE belnr = wa_bkpf-belnr
                                            AND bukrs = wa_bkpf-bukrs
                                            AND gjahr = wa_bkpf-gjahr.
         IF wa_bsegkz-xzahl EQ 'X'.
           APPEND INITIAL LINE TO it_ingresos ASSIGNING FIELD-SYMBOL(<fs_bodykz>).
+          add_line = 'X'.
           MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
           IF wa_bsegkz-mwskz = 'Z0'.
             <fs_bodykz>-exento = wa_bsegkz-dmbtr.
@@ -1395,23 +1419,27 @@ FORM get_Data .
         ENDIF.
         "ZD
         "UNASSIGN <fs_bodykz>.
-        IF wa_bsegkz-fdlev EQ 'ZD' OR wa_bsegkz-fdlev EQ 'ZK' .
-          APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_bodykz>.
-          MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
-          IF wa_bsegkz-mwskz = 'Z0'.
-            <fs_bodykz>-exento = wa_bsegkz-dmbtr.
-          ELSE.
-            <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
-          ENDIF.
-          <fs_bodykz>-total = wa_bsegkz-dmbtr.
-          <fs_bodykz>-tot_egreso = 0.
-          CLEAR wa_hkont.
-          READ TABLE it_skat INTO wa_hkont WITH KEY saknr = wa_bsegkz-hkont.
-          IF sy-subrc EQ 0.
-            <fs_bodykz>-sgtxt = wa_hkont-txt50.
-          ENDIF.
+        IF add_line IS INITIAL.
 
 
+          IF wa_bsegkz-fdlev EQ 'ZD' OR wa_bsegkz-fdlev EQ 'ZK' .
+            APPEND INITIAL LINE TO it_ingresos ASSIGNING <fs_bodykz>.
+            MOVE-CORRESPONDING <fs_head> TO <fs_bodykz>.
+            IF wa_bsegkz-mwskz = 'Z0'.
+              <fs_bodykz>-exento = wa_bsegkz-dmbtr.
+            ELSE.
+              <fs_bodykz>-no_considerado = wa_bsegkz-dmbtr.
+            ENDIF.
+            <fs_bodykz>-total = wa_bsegkz-dmbtr.
+            <fs_bodykz>-tot_egreso = 0.
+            CLEAR wa_hkont.
+            READ TABLE it_skat INTO wa_hkont WITH KEY saknr = wa_bsegkz-hkont.
+            IF sy-subrc EQ 0.
+              <fs_bodykz>-sgtxt = wa_hkont-txt50.
+            ENDIF.
+
+
+          ENDIF.
         ENDIF.
 
         READ TABLE it_kna1 INTO DATA(wa_kna1) WITH KEY kunnr = wa_bsegkz-kunnr.
@@ -1487,7 +1515,7 @@ FORM get_Data .
           <fs_body>-fecpago_xml = wa_valida-fecha.
           <fs_body>-fectimbxml = wa_valida-fechatimbrado.
         ENDIF.
-
+        clear add_line.
       ENDLOOP.
     ENDIF.
     """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -1874,7 +1902,7 @@ FORM get_inversiones .
   b~sgtxt IS NOT INITIAL
   AND bk~xreversed NE 'X' "si es X son documentos de Anulación
   "AND b~fdlev = 'F2' "solo egresos
-  AND bk~tcode NOT IN ( 'KO88', 'KO8G' )
+  AND bk~tcode NOT IN ( 'KO88', 'KO8G','FB41' )
   INTO CORRESPONDING FIELDS OF TABLE @it_inversiones.
   "AND b~hkont NOT IN ('0504025014', '0504025192', '0601001020', '0601001073'). "Inversiones
 

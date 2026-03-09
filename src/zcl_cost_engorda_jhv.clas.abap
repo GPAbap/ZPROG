@@ -1,344 +1,417 @@
-class ZCL_COST_ENGORDA_JHV definition
-  public
-  final
-  create public .
+CLASS zcl_cost_engorda_jhv DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  types:
-    rg_popers TYPE RANGE OF t009b-poper .      "
-  types:
-    rg_dauat TYPE RANGE OF afpo-dauat .      "
-  types:
-    rg_bwart TYPE RANGE OF mseg-bwart .      "
-  types:
-    rg_fechas TYPE RANGE OF mseg-budat_mkpf .      "
-  types:
-    rg_aufnr type range of aufk-aufnr .
-  types:
-    vl_i_aufnr TYPE STANDARD TABLE OF zco_tt_aufnr_fin .      "
-  types:
-    rg_werks TYPE RANGE OF afpo-dwerk .
-  types:
-    rg_matkl TYPE RANGE OF mara-matkl .
+    TYPES:
+      rg_popers TYPE RANGE OF t009b-poper .      "
+    TYPES:
+      rg_dauat TYPE RANGE OF afpo-dauat .      "
+    TYPES:
+      rg_bwart TYPE RANGE OF mseg-bwart .      "
+    TYPES:
+      rg_fechas TYPE RANGE OF mseg-budat_mkpf .      "
+    TYPES:
+      rg_fechas_r TYPE RANGE OF afko-gltri .      "
+    TYPES:
+      rg_aufnr TYPE RANGE OF aufk-aufnr .
+    TYPES:
+      vl_i_aufnr TYPE STANDARD TABLE OF zco_tt_aufnr_fin .      "
+    TYPES:
+      rg_werks TYPE RANGE OF afpo-dwerk .
+    TYPES:
+      rg_matkl TYPE RANGE OF mara-matkl .
+    TYPES:
+      rg_matnr TYPE RANGE OF mara-matnr .
+    TYPES:
+        rg_objnr TYPE RANGE OF cosp-objnr.
+    TYPES:
+        rg_kstar TYPE RANGE OF cosp-kstar.
+    TYPES:
+        rg_ferth TYPE RANGE OF mara-ferth.
 
-  methods GET_AUFNR_CTE   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_CLORDER type RG_DAUAT
-      !P_TIPO type STRING optional
-      !P_WERKS type RG_WERKS optional
-    changing
-      !I_TABLA type STANDARD TABLE optional
-      !I_AUFNR type STANDARD TABLE optional .
-  methods GET_AUFNR_ABLAD   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_CLORDER type RG_DAUAT
-      !P_WERKS type RG_WERKS
-      !I_AUFNR type VL_I_AUFNR optional
-    changing
-      !I_MTS2 type STANDARD TABLE .
-  methods GET_MB51   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_POST   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_CRIANZA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_INCUBADORA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_DEP
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type RG_MATKL
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51_DEP type STANDARD TABLE .
-  methods GET_MB51_ENG   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_HUEVO   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_MB51_ALIM   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MB51 type STANDARD TABLE .
-  methods GET_ACDOCA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_ACDOCA_PPA_DET   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_ACDOCA_POST   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_ACDOCA_CRIANZA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_ACDOCA_ENG   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_ACDOCA_FLETE   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_ACDOCA type STANDARD TABLE .
-  methods GET_APARCERIA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_APARCERIA type STANDARD TABLE .
-  methods GET_MERMAS   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_RGBWART type RG_BWART
-      !I_WERKS type RG_WERKS
-    changing
-      !CH_MERMAS type STANDARD TABLE .
-  methods GET_MERMAS_MAQ   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MERMAS_MAQ type STANDARD TABLE .
-  methods GET_RECUPERACIONES   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_RECUPERACIONES_POST   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_RECUPERACIONES_CRIANZA   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_SUB_HC   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_BWART type RG_BWART
-      !I_WERKS type RG_WERKS
-    changing
-      !CH_SUB_HC type STANDARD TABLE .
-  methods GET_SUBPRD_GAPESA   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_BWART type RG_BWART
-      !I_WERKS type RG_WERKS
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_SUB_HC type STANDARD TABLE .
-  methods GET_ESTADISTICOS_POST  "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_COSTOWIP
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_ESTADISTICOS_CRIANZA  "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_RECUPERA_ALIM   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-    changing
-      !CH_RECUPERA type STANDARD TABLE .
-  methods GET_MAQUILA   " maquila
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_WERKS type RG_WERKS
-    changing
-      !CH_MAQUILA type STANDARD TABLE .
-  methods GET_MAQUILA_ACA   " maquila
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_WERKS type RG_WERKS
-    changing
-      !CH_MAQUILA type STANDARD TABLE .
-  methods GET_MAQUILA_GAPESA   " maquila
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_WERKS type RG_WERKS
-    changing
-      !CH_MAQUILA type STANDARD TABLE .
-  methods GET_ALPESUR   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !P_WERKS type RG_WERKS
-    changing
-      !CH_ALPESUR type STANDARD TABLE .
-  methods GET_KGS_PZAS   "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_KGS_PZAS type STANDARD TABLE .
-  methods GET_KGS_PZAS_PROCPPA   "
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-    changing
-      !CH_KGS_PZAS type STANDARD TABLE .
-  methods GET_KGS_PZAS_DEP   "
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type RG_MATKL
-      !I_AUFNR type VL_I_AUFNR optional
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_KGS_PZAS type STANDARD TABLE .
-  methods GET_KGS_PRO_EMP
-    importing
-      !I_WERKS type RG_WERKS
-      !I_AUFNR type VL_I_AUFNR
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_KGS_EMP type STANDARD TABLE .
-  methods CALCULATE_DATES                                        "
-    changing
-      !P_RGFECHAS type RG_FECHAS .
-  methods CALCULATE_MORTAL    "
-    importing
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_MORTANDAD type STANDARD TABLE .
-  methods MORTAL_DEPOSITO    "
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type MATKL
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_MORTANDAD type STANDARD TABLE .
-  methods KGS_PROCESA_DEP    "
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type MATKL
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_KGSPROCES type STANDARD TABLE .
-  methods KGS_PROCESA_PPA    "
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type MATKL
-      !I_RGBWART type RG_BWART
-      !I_AUFNR type VL_I_AUFNR
-    changing
-      !CH_KGSPROCES type STANDARD TABLE .
-  methods DECOMISO_DEP_MAQ    "
-    importing
-      !I_WERKS type RG_WERKS
-      !I_MATKL type MATKL
-      !I_RGBWART type RG_BWART
-    changing
-      !CH_DECOMISO type STANDARD TABLE .
-  methods ESTAD_HUEVO_INC
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_WERKS type RG_WERKS
-      !I_BWART type RG_BWART
-      !I_AUFNR type VL_I_AUFNR
-      !I_AUFNR_IN02 type VL_I_AUFNR
-    changing
-      !CH_ESTAD_HUE_INC type STANDARD TABLE .
-  methods ESTAD_GAPESA
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_WERKS type RG_WERKS
-      !I_BWART type RG_BWART
-      !I_AUFNR type VL_I_AUFNR
-      !I_AUFNR_IN02 type VL_I_AUFNR
-    changing
-      !CH_ESTAD_HUE_INC type STANDARD TABLE .
-  methods ESTAD_HUEVO_INC2
-    importing
-      !P_GJAHR type GJAHR
-      !P_POPERS type RG_POPERS
-      !I_WERKS type RG_WERKS
-      !I_BWART type RG_BWART
-      !I_AUFNR type VL_I_AUFNR
-      !I_AUFNR_0100 type RG_AUFNR
-    changing
-      !CH_ESTAD_HUE_INC type STANDARD TABLE .
+
+    METHODS get_aufnr_cte   "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_popers  TYPE rg_popers
+        !p_clorder TYPE rg_dauat
+        !p_tipo    TYPE string OPTIONAL
+        !p_werks   TYPE rg_werks OPTIONAL
+      CHANGING
+        !i_tabla   TYPE STANDARD TABLE OPTIONAL
+        !i_aufnr   TYPE STANDARD TABLE OPTIONAL .
+
+    METHODS get_aufnr_cte_ren "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_fecha   TYPE rg_fechas
+        !p_clorder TYPE rg_dauat
+        !p_tipo    TYPE string OPTIONAL
+        !p_werks   TYPE rg_werks OPTIONAL
+      CHANGING
+        !i_tabla   TYPE STANDARD TABLE OPTIONAL
+        !i_aufnr   TYPE STANDARD TABLE OPTIONAL .
+
+
+
+    METHODS get_aufnr_ablad   "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_popers  TYPE rg_popers
+        !p_clorder TYPE rg_dauat
+        !p_werks   TYPE rg_werks
+        !i_aufnr   TYPE vl_i_aufnr OPTIONAL
+      CHANGING
+        !i_mts2    TYPE STANDARD TABLE .
+
+    METHODS get_mb51   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+
+    METHODS get_kgs_cost_trans   "
+      IMPORTING
+        !i_fecha_i         TYPE datum
+        !I_fecha_F         TYPE datum
+        !i_rgbwart         TYPE rg_bwart
+        !i_rgaufnr         TYPE rg_aufnr OPTIONAL
+        !I_ferth           TYPE ferth
+      CHANGING
+        !CH_KGS_cost_trans TYPE STANDARD TABLE .
+
+    METHODS get_kgs_pro_merma
+      IMPORTING
+        !i_fecha_i         TYPE datum
+        !I_fecha_F         TYPE datum
+        !i_rgaufnr         TYPE rg_aufnr
+        !i_rgbwart         TYPE rg_bwart
+      CHANGING
+        !CH_KGS_cost_trans TYPE STANDARD TABLE .
+
+    METHODS get_flete_gto_transf
+      IMPORTING
+        !i_gjahr         TYPE gjahr
+        !i_month         TYPE datum
+        !i_gpo_kostl     TYPE string
+        !i_gpo_kstar     TYPE rg_kstar
+      CHANGING
+        !CH_flete_transf TYPE STANDARD TABLE .
+
+
+    METHODS get_ventas_netas
+      IMPORTING
+        !i_fecha       TYPE datum
+        !i_gpo_kstar   TYPE rg_kstar
+      CHANGING
+        !CH_vtas_netas TYPE STANDARD TABLE .
+
+    METHODS get_kgs_vendidos
+      IMPORTING
+        !i_fecha         TYPE datum
+        !i_gpo_ferth     TYPE rg_ferth
+        !i_gpo_werks     TYPE rg_werks
+        !i_bukrs         TYPE bukrs
+      CHANGING
+        !CH_kgs_vendidos TYPE STANDARD TABLE .
+
+
+    METHODS get_mb51_post   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_mb51_crianza   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_mb51_incubadora   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_mb51_dep
+      IMPORTING
+        !i_werks     TYPE rg_werks
+        !i_matkl     TYPE rg_matkl
+        !i_rgbwart   TYPE rg_bwart
+      CHANGING
+        !ch_mb51_dep TYPE STANDARD TABLE .
+    METHODS get_mb51_eng   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_mb51_huevo   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_mb51_alim   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+        !i_rgbwart TYPE rg_bwart
+      CHANGING
+        !ch_mb51   TYPE STANDARD TABLE .
+    METHODS get_acdoca   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_acdoca_ppa_det   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_acdoca_post   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_acdoca_crianza   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_acdoca_eng   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_acdoca_flete   "
+      IMPORTING
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_acdoca TYPE STANDARD TABLE .
+    METHODS get_aparceria   "
+      IMPORTING
+        !i_aufnr      TYPE vl_i_aufnr
+      CHANGING
+        !ch_aparceria TYPE STANDARD TABLE .
+    METHODS get_mermas   "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_popers  TYPE rg_popers
+        !i_rgbwart TYPE rg_bwart
+        !i_werks   TYPE rg_werks
+      CHANGING
+        !ch_mermas TYPE STANDARD TABLE .
+    METHODS get_mermas_maq   "
+      IMPORTING
+        !p_gjahr       TYPE gjahr
+        !p_popers      TYPE rg_popers
+        !i_rgbwart     TYPE rg_bwart
+      CHANGING
+        !ch_mermas_maq TYPE STANDARD TABLE .
+    METHODS get_recuperaciones   "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_recuperaciones_post   "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_recuperaciones_crianza   "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_sub_hc   "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_popers  TYPE rg_popers
+        !i_bwart   TYPE rg_bwart
+        !i_werks   TYPE rg_werks
+      CHANGING
+        !ch_sub_hc TYPE STANDARD TABLE .
+    METHODS get_subprd_gapesa   "
+      IMPORTING
+        !p_gjahr   TYPE gjahr
+        !p_popers  TYPE rg_popers
+        !i_bwart   TYPE rg_bwart
+        !i_werks   TYPE rg_werks
+        !i_aufnr   TYPE vl_i_aufnr
+      CHANGING
+        !ch_sub_hc TYPE STANDARD TABLE .
+    METHODS get_estadisticos_post  "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_costowip
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_estadisticos_crianza  "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_recupera_alim   "
+      IMPORTING
+        !p_gjahr     TYPE gjahr
+        !p_popers    TYPE rg_popers
+      CHANGING
+        !ch_recupera TYPE STANDARD TABLE .
+    METHODS get_maquila   " maquila
+      IMPORTING
+        !p_gjahr    TYPE gjahr
+        !p_popers   TYPE rg_popers
+        !p_werks    TYPE rg_werks
+      CHANGING
+        !ch_maquila TYPE STANDARD TABLE .
+    METHODS get_maquila_aca   " maquila
+      IMPORTING
+        !p_gjahr    TYPE gjahr
+        !p_popers   TYPE rg_popers
+        !p_werks    TYPE rg_werks
+      CHANGING
+        !ch_maquila TYPE STANDARD TABLE .
+    METHODS get_maquila_gapesa   " maquila
+      IMPORTING
+        !p_gjahr    TYPE gjahr
+        !p_popers   TYPE rg_popers
+        !p_werks    TYPE rg_werks
+      CHANGING
+        !ch_maquila TYPE STANDARD TABLE .
+    METHODS get_alpesur   "
+      IMPORTING
+        !p_gjahr    TYPE gjahr
+        !p_popers   TYPE rg_popers
+        !p_werks    TYPE rg_werks
+      CHANGING
+        !ch_alpesur TYPE STANDARD TABLE .
+    METHODS get_kgs_pzas   "
+      IMPORTING
+        !i_aufnr     TYPE vl_i_aufnr
+      CHANGING
+        !ch_kgs_pzas TYPE STANDARD TABLE .
+    METHODS get_kgs_pzas_procppa   "
+      IMPORTING
+        !p_gjahr     TYPE gjahr
+        !p_popers    TYPE rg_popers
+      CHANGING
+        !ch_kgs_pzas TYPE STANDARD TABLE .
+    METHODS get_kgs_pzas_dep   "
+      IMPORTING
+        !i_werks     TYPE rg_werks
+        !i_matkl     TYPE rg_matkl
+        !i_aufnr     TYPE vl_i_aufnr OPTIONAL
+        !i_rgbwart   TYPE rg_bwart
+      CHANGING
+        !ch_kgs_pzas TYPE STANDARD TABLE .
+    METHODS get_kgs_pro_emp
+      IMPORTING
+        !i_werks    TYPE rg_werks
+        !i_aufnr    TYPE vl_i_aufnr
+        !i_rgbwart  TYPE rg_bwart
+      CHANGING
+        !ch_kgs_emp TYPE STANDARD TABLE .
+    METHODS calculate_dates                                        "
+      CHANGING
+        !p_rgfechas TYPE rg_fechas .
+    METHODS calculate_mortal    "
+      IMPORTING
+        !i_aufnr      TYPE vl_i_aufnr
+      CHANGING
+        !ch_mortandad TYPE STANDARD TABLE .
+    METHODS mortal_deposito    "
+      IMPORTING
+        !i_werks      TYPE rg_werks
+        !i_matkl      TYPE matkl
+        !i_rgbwart    TYPE rg_bwart
+      CHANGING
+        !ch_mortandad TYPE STANDARD TABLE .
+    METHODS kgs_procesa_dep    "
+      IMPORTING
+        !i_werks      TYPE rg_werks
+        !i_matkl      TYPE matkl
+        !i_rgbwart    TYPE rg_bwart
+      CHANGING
+        !ch_kgsproces TYPE STANDARD TABLE .
+    METHODS kgs_procesa_ppa    "
+      IMPORTING
+        !i_werks      TYPE rg_werks
+        !i_matkl      TYPE matkl
+        !i_rgbwart    TYPE rg_bwart
+        !i_aufnr      TYPE vl_i_aufnr
+      CHANGING
+        !ch_kgsproces TYPE STANDARD TABLE .
+    METHODS decomiso_dep_maq    "
+      IMPORTING
+        !i_werks     TYPE rg_werks
+        !i_matkl     TYPE matkl
+        !i_rgbwart   TYPE rg_bwart
+      CHANGING
+        !ch_decomiso TYPE STANDARD TABLE .
+    METHODS estad_huevo_inc
+      IMPORTING
+        !p_gjahr          TYPE gjahr
+        !p_popers         TYPE rg_popers
+        !i_werks          TYPE rg_werks
+        !i_bwart          TYPE rg_bwart
+        !i_aufnr          TYPE vl_i_aufnr
+        !i_aufnr_in02     TYPE vl_i_aufnr
+      CHANGING
+        !ch_estad_hue_inc TYPE STANDARD TABLE .
+    METHODS estad_gapesa
+      IMPORTING
+        !p_gjahr          TYPE gjahr
+        !p_popers         TYPE rg_popers
+        !i_werks          TYPE rg_werks
+        !i_bwart          TYPE rg_bwart
+        !i_aufnr          TYPE vl_i_aufnr
+        !i_aufnr_in02     TYPE vl_i_aufnr
+      CHANGING
+        !ch_estad_hue_inc TYPE STANDARD TABLE .
+    METHODS estad_huevo_inc2
+      IMPORTING
+        !p_gjahr          TYPE gjahr
+        !p_popers         TYPE rg_popers
+        !i_werks          TYPE rg_werks
+        !i_bwart          TYPE rg_bwart
+        !i_aufnr          TYPE vl_i_aufnr
+        !i_aufnr_0100     TYPE rg_aufnr
+      CHANGING
+        !ch_estad_hue_inc TYPE STANDARD TABLE .
   PROTECTED SECTION.
 
-private section.
+  PRIVATE SECTION.
 
-  data RG_FECHAFIN type RG_POPERS .    "
-  data VL_GJAHR type GJAHR .    "
-  data VL_WERKS type RG_WERKS .
-  data:
-    it_status TYPE STANDARD TABLE OF jstat .      "
-  data ORD_VALIDA type AUFNR .     ""e_sysst LIKE bsvx-sttxt.
-  data LV_OBJNR type JSTO-OBJNR .    "
+    DATA rg_fechafin TYPE rg_popers .    "
+    DATA vl_gjahr TYPE gjahr .    "
+    DATA vl_werks TYPE rg_werks .
+    DATA:
+      it_status TYPE STANDARD TABLE OF jstat .      "
+    DATA ord_valida TYPE aufnr .     ""e_sysst LIKE bsvx-sttxt.
+    DATA lv_objnr TYPE jsto-objnr .    "
 
-  methods GET_DAYSMONTH
-    importing
-      !P_DATE type D
-    changing
-      !P_NUMDAYS type I .                                 "
+    METHODS get_daysmonth
+      IMPORTING
+        !p_date    TYPE d
+      CHANGING
+        !p_numdays TYPE i .                                 "
 ENDCLASS.
 
 
 
-CLASS ZCL_COST_ENGORDA_JHV IMPLEMENTATION.
+CLASS zcl_cost_engorda_jhv IMPLEMENTATION.
 
 
-METHOD calculate_dates. "calculo de fechas "
+  METHOD calculate_dates. "calculo de fechas "
 
     DATA: cadena      TYPE string,
           vl_fechaI   TYPE d,
@@ -391,7 +464,7 @@ METHOD calculate_dates. "calculo de fechas "
   ENDMETHOD.
 
 
-METHOD calculate_mortal. "calcula mortalidad
+  METHOD calculate_mortal. "calcula mortalidad
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -452,7 +525,7 @@ METHOD calculate_mortal. "calcula mortalidad
   ENDMETHOD.
 
 
-METHOD decomiso_dep_maq. "calcula mortalidad
+  METHOD decomiso_dep_maq. "calcula mortalidad
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -528,7 +601,7 @@ METHOD decomiso_dep_maq. "calcula mortalidad
   ENDMETHOD.
 
 
-METHOD estad_gapesa.
+  METHOD estad_gapesa.
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -667,7 +740,7 @@ METHOD estad_gapesa.
   ENDMETHOD.
 
 
-METHOD estad_huevo_inc.
+  METHOD estad_huevo_inc.
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -1077,7 +1150,7 @@ SELECT matnr,
   ENDMETHOD.
 
 
-METHOD estad_huevo_inc2.
+  METHOD estad_huevo_inc2.
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -1095,7 +1168,7 @@ METHOD estad_huevo_inc2.
     DATA: rg_aufnr_nac   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr_nac LIKE LINE OF rg_aufnr.
 
-   " DATA(vl_tt_aufnr) = i_aufnr_0100.
+    " DATA(vl_tt_aufnr) = i_aufnr_0100.
     DATA(vl_tt_aufnr_nac) = i_aufnr.
 
     "SORT vl_tt_aufnr BY dauat.
@@ -1112,7 +1185,7 @@ METHOD estad_huevo_inc2.
 
     CLEAR wa_rgaufnr.
 
-    LOOP AT vl_tt_aufnr_nac INTO data(wa_aufnr).
+    LOOP AT vl_tt_aufnr_nac INTO DATA(wa_aufnr).
       wa_rgaufnr-sign = 'I'.
       wa_rgaufnr-option = 'EQ'.
       wa_rgaufnr-low = wa_aufnr-aufnr.
@@ -1356,7 +1429,7 @@ METHOD estad_huevo_inc2.
     INNER JOIN mseg ON mseg~aufnr EQ aufk~aufnr
     WHERE mseg~werks IN @i_werks
     "AND mseg~aufnr IN @i_aufnr_0100
-    and aufk~auart = '0100'
+    AND aufk~auart = '0100'
     AND mseg~bwart IN @i_bwart
     AND mseg~matnr IN ('000000000000400145','000000000000400194')
 
@@ -1509,7 +1582,7 @@ METHOD estad_huevo_inc2.
   ENDMETHOD.
 
 
-METHOD get_acdoca. "costos indirectos "
+  METHOD get_acdoca. "costos indirectos "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1547,7 +1620,7 @@ METHOD get_acdoca. "costos indirectos "
   ENDMETHOD.
 
 
-METHOD get_acdoca_crianza. "costos indirectos "
+  METHOD get_acdoca_crianza. "costos indirectos "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1583,7 +1656,7 @@ METHOD get_acdoca_crianza. "costos indirectos "
   ENDMETHOD.
 
 
-METHOD get_acdoca_eng. "costos indirectos engorda "
+  METHOD get_acdoca_eng. "costos indirectos engorda "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1623,7 +1696,7 @@ METHOD get_acdoca_eng. "costos indirectos engorda "
   ENDMETHOD.
 
 
-METHOD get_acdoca_flete. "costo indirecto solo flete "
+  METHOD get_acdoca_flete. "costo indirecto solo flete "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1680,7 +1753,7 @@ METHOD get_acdoca_flete. "costo indirecto solo flete "
   ENDMETHOD.
 
 
-METHOD get_acdoca_post. "costos indirectos "
+  METHOD get_acdoca_post. "costos indirectos "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1717,7 +1790,7 @@ METHOD get_acdoca_post. "costos indirectos "
   ENDMETHOD.
 
 
-METHOD get_acdoca_ppa_det. "costos indirectos "
+  METHOD get_acdoca_ppa_det. "costos indirectos "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1748,7 +1821,7 @@ METHOD get_acdoca_ppa_det. "costos indirectos "
   ENDMETHOD.
 
 
-METHOD get_alpesur. "alimento alpesur "
+  METHOD get_alpesur. "alimento alpesur "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -1828,7 +1901,7 @@ METHOD get_alpesur. "alimento alpesur "
   ENDMETHOD.
 
 
-METHOD get_aparceria. "aparceria para enngorda "
+  METHOD get_aparceria. "aparceria para enngorda "
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -1860,7 +1933,7 @@ METHOD get_aparceria. "aparceria para enngorda "
   ENDMETHOD.
 
 
-METHOD get_aufnr_ablad. "ordenes extra "
+  METHOD get_aufnr_ablad. "ordenes extra "
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -2006,7 +2079,158 @@ METHOD get_aufnr_ablad. "ordenes extra "
   ENDMETHOD.
 
 
-METHOD get_aufnr_cte. "ordenes "
+  METHOD get_aufnr_cte_ren.
+
+
+    DATA: min TYPE mseg-budat_mkpf,
+          max TYPE mseg-budat_mkpf.
+
+*    READ TABLE p_clorder INTO DATA(wa_clord) INDEX 1.
+*    IF wa_clord-low EQ 'PR02'.
+*      REFRESH p_fecha.
+*    ENDIF.
+
+
+*    IF  wa_clord-low EQ '0100'.
+*
+*      SELECT DISTINCT a~aufnr
+*      FROM aufk AS a
+*      WHERE idat2 IN @p_fecha
+*      AND werks eq 'PQ01'
+*     INTO TABLE @DATA(it_aufnr_0100).
+*
+*    ELSE.
+
+    SELECT DISTINCT a~aufnr, a~gstri, a~getri,a~gltri,a~ftrmi, p~dauat, p~pwerk, p~dwerk,c~objnr,p~ablad, a~plnbez,
+       p~objnp, substring( a~getri, 5,2 ) AS popera, substring(  a~gltri,5,2 ) AS popoerb
+     FROM afko AS a
+    INNER JOIN afpo AS p ON p~aufnr = a~aufnr
+    INNER JOIN caufv AS c ON c~aufnr EQ a~aufnr
+   WHERE ( a~getri IN @p_fecha OR a~gltri IN @p_fecha )
+   AND dauat IN @p_clorder
+   AND dwerk IN @p_werks
+   INTO TABLE @DATA(it_aufnr_close).
+
+*    ENDIF.
+
+*    IF wa_clord-low EQ '0100'.
+*      """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+*
+*    ELSE.
+*      IF wa_clord-low NE 'PR02'.
+
+    IF it_aufnr_close IS NOT INITIAL.
+      LOOP AT it_aufnr_close INTO DATA(wa_aufnr).
+        lv_objnr = wa_aufnr-objnr.
+
+        CALL FUNCTION 'STATUS_READ'
+          EXPORTING
+            client           = sy-mandt
+            objnr            = lv_objnr
+            only_active      = 'X'
+          TABLES
+            status           = it_status
+          EXCEPTIONS
+            object_not_found = 1
+            OTHERS           = 2.
+        IF sy-subrc EQ 0.
+          IF p_tipo EQ 'ENGORDA' OR p_tipo = 'PPA'. "OR p_tipo = 'CRIANZA' OR p_tipo = 'INCUBADORA'.
+
+*              READ TABLE it_status INTO DATA(wa_notie) WITH KEY stat = 'I0009'. "NOTI Excl.
+*              IF sy-subrc EQ 0.
+            READ TABLE it_status INTO DATA(wa_cerre) WITH KEY stat = 'I0046'. "CERR Excl.
+            IF sy-subrc EQ 0.
+              ord_valida = wa_aufnr-aufnr.
+*                ELSE.
+*                  READ TABLE it_status INTO DATA(wa_ctece) WITH KEY stat = 'I0045'. "CTEC
+*                  IF sy-subrc EQ 0.
+*                    ord_valida = wa_aufnr-aufnr.
+*                  ENDIF.
+            ELSE.
+              CLEAR ord_valida.
+            ENDIF.
+*              ENDIF.
+
+            IF ord_valida IS INITIAL.
+              DELETE it_aufnr_close WHERE aufnr = wa_aufnr-aufnr.
+              .
+            ENDIF.
+
+          ELSE.
+
+            READ TABLE it_status INTO DATA(wa_noti) WITH KEY stat = 'I0009'. "NOTI Excl.
+            IF sy-subrc EQ 0.
+              READ TABLE it_status INTO DATA(wa_cerr) WITH KEY stat = 'I0046'. "CERR Excl.
+              IF sy-subrc EQ 0.
+                ord_valida = wa_aufnr-aufnr.
+              ELSE.
+                READ TABLE it_status INTO DATA(wa_ctec) WITH KEY stat = 'I0045'. "CTEC
+                IF sy-subrc EQ 0.
+                  ord_valida = wa_aufnr-aufnr.
+                ELSE.
+                  CLEAR ord_valida.
+                ENDIF.
+              ENDIF.
+            ELSE.
+              CLEAR ord_valida.
+            ENDIF.
+
+            IF ord_valida IS INITIAL.
+              DELETE it_aufnr_close WHERE aufnr = wa_aufnr-aufnr.
+              .
+            ENDIF.
+
+
+          ENDIF.
+        ENDIF.
+
+      ENDLOOP.
+    ENDIF.
+
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    SORT it_aufnr_close BY getri DESCENDING.
+
+
+
+    SELECT belnr, budat, perio, auak~objnr
+    INTO TABLE @DATA(it_auak)
+      FROM auak
+    FOR ALL ENTRIES IN @it_aufnr_close
+      WHERE objnr = @it_aufnr_close-objnr
+      .
+
+    SORT it_auak BY objnr belnr DESCENDING.
+
+
+    LOOP AT it_aufnr_close INTO DATA(wa_test) WHERE getri IS INITIAL.
+      READ TABLE it_auak INTO DATA(wa_auak) WITH KEY objnr = wa_test-objnr.
+      IF sy-subrc EQ 0.
+        "IF wa_auak-budat+4(2) EQ wa_test-gltri+4(2) .
+        wa_test-getri = wa_auak-budat.
+        wa_test-popera = wa_auak-perio+1(2).
+        MODIFY it_aufnr_close FROM wa_test TRANSPORTING getri popera WHERE objnr = wa_test-objnr.
+        "ENDIF.
+
+      ENDIF.
+    ENDLOOP.
+
+    DELETE it_aufnr_close WHERE getri IS INITIAL.
+    DELETE it_aufnr_close WHERE getri NOT IN p_fecha.
+
+    SORT it_aufnr_close BY aufnr DESCENDING.
+    DELETE ADJACENT DUPLICATES FROM it_aufnr_close COMPARING aufnr.
+
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+*      ENDIF.
+*    ENDIF.
+    i_tabla[] = it_aufnr_close[].
+*    i_aufnr[] = it_aufnr_0100[].
+
+
+  ENDMETHOD.
+
+
+  METHOD get_aufnr_cte. "ordenes "
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -2052,7 +2276,7 @@ METHOD get_aufnr_cte. "ordenes "
       SELECT DISTINCT a~aufnr
       FROM aufk AS a
       WHERE idat2 IN @lv_rgfechas
-      AND werks eq 'PQ01'
+      AND werks EQ 'PQ01'
      INTO TABLE @DATA(it_aufnr_0100).
 
     ELSE.
@@ -2184,7 +2408,7 @@ METHOD get_aufnr_cte. "ordenes "
   ENDMETHOD.
 
 
-METHOD get_costowip.
+  METHOD get_costowip.
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -2232,7 +2456,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_daysMonth. "cálculo de dias en el mes "
+  METHOD get_daysMonth. "cálculo de dias en el mes "
 
     DATA: xdatum TYPE d.
 
@@ -2245,7 +2469,7 @@ METHOD get_daysMonth. "cálculo de dias en el mes "
   ENDMETHOD.
 
 
-METHOD get_estadisticos_crianza. "recuperaciones "
+  METHOD get_estadisticos_crianza. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -2303,7 +2527,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_estadisticos_post. "recuperaciones "
+  METHOD get_estadisticos_post. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -2362,7 +2586,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_kgs_pro_emp. "cantidad kilos y piezas empacadora
+  METHOD get_kgs_pro_emp. "cantidad kilos y piezas empacadora
 
     FIELD-SYMBOLS: <fs_mseg> TYPE any,
                    <f_field> TYPE any.
@@ -2481,7 +2705,7 @@ METHOD get_kgs_pro_emp. "cantidad kilos y piezas empacadora
   ENDMETHOD.
 
 
-METHOD get_kgs_pzas. "cantidad de kilos y piezas "
+  METHOD get_kgs_pzas. "cantidad de kilos y piezas "
 
     FIELD-SYMBOLS: <fs_mseg> TYPE any,
                    <f_field> TYPE any.
@@ -2556,7 +2780,7 @@ METHOD get_kgs_pzas. "cantidad de kilos y piezas "
   ENDMETHOD.
 
 
-METHOD get_kgs_pzas_dep. "cantidad kilos y piezas deposito
+  METHOD get_kgs_pzas_dep. "cantidad kilos y piezas deposito
 
     FIELD-SYMBOLS: <fs_mseg> TYPE any,
                    <f_field> TYPE any.
@@ -2729,7 +2953,7 @@ METHOD get_kgs_pzas_dep. "cantidad kilos y piezas deposito
   ENDMETHOD.
 
 
-METHOD get_kgs_pzas_procppa. "cantidad kilos y piezas ppa "
+  METHOD get_kgs_pzas_procppa. "cantidad kilos y piezas ppa "
 
     FIELD-SYMBOLS: <fs_mseg> TYPE any,
                    <f_field> TYPE any.
@@ -2827,7 +3051,7 @@ METHOD get_kgs_pzas_procppa. "cantidad kilos y piezas ppa "
   ENDMETHOD.
 
 
-METHOD get_maquila. "maquila alimento "
+  METHOD get_maquila. "maquila alimento "
 
     FIELD-SYMBOLS: <fst_maquila> TYPE any,
                    <f_field>     TYPE any.
@@ -2969,7 +3193,7 @@ METHOD get_maquila. "maquila alimento "
   ENDMETHOD.
 
 
-METHOD get_maquila_aca. "maquila alimento "
+  METHOD get_maquila_aca. "maquila alimento "
 
     FIELD-SYMBOLS: <fst_maquila> TYPE any,
                    <f_field>     TYPE any.
@@ -3116,7 +3340,7 @@ METHOD get_maquila_aca. "maquila alimento "
   ENDMETHOD.
 
 
-METHOD get_maquila_gapesa. "maquila gapesa"
+  METHOD get_maquila_gapesa. "maquila gapesa"
 
     FIELD-SYMBOLS: <fst_maquila> TYPE any,
                    <f_field>     TYPE any.
@@ -3263,7 +3487,7 @@ METHOD get_maquila_gapesa. "maquila gapesa"
   ENDMETHOD.
 
 
-METHOD get_mb51. "costos directos ppa depositos empacadora "
+  METHOD get_mb51. "costos directos ppa depositos empacadora "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -3399,7 +3623,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_alim. "costos directos alimento "
+  METHOD get_mb51_alim. "costos directos alimento "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -3509,7 +3733,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_crianza. "costos directos crianza "
+  METHOD get_mb51_crianza. "costos directos crianza "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -3619,7 +3843,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_dep. "costos directos ppa depositos empacadora "
+  METHOD get_mb51_dep. "costos directos ppa depositos empacadora "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -3782,7 +4006,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_eng. "costos directos engorda "
+  METHOD get_mb51_eng. "costos directos engorda "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -3914,7 +4138,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_huevo. "costos directos alimento "
+  METHOD get_mb51_huevo. "costos directos alimento "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4042,7 +4266,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_incubadora. "costos directos crianza "
+  METHOD get_mb51_incubadora. "costos directos crianza "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4153,7 +4377,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mb51_post. "costos directos empacadora "
+  METHOD get_mb51_post. "costos directos empacadora "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4263,7 +4487,7 @@ INTO TABLE @DATA(it_mb51).
   ENDMETHOD.
 
 
-METHOD get_mermas. "mermas para alimento "
+  METHOD get_mermas. "mermas para alimento "
 
 
     DATA: lv_rgfechas TYPE rg_fechas.
@@ -4451,7 +4675,7 @@ METHOD get_mermas. "mermas para alimento "
   ENDMETHOD.
 
 
-METHOD get_mermas_maq. "mermas para alimento "
+  METHOD get_mermas_maq. "mermas para alimento "
 
 
     DATA: lv_rgfechas TYPE rg_fechas.
@@ -4646,7 +4870,7 @@ METHOD get_mermas_maq. "mermas para alimento "
   ENDMETHOD.
 
 
-METHOD get_recuperaciones. "recuperaciones "
+  METHOD get_recuperaciones. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4699,7 +4923,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_recuperaciones_crianza. "recuperaciones "
+  METHOD get_recuperaciones_crianza. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4752,7 +4976,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_recuperaciones_post. "recuperaciones "
+  METHOD get_recuperaciones_post. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4804,7 +5028,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_recupera_alim. "recuperaciones alimento "
+  METHOD get_recupera_alim. "recuperaciones alimento "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -4887,7 +5111,7 @@ INTO TABLE @DATA(it_mseg).
   ENDMETHOD.
 
 
-METHOD get_subprd_gapesa. "recuperaciones "
+  METHOD get_subprd_gapesa. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -5034,7 +5258,7 @@ METHOD get_subprd_gapesa. "recuperaciones "
   ENDMETHOD.
 
 
-METHOD get_sub_hc. "recuperaciones "
+  METHOD get_sub_hc. "recuperaciones "
 
     FIELD-SYMBOLS: <fst_mb51> TYPE any,
                    <f_field>  TYPE any.
@@ -5182,7 +5406,7 @@ METHOD get_sub_hc. "recuperaciones "
   ENDMETHOD.
 
 
-METHOD kgs_procesa_dep.
+  METHOD kgs_procesa_dep.
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -5253,7 +5477,7 @@ METHOD kgs_procesa_dep.
   ENDMETHOD.
 
 
-METHOD kgs_procesa_ppa.
+  METHOD kgs_procesa_ppa.
 
     DATA: lv_rgfechas TYPE rg_fechas.
     DATA: min TYPE mseg-budat_mkpf,
@@ -5335,7 +5559,7 @@ METHOD kgs_procesa_ppa.
   ENDMETHOD.
 
 
-METHOD mortal_deposito. "calcula mortalidad
+  METHOD mortal_deposito. "calcula mortalidad
 
     DATA: rg_aufnr   TYPE RANGE OF afko-aufnr,
           wa_rgaufnr LIKE LINE OF rg_aufnr.
@@ -5409,4 +5633,120 @@ METHOD mortal_deposito. "calcula mortalidad
     ch_mortandad[]  = it_mortalidad[].
 
   ENDMETHOD.
+
+
+  METHOD get_kgs_cost_trans.
+
+    SELECT SUM(
+       CAST( CASE WHEN m1~bwart = '262' OR m1~bwart = '102' THEN menge * -1 ELSE menge END AS QUAN( 13,3 ) ) ) AS menge, m1~meins
+      INTO TABLE @DATA(it_kgs)
+   FROM mseg AS m1
+   INNER JOIN mara AS m2 ON m2~matnr = m1~matnr
+   WHERE m2~ferth = @i_ferth AND
+   m1~budat_mkpf BETWEEN @i_fecha_i AND @i_fecha_f
+   AND m1~bwart IN @i_rgbwart
+   AND m1~aufnr IN @i_rgaufnr
+   GROUP BY  m1~meins.
+
+    ch_kgs_cost_trans = it_kgs[].
+  ENDMETHOD.
+
+
+  METHOD get_kgs_pro_merma.
+
+    SELECT SUM(
+      CAST( CASE WHEN m1~bwart = '262' OR m1~bwart = '102' THEN menge * -1 ELSE menge END AS QUAN( 13,3 ) ) ) AS menge, m1~meins
+     INTO TABLE @DATA(it_kgs)
+    FROM mseg AS m1
+    WHERE m1~budat_mkpf BETWEEN @i_fecha_i AND @i_fecha_f
+    AND m1~bwart IN @i_rgbwart
+    AND m1~aufnr IN @i_rgaufnr
+    GROUP BY  m1~meins.
+
+    ch_kgs_cost_trans = it_kgs[].
+  ENDMETHOD.
+
+
+  METHOD get_flete_gto_transf.
+
+    DATA vl_string TYPE string.
+    DATA(vl_mes) = i_month+4(2).
+    DATA: vl_rg_objnr TYPE RANGE OF cosp-objnr,
+          wa_rg_objnr LIKE LINE OF vl_rg_objnr.
+
+    TYPES: BEGIN OF st_coss,
+             saknr TYPE saknr,
+             mes   TYPE wtgxxx,
+           END OF st_coss.
+
+
+
+    DATA i_coss TYPE STANDARD TABLE OF st_coss.
+
+    SELECT valfrom, objnr
+     INTO TABLE @DATA(it_kostl)
+     FROM setleaf AS s
+     INNER JOIN csks AS c ON c~kostl = s~valfrom
+     WHERE setname = @i_gpo_kostl.
+
+    LOOP AT it_kostl INTO DATA(wa_kostl).
+      wa_rg_objnr-low = wa_kostl-objnr.
+      wa_rg_objnr-option = 'EQ'.
+      wa_rg_objnr-sign = 'I'.
+      APPEND wa_rg_objnr TO vl_rg_objnr.
+    ENDLOOP.
+
+
+    CONCATENATE 'KSTAR,' 'WTG0' vl_mes ' AS MES' INTO vl_string.
+
+
+
+
+
+    SELECT (vl_string)
+         FROM  coss
+*         for ALL ENTRIES IN @it_kostl
+              WHERE objnr IN @vl_rg_objnr
+              AND gjahr = @i_gjahr
+              AND lednr EQ '00'
+              AND perbl  EQ '016'
+              AND versn EQ '000'
+             AND wrttp IN ('01','04','10','11','60')
+             AND kstar IN @i_gpo_kstar
+             AND bukrs = 'SA01'
+              INTO TABLE @i_coss.
+
+
+    ch_flete_transf = i_coss[].
+
+  ENDMETHOD.
+
+  METHOD get_ventas_netas.
+
+    SELECT a~racct, SUM( a~wsl ) AS monto
+    INTO TABLE @DATA(it_vtas_netas)
+    FROM acdoca AS a
+     WHERE budat = @i_fecha
+     AND racct IN @i_gpo_kstar
+     GROUP BY a~racct.
+
+    ch_vtas_netas = it_vtas_netas.
+
+  ENDMETHOD.
+
+  METHOD get_kgs_vendidos.
+
+    SELECT c~artnr, SUM( vvpnt ) AS mes
+    INTO TABLE @DATA(it_kgs_vtas)
+    FROM ce1gp00 AS c
+    INNER JOIN mara AS m ON m~matnr = c~artnr
+    WHERE m~ferth IN @i_gpo_ferth
+    AND c~werks IN @i_gpo_werks AND
+    hzdat = @i_fecha
+    AND bukrs = @i_bukrs and vrgar = 'F'
+    GROUP BY c~artnr.
+
+   ch_kgs_vendidos = it_kgs_vtas[].
+  ENDMETHOD.
+
 ENDCLASS.
