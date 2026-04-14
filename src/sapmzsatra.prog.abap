@@ -20,3 +20,9 @@
 *INCLUDE mzsatrao01.  " PBO-Modules
 *INCLUDE mzsatrai01.  " PAI-Modules
 *INCLUDE mzsatraf01.  " FORM-Routines
+*{   INSERT         SPDK914782                                        1
+INCLUDE mzsatratop.  " global Data
+INCLUDE mzsatrao01.  " PBO-Modules
+INCLUDE mzsatrai01.  " PAI-Modules
+INCLUDE mzsatraf01.  " FORM-Routines
+*}   INSERT

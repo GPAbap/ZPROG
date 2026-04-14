@@ -10,121 +10,239 @@
     <LDBNAME>D$S</LDBNAME>
     <UCCHECK>X</UCCHECK>
    </PROGDIR>
+   <CUA>
+    <ADM>
+     <ACTCODE>000001</ACTCODE>
+     <PFKCODE>000001</PFKCODE>
+    </ADM>
+    <STA>
+     <RSMPE_STAT>
+      <CODE>ZSTANDARD</CODE>
+      <MODAL>D</MODAL>
+      <ACTCODE>000001</ACTCODE>
+      <PFKCODE>000001</PFKCODE>
+      <BUTCODE>0001</BUTCODE>
+      <INT_NOTE>Reporte Rentablidad</INT_NOTE>
+     </RSMPE_STAT>
+    </STA>
+    <FUN>
+     <RSMPE_FUNT>
+      <CODE>&amp;CSV</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_XLS</TEXT_NAME>
+      <ICON_ID>@J2@</ICON_ID>
+      <FUN_TEXT>Crear CSV</FUN_TEXT>
+      <INFO_TEXT>Exportar CSV</INFO_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>&amp;F03</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <FUN_TEXT>Atrás</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>&amp;F12</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <TEXT_NAME>ICON_CANCEL</TEXT_NAME>
+      <ICON_ID>@0W@</ICON_ID>
+      <FUN_TEXT>Cancelar</FUN_TEXT>
+     </RSMPE_FUNT>
+     <RSMPE_FUNT>
+      <CODE>&amp;F15</CODE>
+      <TEXTNO>001</TEXTNO>
+      <TEXT_TYPE>S</TEXT_TYPE>
+      <FUN_TEXT>Finalizar</FUN_TEXT>
+     </RSMPE_FUNT>
+    </FUN>
+    <BUT>
+     <RSMPE_BUT>
+      <PFK_CODE>000001</PFK_CODE>
+      <CODE>0001</CODE>
+      <NO>01</NO>
+      <PFNO>02</PFNO>
+     </RSMPE_BUT>
+    </BUT>
+    <PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>02</PFNO>
+      <FUNCODE>&amp;CSV</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>03</PFNO>
+      <FUNCODE>&amp;F03</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>12</PFNO>
+      <FUNCODE>&amp;F12</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+     <RSMPE_PFK>
+      <CODE>000001</CODE>
+      <PFNO>15</PFNO>
+      <FUNCODE>&amp;F15</FUNCODE>
+      <FUNNO>001</FUNNO>
+     </RSMPE_PFK>
+    </PFK>
+    <SET>
+     <RSMPE_STAF>
+      <STATUS>ZSTANDARD</STATUS>
+      <FUNCTION>&amp;CSV</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ZSTANDARD</STATUS>
+      <FUNCTION>&amp;F03</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ZSTANDARD</STATUS>
+      <FUNCTION>&amp;F12</FUNCTION>
+     </RSMPE_STAF>
+     <RSMPE_STAF>
+      <STATUS>ZSTANDARD</STATUS>
+      <FUNCTION>&amp;F15</FUNCTION>
+     </RSMPE_STAF>
+    </SET>
+    <DOC>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>A</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Reporte Rentablidad</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>P</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Reporte Rentablidad</INT_NOTE>
+     </RSMPE_ATRT>
+     <RSMPE_ATRT>
+      <OBJ_TYPE>B</OBJ_TYPE>
+      <OBJ_CODE>000001</OBJ_CODE>
+      <SUB_CODE>0001</SUB_CODE>
+      <MODAL>D</MODAL>
+      <INT_NOTE>Reporte Rentablidad</INT_NOTE>
+     </RSMPE_ATRT>
+    </DOC>
+   </CUA>
    <TPOOL>
     <item>
      <ID>I</ID>
      <KEY>001</KEY>
-     <ENTRY>Peso Promedio PV</ENTRY>
-     <LENGTH>20</LENGTH>
-    </item>
-    <item>
-     <ID>I</ID>
-     <KEY>003</KEY>
-     <ENTRY>C.U. Kg. Costo Transferencia</ENTRY>
+     <ENTRY>Flete gasto PPA</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>I</ID>
-     <KEY>004</KEY>
+     <KEY>002</KEY>
+     <ENTRY>Costo transferencia kg</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
      <ENTRY>Rendimiento</ENTRY>
      <LENGTH>11</LENGTH>
     </item>
     <item>
      <ID>I</ID>
-     <KEY>005</KEY>
-     <ENTRY>Peso Promedio</ENTRY>
+     <KEY>004</KEY>
+     <ENTRY>Peso promedio</ENTRY>
      <LENGTH>13</LENGTH>
     </item>
     <item>
      <ID>I</ID>
-     <KEY>007</KEY>
-     <ENTRY>Flete Gasto Transferencia</ENTRY>
+     <KEY>005</KEY>
+     <ENTRY>Flete gasto PPA 2</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>I</ID>
-     <KEY>008</KEY>
+     <KEY>006</KEY>
      <ENTRY>Recuperaciones</ENTRY>
      <LENGTH>14</LENGTH>
     </item>
     <item>
      <ID>I</ID>
-     <KEY>009</KEY>
-     <ENTRY>Precio Venta</ENTRY>
+     <KEY>007</KEY>
+     <ENTRY>Precio venta</ENTRY>
      <LENGTH>14</LENGTH>
     </item>
     <item>
      <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>Gasto distribucion</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>009</KEY>
+     <ENTRY>Gasto venta</ENTRY>
+     <LENGTH>18</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>010</KEY>
-     <ENTRY>Gasto Distribución</ENTRY>
-     <LENGTH>20</LENGTH>
+     <ENTRY>Gastos administracion</ENTRY>
+     <LENGTH>28</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>011</KEY>
-     <ENTRY>Gasto Venta</ENTRY>
-     <LENGTH>11</LENGTH>
+     <ENTRY>CU materia prima</ENTRY>
+     <LENGTH>20</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>012</KEY>
-     <ENTRY>Gasto Administración</ENTRY>
+     <ENTRY>Costo total kg</ENTRY>
      <LENGTH>20</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>013</KEY>
-     <ENTRY>C.U. Materia Prima</ENTRY>
-     <LENGTH>20</LENGTH>
-    </item>
-    <item>
-     <ID>I</ID>
-     <KEY>014</KEY>
-     <ENTRY>Costo Total Kilo</ENTRY>
-     <LENGTH>20</LENGTH>
-    </item>
-    <item>
-     <ID>I</ID>
-     <KEY>015</KEY>
-     <ENTRY>Utilidad Bruta</ENTRY>
+     <ENTRY>Utilidad bruta</ENTRY>
      <LENGTH>15</LENGTH>
     </item>
     <item>
      <ID>I</ID>
+     <KEY>014</KEY>
+     <ENTRY>Total gastos venta</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>015</KEY>
+     <ENTRY>Utilidad operacion</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
      <KEY>016</KEY>
-     <ENTRY>Total Gastos Venta</ENTRY>
-     <LENGTH>20</LENGTH>
+     <ENTRY>Utilidad op. pkg iniciados</ENTRY>
+     <LENGTH>36</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>017</KEY>
-     <ENTRY>Utilidad Operación</ENTRY>
-     <LENGTH>20</LENGTH>
+     <ENTRY>Cantidad</ENTRY>
+     <LENGTH>36</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>018</KEY>
-     <ENTRY>Utilidad Operación PKG. Iniciados</ENTRY>
-     <LENGTH>33</LENGTH>
+     <ENTRY>Parámentros de Entrada</ENTRY>
+     <LENGTH>22</LENGTH>
     </item>
     <item>
      <ID>R</ID>
      <ENTRY>Reporte Matriz Rentabilidad</ENTRY>
      <LENGTH>27</LENGTH>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_GJAHR</KEY>
-     <ENTRY>.</ENTRY>
-     <LENGTH>9</LENGTH>
-     <SPLIT>D</SPLIT>
-    </item>
-    <item>
-     <ID>S</ID>
-     <KEY>P_WERKS</KEY>
-     <ENTRY>.</ENTRY>
-     <LENGTH>9</LENGTH>
-     <SPLIT>D</SPLIT>
     </item>
     <item>
      <ID>S</ID>

@@ -23,7 +23,6 @@ FUNCTION zmm_ret_emb_cja.
   DATA: it_pedidos  TYPE STANDARD TABLE OF st_pedidos,
         it_entregas TYPE STANDARD TABLE OF st_entregas.
 
-
   DATA: vl_kgs_dev  TYPE lfimg,
         vl_pzas_dev TYPE p DECIMALS 2.
   DATA: gen_vbeln TYPE vbeln.
@@ -35,6 +34,8 @@ FUNCTION zmm_ret_emb_cja.
     p_fecha-high = sy-datum.
 
   ENDIF.
+
+  REFRESH it_created_vbeln.
 
   PERFORM get_data USING p_fecha p_vkorg
                          p_vtweg p_spart
@@ -48,11 +49,11 @@ FUNCTION zmm_ret_emb_cja.
 
   DELETE it_entregas WHERE ( disgr  NE '4002' AND disgr  NE '5001' ).
 
-  SORT it_entregas BY vbeln.
+  SORT it_entregas BY vbeln matnr vgbel.
   SORT it_pedidos BY vbeln.
 
   DATA(it_single_entregas) = it_entregas[].
-  DELETE ADJACENT DUPLICATES FROM it_single_entregas COMPARING vbeln.
+  DELETE ADJACENT DUPLICATES FROM it_single_entregas COMPARING vbeln matnr vgbel.
 
   LOOP AT it_single_entregas INTO DATA(wa_entregas).
 
@@ -80,7 +81,22 @@ FUNCTION zmm_ret_emb_cja.
     READ TABLE it_pedidos INTO DATA(wa_pedidos) WITH KEY vbeln = wa_entregas-vgbel.
     IF sy-subrc EQ 0.
       IF vl_kgs_dev GT 0.
+
+*        DATA lv_doc_sig TYPE vbeln.
+*        CLEAR lv_doc_sig.
+*
+*        SELECT SINGLE vbeln
+*          FROM vbfa
+*          INTO @lv_doc_sig
+*         WHERE vbelv = @wa_entregas-vbeln.
+*
+*        IF sy-subrc = 0.
+*          CONTINUE.
+*        ENDIF.
+
+
         PERFORM devolucion_cajas TABLES it_entregas USING wa_pedidos
+                                                  wa_entregas-vbeln
                                                   'PP01'
                                                   vl_pzas_dev
                                                   vl_kgs_dev
@@ -92,7 +108,9 @@ FUNCTION zmm_ret_emb_cja.
   ENDLOOP.
 
 
+PERFORM contab_entrega_bf.
 
+  p_table = it_created_vbeln[].
 ENDFUNCTION.
 
 FORM f_pedido_venta TABLES pit_entregas TYPE STANDARD TABLE
@@ -130,7 +148,7 @@ FORM f_pedido_venta TABLES pit_entregas TYPE STANDARD TABLE
          lt_return[].
 
   ls_header-doc_type = 'ZDEM'.
-  ls_header-sales_org = ref_pedido-vkbur.
+  ls_header-sales_org = ref_pedido-vkorg. "ref_pedido-vkbur.
   ls_header-distr_chan = ref_pedido-vtweg.
   ls_header-division =  ref_pedido-spart.
   ls_header-req_date_h = sy-datlo.
@@ -209,9 +227,9 @@ FORM f_pedido_venta TABLES pit_entregas TYPE STANDARD TABLE
 
     COMMIT WORK AND WAIT.
 * Pedido de Venta grabado
-    MESSAGE ID 'V1' TYPE 'S' NUMBER '311'
-    WITH 'Pedido de Venta'(s01)
-          p_documento.
+*    MESSAGE ID 'V1' TYPE 'S' NUMBER '311'
+*    WITH 'Pedido de Venta'(s01)
+*          p_documento.
   ELSE.
     LOOP AT lt_return INTO ls_return WHERE type = 'E'.
       MESSAGE ID ls_return-id TYPE ls_return-type NUMBER ls_return-number
@@ -310,14 +328,22 @@ FORM get_data USING p_fecha LIKE bapi_rangesaudat
     WHERE vgbel = @it_pedidos-vbeln
     AND lips~werks EQ 'PP01'.
 
-    SELECT vbeln, erdat, lips~matnr, lfimg, lips~werks, disgr, vgbel
-    FROM lips
-    INNER JOIN marc AS m ON m~matnr = lips~matnr AND m~werks = lips~werks
-    FOR ALL ENTRIES IN @it_entregas
-    WHERE vbeln = @it_entregas-vbeln AND lips~vgbel IS INITIAL
-    AND lips~werks EQ 'PP01'
-    APPENDING TABLE @it_entregas.
+    IF it_entregas[] IS NOT INITIAL.
 
+      SELECT vbeln, erdat, lips~matnr, lfimg, lips~werks, disgr, vgbel
+      FROM lips
+      INNER JOIN marc AS m ON m~matnr = lips~matnr AND m~werks = lips~werks
+      FOR ALL ENTRIES IN @it_entregas
+      WHERE vbeln = @it_entregas-vbeln AND lips~vgbel IS INITIAL
+      AND lips~werks EQ 'PP01'
+      INTO TABLE @DATA(lt_entregas_extra).
+
+      APPEND LINES OF lt_entregas_extra TO it_entregas.
+
+      SORT it_entregas BY vbeln matnr vgbel.
+      DELETE ADJACENT DUPLICATES FROM it_entregas COMPARING vbeln matnr vgbel.
+
+    ENDIF.
 
 
   ENDIF.
@@ -329,10 +355,11 @@ FORM get_data USING p_fecha LIKE bapi_rangesaudat
 ENDFORM.
 
 FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
-                           USING i_wapedidos i_werks
+                           USING i_wapedidos i_vbeln i_werks
                                  vl_pzas_dev vl_kgs_dev
                  CHANGING p_documento TYPE vbak-vbeln.
 
+  DATA vl_it_entregas TYPE STANDARD TABLE OF st_entregas.
 
   .
 
@@ -362,8 +389,21 @@ FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
 
   DATA detalle TYPE st_entregas.
   DATA ref_pedido TYPE st_pedidos.
+  DATA lv_existente TYPE vbeln.
+  vl_it_entregas = pit_entregas[].
 
   ref_pedido = i_wapedidos.
+
+  CLEAR lv_existente.
+
+*  SELECT SINGLE vbeln
+*    FROM vbfa
+*    INTO @lv_existente
+*   WHERE vbelv = @i_vbeln.
+*
+*  IF sy-subrc = 0.
+*    EXIT. " O RETURN si lo conviertes a método/FM
+*  ENDIF.
 
 
   CLEAR:
@@ -409,7 +449,7 @@ FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
 
   posicion = '0'.
 
-  LOOP AT pit_entregas INTO detalle.
+  LOOP AT vl_it_entregas INTO detalle WHERE vbeln = i_vbeln.
 
     IF detalle-matnr EQ '000000000000250036' OR detalle-matnr EQ '000000000000250037'.
 
@@ -473,6 +513,19 @@ FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
 *     order_conditions_in  = lt_condiciones
     .
 
+
+  READ TABLE lt_return WITH KEY type = 'E' TRANSPORTING NO FIELDS.
+  IF sy-subrc = 0.
+    CLEAR p_documento.
+    EXIT.
+  ENDIF.
+
+  READ TABLE lt_return WITH KEY type = 'A' TRANSPORTING NO FIELDS.
+  IF sy-subrc = 0.
+    CLEAR p_documento.
+    EXIT.
+  ENDIF.
+
   IF p_documento IS NOT INITIAL.
     CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
       EXPORTING
@@ -480,18 +533,17 @@ FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
 *      IMPORTING
 *       return = lt_return
       .
+    WAIT UP TO '3' SECONDS.
 
-    COMMIT WORK AND WAIT.
-* Pedido de Venta grabado
-    MESSAGE ID 'V1' TYPE 'S' NUMBER '311'
-    WITH 'Devolución Número: '(s01)
-          p_documento.
+    wa_created-documento = p_documento.
+   APPEND wa_created TO it_created_vbeln.
 
-    READ TABLE lt_return INTO DATA(wa_vbeln) WITH KEY type = 'S' id = 'V1' number = '260'.
-    IF sy-subrc EQ 0.
-      entrega = wa_vbeln-message_v3.
-      PERFORM contab_entrega USING entrega.
-    ENDIF.
+
+*    READ TABLE lt_return INTO DATA(wa_vbeln) WITH KEY type = 'S' id = 'V1' number = '260'.
+*    IF sy-subrc EQ 0.
+*      entrega = wa_vbeln-message_v3.
+*      PERFORM contab_entrega USING entrega.
+*    ENDIF.
   ELSE.
     LOOP AT lt_return INTO DATA(ls_return) WHERE type = 'E'.
       MESSAGE ID ls_return-id TYPE ls_return-type NUMBER ls_return-number
@@ -504,7 +556,31 @@ FORM devolucion_cajas TABLES pit_entregas TYPE STANDARD TABLE
   ENDIF.
 
 ENDFORM.
+FORM contab_entrega_bf.
 
+  DATA: lt_entregas TYPE TABLE OF vbeln,
+        lv_entrega  TYPE vbeln.
+
+  CLEAR lt_entregas.
+IF it_created_vbeln[] is not INITIAL.
+
+
+  SELECT vbeln
+    FROM vbfa
+    INTO TABLE @lt_entregas
+   FOR ALL ENTRIES IN @it_created_vbeln
+   WHERE vbelv   = @it_created_vbeln-documento
+     AND vbtyp_n = 'T'.   " J = entrega de devolución
+
+  SORT lt_entregas.
+  DELETE ADJACENT DUPLICATES FROM lt_entregas.
+
+  LOOP AT lt_entregas INTO lv_entrega.
+    PERFORM contab_entrega USING lv_entrega.
+ ENDLOOP.
+
+ENDIF.
+ENDFORM.
 
 FORM contab_entrega USING p_vbeln TYPE vbeln.
 
@@ -516,6 +592,15 @@ FORM contab_entrega USING p_vbeln TYPE vbeln.
         vl_vbeln TYPE vbeln.
 
   vl_vbeln = |{ p_vbeln ALPHA = IN }|.
+
+  SELECT SINGLE wbstk
+  FROM likp
+  INTO @DATA(lv_wbstk)
+ WHERE vbeln = @vl_vbeln.
+
+  IF lv_wbstk = 'C'.
+    RETURN. " Ya contabilizada
+  ENDIF.
 
   it_hd-deliv_numb  = vl_vbeln.
   it_hc-deliv_numb  = vl_vbeln.
@@ -542,5 +627,9 @@ FORM contab_entrega USING p_vbeln TYPE vbeln.
     CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
       EXPORTING
         wait = 'X'.
+
+
   ENDIF.
+  WAIT UP TO '3' SECONDS.
+
 ENDFORM.

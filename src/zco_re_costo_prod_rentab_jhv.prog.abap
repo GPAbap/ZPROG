@@ -16,17 +16,29 @@ START-OF-SELECTION.
 *  IF it_aufnr_end IS INITIAL.
 *    MESSAGE 'No hay órdenes con los criterios establecidos' TYPE 'I' DISPLAY LIKE 'S'.
 *  ELSE.
-  PERFORM get_kgs_pzas.
-  PERFORM set_peso_prom.
-  """"""""""""""""""""""""""""
-  PERFORM get_ordenes_fin USING 'PPA'.
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  perform get_cantidad_procesado. "para operaciones posteriores
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  perform get_cantidad_pv. "para operaciones posteriores
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+   PERFORM get_kgs_pzas. "para operaciones posteriores
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  PERFORM flete_gto_transf.
+  """"""""""""""""""""""""""""""""""
   PERFORM set_costo_transf.
   """"""""""""""""""""""""""""""""
+  PERFORM get_ordenes_fin USING 'PPA'.
   PERFORM set_rendimientos.
-  """""""""""""""""""""""""""
-  PERFORM flete_gto_transf.
-  """""""""""""""""""""""""""""""""
+  """""""""""""""""""""""""""""""""""""
+  PERFORM set_peso_prom.
+  """"""""""""""""""""""""""""
   PERFORM precio_vta_kg_uni.
   """""""""""""""""""""""""""""""""
+  PERFORM set_gastos_distrib.
+  """""""""""""""""""""""""""""""""""""
+  PERFORM set_gastos_venta.
+  """"""""""""""""""""""""""""""""""""""
+  PERFORM set_gastos_admon.
+  """"""""""""""""""""""""""""""""""""""""
   PERFORM show_results.
 *  ENDIF.

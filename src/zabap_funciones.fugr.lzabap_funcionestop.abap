@@ -20,4 +20,12 @@ TYPES: BEGIN OF st_pedidos,
          werks TYPE werks_d,
          disgr TYPE disgr,
          vgbel TYPE vgbel,
-       END OF st_entregas.
+       END OF st_entregas,
+
+       BEGIN OF st_created_vbeln,
+         documento TYPE vbeln,
+         vbeln     TYPE vbeln,
+       END OF st_created_vbeln.
+
+DATA: it_created_vbeln TYPE STANDARD TABLE OF st_Created_vbeln,
+      wa_created       LIKE LINE OF it_created_vbeln.

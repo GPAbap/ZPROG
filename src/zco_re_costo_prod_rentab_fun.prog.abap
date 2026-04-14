@@ -4,8 +4,73 @@
 
 
 FORM handle_user_command USING i_ucomm TYPE salv_de_function.
+  PERFORM export_csv.
+
 ENDFORM.
 
+FORM export_csv.
+
+  DATA: gv_line TYPE string,
+        gv_sep  TYPE c LENGTH 1 VALUE ','.
+
+  DATA: dato       TYPE string,
+        wgbez60    TYPE string,
+        h          TYPE string,
+        m          TYPE string,
+        chiapas    TYPE string,
+        rns_entero TYPE string,
+        rns_cortes TYPE string,
+        rtc        TYPE string,
+        pintado_p  TYPE string,
+        hidratado  TYPE string,
+        rhp_cortes TYPE string,
+        limpiezas  TYPE string.
+
+  FIELD-SYMBOLS: <fs_st>   TYPE any,
+                 <fs_line> TYPE any.
+
+  OPEN DATASET sap_file
+  FOR OUTPUT IN TEXT MODE ENCODING UTF-8.
+
+  IF sy-subrc <> 0.
+    WRITE: / 'No se pudo abrir el archivo:', sap_file.
+    RETURN.
+  ENDIF.
+
+  "------------------------------------------------------------
+  " 3. Escribir encabezado CSV
+  "------------------------------------------------------------
+  CLEAR gv_line.
+  LOOP AT lt_fcat INTO ls_fcat WHERE fieldname NE 'TABCOLOR' .
+    dato = ls_fcat-coltext.
+    CONCATENATE gv_line dato INTO gv_line SEPARATED BY gv_sep.
+  ENDLOOP.
+
+  gv_line = gv_line+1.
+
+  TRANSFER gv_line TO sap_file.
+
+  "------------------------------------------------------------
+  " 4. Escribir datos
+  "------------------------------------------------------------
+  LOOP AT <fs_outtable> ASSIGNING <fs_st>.
+    CLEAR gv_line.
+
+    LOOP AT lt_fcat INTO ls_fcat WHERE fieldname NE 'TABCOLOR' .
+
+      ASSIGN COMPONENT ls_fcat-fieldname OF STRUCTURE <fs_st> TO <fs_line>.
+      dato = <fs_line>.
+      CONCATENATE gv_line dato  INTO gv_line SEPARATED BY gv_sep.
+
+    ENDLOOP.
+    gv_line = gv_line+1.
+
+    TRANSFER gv_line TO sap_file.
+
+
+  ENDLOOP.
+  CLOSE DATASET sap_file.
+ENDFORM.
 FORM build_fieldcatalog.
 
   DATA: campocu       TYPE string,
@@ -23,7 +88,7 @@ FORM build_fieldcatalog.
   ls_fcat-col_pos   = ncolumnas.
   ls_fcat-fieldname = 'WGBEZ60'.
   ls_fcat-outputlen = '40'.
-  ls_fcat-coltext   = 'CONCEPTO'.
+  ls_fcat-coltext   = 'description'.
   ls_fcat-fix_column = 'X'.
   APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
 
@@ -41,6 +106,7 @@ FORM build_fieldcatalog.
     ls_fcat-col_pos   = ncolumnas.
     ls_fcat-ref_table = 'MSEG'.
     ls_fcat-ref_field = 'MENGE'.
+    ls_fcat-coltext   = 'H/xalapa'.
     ls_fcat-decimals = '3'.
     ls_fcat-outputlen = '22'.
     ls_fcat-do_sum    = 'X'.
@@ -49,14 +115,121 @@ FORM build_fieldcatalog.
 
   ncolumnas = ncolumnas + 1.
   ls_fcat-col_pos   = ncolumnas.
-  ls_fcat-fieldname = 'TOTAL'.
-  ls_fcat-coltext   = 'TOTAL'.
+  ls_fcat-fieldname = 'H'.
+  ls_fcat-coltext   = 'H'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'M'.
+  ls_fcat-coltext   = 'M'.
   "ls_fcat-datatype  = 'CURR'.
   ls_fcat-ref_table = 'MSEG'.
   ls_fcat-ref_field = 'MENGE'.
   ls_fcat-decimals = '3'.
-  ls_fcat-outputlen = '22'.
-  ls_fcat-no_out = 'X'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'CHIAPAS'.
+  ls_fcat-coltext   = 'CHIAPAS'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '11'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'RNS_ENTERO'.
+  ls_fcat-coltext   = 'RNS ENTERO'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '11'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'RNS_CORTES'.
+  ls_fcat-coltext   = 'RNS CORTES'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '11'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'RTC'.
+  ls_fcat-coltext   = 'RTC'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'PINTADO_P'.
+  ls_fcat-coltext   = 'PINTADO PESADO'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'HIDRATADO'.
+  ls_fcat-coltext   = 'HIDRATADO'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'RHP_CORTES'.
+  ls_fcat-coltext   = 'RHP CORTES'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
+  APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
+
+  ncolumnas = ncolumnas + 1.
+  ls_fcat-col_pos   = ncolumnas.
+  ls_fcat-fieldname = 'LIMPIEZAS'.
+  ls_fcat-coltext   = 'LIMPIEZAS'.
+  "ls_fcat-datatype  = 'CURR'.
+  ls_fcat-ref_table = 'MSEG'.
+  ls_fcat-ref_field = 'MENGE'.
+  ls_fcat-decimals = '3'.
+  ls_fcat-outputlen = '10'.
+*  ls_fcat-no_out = 'X'.
   APPEND ls_fcat TO lt_fcat. CLEAR  ls_fcat.
 
   ncolumnas = ncolumnas + 1.
@@ -228,17 +401,17 @@ FORM set_functions_alv.
 *endtry.
 
 *  IF gv_tipore = 'PPA'.
-*    o_alv->set_screen_status(
-*        pfstatus      =  'ZSTANDARD'
-*        report        =  sy-repid
-*        set_functions = o_alv->c_functions_all ).
-*
-*    lr_events = o_alv->get_event( ).
-*
-*    CREATE OBJECT gr_events.
-*
-**... §6.1 register to the event USER_COMMAND
-*    SET HANDLER gr_events->on_user_command FOR lr_events.
+  o_alv->set_screen_status(
+      pfstatus      =  'ZSTANDARD'
+      report        =  sy-repid
+      set_functions = o_alv->c_functions_all ).
+
+  lr_events = o_alv->get_event( ).
+
+  CREATE OBJECT gr_events.
+
+*... §6.1 register to the event USER_COMMAND
+  SET HANDLER gr_events->on_user_command FOR lr_events.
 *  ENDIF.
 ENDFORM.
 
@@ -298,36 +471,22 @@ FORM calculate_columns .
   DATA column TYPE REF TO cl_salv_column.
 
   column = lr_columns->get_column( columnname = 'WGBEZ60' ).
-  column->set_short_text('CONCEPTO' ).
-  column->set_medium_text('CONCEPTO' ).
-  column->set_long_text('CONCEPTO' ).
+  column->set_short_text('descript.' ).
+  column->set_medium_text('description' ).
+  column->set_long_text('description' ).
 
 
 *
-  column = lr_columns->get_column( columnname = 'TOTAL' ).
-  column->set_short_text('TOTAL' ).
-  column->set_medium_text('TOTAL' ).
-  column->set_long_text('TOTAL' ).
+  column = lr_columns->get_column( columnname = 'H' ).
+  column->set_short_text('H' ).
+  column->set_medium_text('H' ).
+  column->set_long_text('H' ).
 
-  LOOP AT lt_fcat INTO DATA(wa_fcat) WHERE fieldname NE 'WGBEZ60' AND fieldname NE 'TOTAL' AND fieldname NE lv_fname.
+  LOOP AT lt_fcat INTO DATA(wa_fcat) WHERE fieldname CP 'M0*'.
 
-    CONCATENATE sy-datum+0(4) wa_fcat-fieldname+1(2) '01' INTO campocu.
-    vl_date = campocu.
-    CALL FUNCTION '/SAPCE/IURU_GET_MONTH_NAME'
-      EXPORTING
-        iv_date       = vl_date
-      IMPORTING
-        ev_month_name = vl_name_month.
-
-    vl_zname_month = vl_name_month.
-    TRANSLATE vl_zname_month TO UPPER CASE.
-*    CONCATENATE vl_zname_month 'REAL' INTO vl_zname_month SEPARATED BY space.
-*    TRANSLATE vl_zname_month TO UPPER CASE.
-    vl_scrtext_m = vl_zname_month.
-    vl_scrtext_l = vl_zname_month.
-*    CONCATENATE vl_zname_month+0(3) 'REAL' INTO vl_zname_month SEPARATED BY space.
-    vl_scrtext_s = vl_zname_month.
-
+    vl_scrtext_m = 'H/xalapa'.
+    vl_scrtext_l = 'H/xalapa'.
+    vl_scrtext_s = 'H/xalapa'."vl_zname_month.
 
 
     column = lr_columns->get_column( columnname = wa_fcat-fieldname ).
@@ -337,6 +496,50 @@ FORM calculate_columns .
     columnname = wa_fcat-fieldname.
   ENDLOOP.
 
+  column = lr_columns->get_column( columnname = 'M' ).
+  column->set_short_text('M' ).
+  column->set_medium_text('M' ).
+  column->set_long_text('M' ).
+
+  column = lr_columns->get_column( columnname = 'CHIAPAS' ).
+  column->set_short_text('Chiapas' ).
+  column->set_medium_text('Chiapas' ).
+  column->set_long_text('Chiapas' ).
+
+  column = lr_columns->get_column( columnname = 'RNS_ENTERO' ).
+  column->set_short_text('RNS Entero' ).
+  column->set_medium_text('RNS Entero' ).
+  column->set_long_text('RNS Entero' ).
+
+  column = lr_columns->get_column( columnname = 'RNS_CORTES' ).
+  column->set_short_text('RNS Cortes' ).
+  column->set_medium_text('RNS Cortes' ).
+  column->set_long_text('RNS Cortes' ).
+
+  column = lr_columns->get_column( columnname = 'RTC' ).
+  column->set_short_text('RTC' ).
+  column->set_medium_text('RTC' ).
+  column->set_long_text('RTC' ).
+
+  column = lr_columns->get_column( columnname = 'PINTADO_P' ).
+  column->set_short_text('Pintado p' ).
+  column->set_medium_text('Pintado Pesado' ).
+  column->set_long_text('Pintado Pesado' ).
+
+  column = lr_columns->get_column( columnname = 'HIDRATADO' ).
+  column->set_short_text('Hidratado' ).
+  column->set_medium_text('Hidratado' ).
+  column->set_long_text('Hidratado' ).
+
+  column = lr_columns->get_column( columnname = 'RHP_CORTES' ).
+  column->set_short_text('RHP Cortes' ).
+  column->set_medium_text('RHP Cortes' ).
+  column->set_long_text('RHP Cortes' ).
+
+  column = lr_columns->get_column( columnname = 'LIMPIEZAS' ).
+  column->set_short_text('Limpiezas' ).
+  column->set_medium_text('Limpiezas' ).
+  column->set_long_text('Limpiezas' ).
 
 ENDFORM.
 *&---------------------------------------------------------------------*
@@ -467,6 +670,330 @@ FORM report_header  CHANGING p_o_alv TYPE REF TO cl_salv_table.
 
   p_o_alv->set_top_of_list( lo_header ).
 ENDFORM.
+
+FORM get_cantidad_pv.
+
+  FIELD-SYMBOLS: <fs_st> TYPE any,
+                 <fs_ln> TYPE any.
+
+  obj_engorda->get_pzas_pv(
+EXPORTING
+ i_fecha  = so_fecha-low
+CHANGING
+ ch_pzas_pv = it_pzas_pv
+
+
+).
+
+  CLEAR: gv_cant_pv,
+        gv_cantH ,
+        gv_cantM ,
+        gv_chiapas,
+
+        gv_cant_pv_kg,
+        gv_cantH_kg ,
+        gv_cantM_kg ,
+        gv_chiapas_kg,
+
+      gv_cant_pv_mn ,
+      gv_cantH_mn,
+      gv_cantM_mn,
+      gv_chiapas_mn,
+
+      gv_dev_pv,
+      gv_dev_h,
+      gv_dev_m,
+      gv_dev_chiapas,
+      gv_fletes_pv,
+      gv_fletes_h,
+      gv_fletes_m,
+      gv_fletes_chiapas.
+
+
+  gv_cant_pv = REDUCE #( INIT x TYPE rke2_absmg
+                                FOR wa1 IN it_pzas_pv WHERE ( spart = '94' )
+                                NEXT x = x + wa1-absmg ).
+
+  gv_cant_pv_kg = REDUCE #( INIT x1 TYPE rke2_vvpnt
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart = '94' )
+                                 NEXT x1 = x1 + wa1-vvpnt ).
+
+  gv_cant_pv_mn = REDUCE #( INIT x2 TYPE rke2_erlos
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart = '94' )
+                                 NEXT x2 = x2 + wa1-erlos ).
+
+  gv_dev_pv = REDUCE #( INIT x2 TYPE rke2_vvdrv
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart = '94' )
+                                 NEXT x2 = x2 + wa1-vvdrv ).
+
+  gv_fletes_pv = REDUCE #( INIT x2 TYPE rke2_vvgdi
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart = '94' )
+                                 NEXT x2 = x2 + wa1-vvgdi ).
+
+
+  gv_cant_pv_mn = gv_cant_pv_mn -  gv_dev_pv -   gv_fletes_pv.
+
+
+  IF gv_cant_pv LT 0.
+    gv_cant_pv = gv_cant_pv * -1.
+  ENDIF.
+
+  gv_cantH = REDUCE #( INIT x TYPE rke2_absmg
+                               FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500022' )
+                               NEXT x = x + wa1-absmg ).
+
+  gv_cantH = REDUCE #( INIT x1 TYPE rke2_vvpnt
+                                FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500022' )
+                                NEXT x1 = x1 + wa1-vvpnt ).
+
+  gv_canth_mn = REDUCE #( INIT x2 TYPE rke2_erlos
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500022' )
+                                 NEXT x2 = x2 + wa1-erlos ).
+
+  gv_dev_h = REDUCE #( INIT x2 TYPE rke2_vvdrv
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500022' )
+                                 NEXT x2 = x2 + wa1-vvdrv ).
+
+  gv_fletes_h = REDUCE #( INIT x2 TYPE rke2_vvgdi
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500022' )
+                                 NEXT x2 = x2 + wa1-vvgdi ).
+
+
+  gv_canth_mn = gv_canth_mn -   gv_dev_h -   gv_fletes_h.
+
+  IF gv_cantH LT 0.
+    gv_cantH = gv_cantH * -1.
+  ENDIF.
+
+  gv_cantM = REDUCE #( INIT x TYPE rke2_absmg
+                               FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500021' )
+                               NEXT x = x + wa1-absmg ).
+
+  gv_cantM = REDUCE #( INIT x1 TYPE rke2_vvpnt
+                               FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500021' )
+                               NEXT x1 = x1 + wa1-vvpnt ).
+
+  gv_cantm_mn = REDUCE #( INIT x2 TYPE rke2_erlos
+                                FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500021' )
+                                NEXT x2 = x2 + wa1-erlos ).
+
+  gv_dev_m = REDUCE #( INIT x2 TYPE rke2_vvdrv
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500021' )
+                                 NEXT x2 = x2 + wa1-vvdrv ).
+
+  gv_fletes_m = REDUCE #( INIT x2 TYPE rke2_vvgdi
+                                 FOR wa1 IN it_pzas_pv WHERE ( spart NE '94' AND matnr EQ '000000000000500021' )
+                                 NEXT x2 = x2 + wa1-vvgdi ).
+
+
+  gv_cantm_mn = gv_cantm_mn - gv_dev_m - gv_fletes_m.
+
+
+  IF gv_cantm LT 0.
+    gv_cantm = gv_cantm * -1.
+  ENDIF.
+
+  gv_chiapas = REDUCE #( INIT x TYPE rke2_absmg
+                                 FOR wa1 IN it_pzas_pv WHERE ( werks EQ 'PE62' )
+                                 NEXT x = x + wa1-absmg ).
+
+  gv_chiapas = REDUCE #( INIT x1 TYPE rke2_vvpnt
+                                 FOR wa1 IN it_pzas_pv WHERE ( werks EQ 'PE62' )
+                                 NEXT x1 = x1 + wa1-vvpnt ).
+
+  gv_chiapas_mn = REDUCE #( INIT x2 TYPE rke2_erlos
+                                 FOR wa1 IN it_pzas_pv WHERE ( werks EQ 'PE62' )
+                                 NEXT x2 = x2 + wa1-erlos ).
+
+  gv_dev_chiapas = REDUCE #( INIT x2 TYPE rke2_vvdrv
+                                 FOR wa1 IN it_pzas_pv WHERE ( werks EQ 'PE62' )
+                                 NEXT x2 = x2 + wa1-vvdrv ).
+
+  gv_fletes_chiapas = REDUCE #( INIT x2 TYPE rke2_vvgdi
+                                 FOR wa1 IN it_pzas_pv WHERE ( werks EQ 'PE62' )
+                                 NEXT x2 = x2 + wa1-vvgdi ).
+
+
+  gv_chiapas_mn = gv_chiapas_mn - gv_dev_chiapas -   gv_fletes_chiapas.
+
+  IF gv_chiapas LT 0.
+    gv_chiapas = gv_chiapas * -1.
+  ENDIF.
+
+  APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
+  ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_ln>.
+  <fs_ln> = TEXT-017.
+
+  LOOP AT gv_tt_meses INTO DATA(wa_meses).
+
+    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_cant_pv.
+
+    ASSIGN COMPONENT 'H' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_cantH.
+
+    ASSIGN COMPONENT 'M' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_cantM.
+
+    ASSIGN COMPONENT 'CHIAPAS' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_chiapas.
+
+    ASSIGN COMPONENT 'RNS_ENTERO' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_rnsentero.
+
+    ASSIGN COMPONENT 'RNS_CORTES' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_rnscortes.
+
+    ASSIGN COMPONENT 'RNS_RTC' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_rtc.
+
+    ASSIGN COMPONENT 'PINTADO_P' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_pintadopesado.
+
+    ASSIGN COMPONENT 'HIDRATADO' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_hidratado.
+
+    ASSIGN COMPONENT 'RHP_CORTES' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_rhpcortes.
+
+    ASSIGN COMPONENT 'LIMPIEZAS' OF STRUCTURE <fs_st> TO <fs_ln>.
+    <fs_ln> = gv_limpiezas.
+  ENDLOOP.
+ENDFORM.
+
+FORM get_cantidad_procesado.
+
+  FIELD-SYMBOLS: <fs_st> TYPE any,
+                 <fs_ln> TYPE any.
+
+  obj_engorda->get_pzas_pro(
+EXPORTING
+ i_fecha  = so_fecha-low
+CHANGING
+ ch_pzas_pro = it_pzas_pro
+
+).
+
+  CLEAR: gv_rnsentero,
+         gv_rnscortes,
+         gv_rtc,
+         gv_pintadopesado,
+         gv_hidratado,
+         gv_rhpcortes,
+         gv_limpiezas,
+
+         gv_rnsentero_mn,
+         gv_rnscortes_mn,
+         gv_rtc_mn,
+         gv_pintadopesado_mn,
+         gv_hidratado_mn,
+         gv_rhpcortes_mn,
+         gv_limpiezas_mn.
+
+
+
+  gv_rnsentero = REDUCE #( INIT x TYPE menge_d
+                                FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RNSENTERO' )
+                                NEXT x = x + wa1-msl ).
+
+  gv_rnsentero_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                                FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RNSENTERO' )
+                                NEXT x1 = x1 + wa1-hsl ).
+
+  IF gv_rnsentero LT 0.
+    gv_rnsentero = gv_rnsentero * -1.
+    gv_rnsentero_mn = gv_rnsentero_mn * -1.
+  ENDIF.
+
+  gv_rnscortes = REDUCE #( INIT x TYPE menge_d
+                               FOR wa IN it_pzas_pro WHERE ( ferth = 'RNSCORTES' )
+                               NEXT x = x + wa-msl ).
+
+  gv_rnscortes_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                                 FOR wa IN it_pzas_pro WHERE ( ferth = 'RNSCORTES' )
+                                 NEXT x1 = x1 + wa-hsl ).
+
+  IF gv_rnscortes LT 0.
+    gv_rnscortes = gv_rnscortes * -1.
+    gv_rnscortes_mn = gv_rnscortes_mn * -1.
+  ENDIF.
+
+  gv_rtc = REDUCE #( INIT x TYPE menge_d
+                               FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RTC' )
+                               NEXT x = x + wa1-msl ).
+
+  gv_rtc_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                              FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RTC' )
+                              NEXT x1 = x1 + wa1-hsl ).
+
+  IF gv_rtc_mn LT 0.
+    gv_rtc = gv_rtc * -1.
+    gv_rtc_mn = gv_rtc_mn * -1.
+  ENDIF.
+
+  gv_pintadopesado = REDUCE #( INIT x TYPE menge_d
+                                 FOR wa1 IN it_pzas_pro WHERE ( ferth = 'PINTADOPESADO'  )
+                                 NEXT x = x + wa1-msl ).
+
+  gv_pintadopesado_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                                 FOR wa1 IN it_pzas_pro WHERE ( ferth = 'PINTADOPESADO'  )
+                                 NEXT x1 = x1 + wa1-hsl ).
+
+  IF gv_pintadopesado LT 0.
+    gv_pintadopesado = gv_pintadopesado * -1.
+    gv_pintadopesado_mn = gv_pintadopesado_mn * -1.
+  ENDIF.
+
+
+  gv_hidratado = REDUCE #( INIT x TYPE menge_d
+                                 FOR wa1 IN it_pzas_pro WHERE ( ferth = 'HIDRATADO'  )
+                                 NEXT x = x + wa1-msl ).
+
+  gv_hidratado_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                                FOR wa1 IN it_pzas_pro WHERE ( ferth = 'HIDRATADO'  )
+                                NEXT x1 = x1 + wa1-hsl ).
+
+  IF gv_hidratado LT 0.
+    gv_hidratado = gv_hidratado * -1.
+    gv_hidratado_mn = gv_hidratado_mn * -1.
+  ENDIF.
+
+
+  gv_rhpcortes = REDUCE #( INIT x TYPE menge_d
+                               FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RHPCORTES'  )
+                               NEXT x = x + wa1-msl ).
+
+  gv_rhpcortes = REDUCE #( INIT x1 TYPE fins_vhcur12
+                               FOR wa1 IN it_pzas_pro WHERE ( ferth = 'RHPCORTES'  )
+                               NEXT x1 = x1 + wa1-hsl ).
+  IF gv_rhpcortes LT 0.
+    gv_rhpcortes = gv_rhpcortes * -1.
+    gv_rhpcortes_mn = gv_rhpcortes_mn * -1.
+  ENDIF.
+
+  gv_limpiezas = REDUCE #( INIT x TYPE menge_d
+                             FOR wa1 IN it_pzas_pro WHERE ( ferth = 'LIMPIEZAS'  )
+                             NEXT x = x + wa1-msl ).
+
+  gv_limpiezas_mn = REDUCE #( INIT x1 TYPE fins_vhcur12
+                             FOR wa1 IN it_pzas_pro WHERE ( ferth = 'LIMPIEZAS'  )
+                             NEXT x1 = x1 + wa1-hsl ).
+  IF gv_limpiezas LT 0.
+    gv_limpiezas = gv_limpiezas * -1.
+    gv_limpiezas_mn = gv_limpiezas_mn * -1.
+  ENDIF.
+
+
+  gv_rnsentero = gv_rnsentero / c_rnsentero.
+  gv_rnscortes = gv_rnscortes / c_rnscortes.
+  gv_rtc = gv_rtc / c_rtc.
+  gv_pintadopesado = gv_pintadopesado / c_pintado.
+  gv_hidratado = gv_hidratado / c_hidratado.
+  gv_rhpcortes = gv_rhpcortes / c_rhpcortes.
+  gv_limpiezas = gv_limpiezas / c_limpiezas.
+
+ENDFORM.
+
 *&---------------------------------------------------------------------*
 *& Form set_textos
 *&---------------------------------------------------------------------*
@@ -638,40 +1165,48 @@ FORM set_peso_prom .
   UNASSIGN <fs_field>.
   APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
   ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
-  <fs_field> = TEXT-001.
+  <fs_field> = TEXT-004.
 
   LOOP AT gv_tt_meses INTO DATA(wa_meses).
 
-    LOOP AT <fs_outtable> ASSIGNING <fs_st>.
+    " LOOP AT <fs_outtable> ASSIGNING <fs_st>.
 
-      READ TABLE it_aux_acum INTO DATA(wa_acum) WITH KEY columna = wa_meses-zmonth.
-      IF sy-subrc = 0.
-        UNASSIGN <fs_mes>.
-        ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_mes> .
-        ASSIGN COMPONENT 'ACUMULADO' OF STRUCTURE wa_acum TO <fs_acum>.
+    READ TABLE it_aux_acum INTO DATA(wa_acum) WITH KEY columna = wa_meses-zmonth.
+    IF sy-subrc = 0.
+      UNASSIGN <fs_mes>.
+      ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_mes> .
+      ASSIGN COMPONENT 'ACUMULADO' OF STRUCTURE wa_acum TO <fs_acum>.
 
-        LOOP AT <fs_acum>  ASSIGNING FIELD-SYMBOL(<fs_unit>).
-          ASSIGN COMPONENT 'PIEZAS' OF STRUCTURE <fs_unit> TO FIELD-SYMBOL(<fs_piezas>).
-          vl_piezas_pv = <fs_piezas>.
+      LOOP AT <fs_acum>  ASSIGNING FIELD-SYMBOL(<fs_unit>).
+        ASSIGN COMPONENT 'PIEZAS' OF STRUCTURE <fs_unit> TO FIELD-SYMBOL(<fs_piezas>).
+        vl_piezas_pv = <fs_piezas>.
 
-          ASSIGN COMPONENT '/CWM/MENGE' OF STRUCTURE <fs_unit> TO FIELD-SYMBOL(<fs_kilos>).
-          IF <fs_kilos> GT 0.
-            vl_kilos_pv = <fs_kilos>.
-          ENDIF.
-
-        ENDLOOP.
-
-        IF vl_piezas_pv GT 0.
-          <fs_mes> = vl_kilos_pv / vl_piezas_pv.
-          CLEAR wa_backlog.
-          wa_backlog-wgbez60 = TEXT-001.
-          wa_backlog-valor = <fs_mes>.
-          APPEND wa_backlog TO it_backlog.
+        ASSIGN COMPONENT '/CWM/MENGE' OF STRUCTURE <fs_unit> TO FIELD-SYMBOL(<fs_kilos>).
+        IF <fs_kilos> GT 0.
+          vl_kilos_pv = <fs_kilos>.
         ENDIF.
-      ENDIF.
-    ENDLOOP.
 
+      ENDLOOP.
+
+      IF vl_piezas_pv GT 0.
+        <fs_mes> = vl_kilos_pv / vl_piezas_pv.
+        IF <fs_mes> LT 0.
+          <fs_mes> = <fs_mes> * -1.
+        ENDIF.
+
+        PERFORM calcula_columnas
+      USING
+         <fs_mes>
+         0
+        <fs_st>
+        TEXT-004.
+
+      ENDIF.
+
+    ENDIF.
   ENDLOOP.
+
+  "ENDLOOP.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form set_costo_transf
@@ -814,11 +1349,18 @@ FORM set_costo_transf .
 
       APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
       ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
-      <fs_field> = TEXT-003.
+      <fs_field> = TEXT-002.
 
       ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
 
       READ TABLE it_aux_out INTO DATA(kilos_tras) INDEX 1.
+      IF sy-subrc EQ 0.
+        gv_trasd_vivo = kilos_tras-month.
+        wa_backlog-wgbez60 = 'KILOS TRASP. VIVO'.
+        wa_backlog-valor = kg_pro.
+        APPEND wa_backlog TO it_backlog.
+      ENDIF.
+
 
       READ TABLE it_kg_cost_trans INTO DATA(kilos_pro) INDEX 1.
       IF sy-subrc EQ 0.
@@ -839,16 +1381,39 @@ FORM set_costo_transf .
         kg_merma = kilos_merma-menge.
       ENDIF.
       kilos_producidos = kilos_pro-menge - kilos_menu-menge - kilos_merma-menge.
-
+      """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
       IF kilos_producidos GT 0.
         <fs_field> = kilos_tras-month  / kilos_producidos  .
+*        IF <fs_field>  LT 0.
+*          <fs_field>  = <fs_field>  * -1.
+*        ENDIF.
+*        """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+*
+*        """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+        PERFORM calcula_columnas
+          USING
+            <fs_field>
+            0
+            <fs_st>
+            TEXT-002.
+
+        PERFORM calcula_columnas
+         USING
+           gv_trasd_vivo
+           kilos_producidos
+           <fs_st>
+           TEXT-002.
+
+
+
       ELSE.
         <fs_field> = '0.00'.
       ENDIF.
+      """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-      wa_backlog-wgbez60 = TEXT-003.
-      wa_backlog-valor = <fs_field>.
-      APPEND wa_backlog TO it_backlog.
+*      wa_backlog-wgbez60 = TEXT-002.
+*      wa_backlog-valor = <fs_field>.
+*      APPEND wa_backlog TO it_backlog.
 
       wa_backlog-wgbez60 = 'KILOS PRODUCIDOS'.
       wa_backlog-valor = kilos_producidos.
@@ -856,10 +1421,6 @@ FORM set_costo_transf .
 
 
     ENDLOOP. "meses
-
-
-
-
 
   ENDIF."ultimo if
 ENDFORM.
@@ -1037,6 +1598,7 @@ FORM set_rendimientos.
 
     IF vl_tot_kgs_pro_neto GT 0.
       vl_rendimiento = vl_kgs_proceso / vl_tot_kgs_pro_neto.
+
     ELSE.
       vl_rendimiento = '0.00'.
     ENDIF.
@@ -1051,19 +1613,26 @@ FORM set_rendimientos.
 
     APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
     ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
-    <fs_field> = TEXT-004.
+    <fs_field> = TEXT-003.
 
-    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
-    <fs_field> = vl_rendimiento.
+*    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
+*    <fs_field> = vl_rendimiento.
+*
+*    IF <fs_field> LT 0.
+*      <fs_field> = <fs_field> * -1.
+*    ENDIF.
+*
+*    wa_backlog-wgbez60 = TEXT-003.
+*    wa_backlog-valor = vl_rendimiento.
+*    APPEND wa_backlog TO it_backlog.
 
-
-    wa_backlog-wgbez60 = TEXT-004.
-    wa_backlog-valor = vl_rendimiento.
-    APPEND wa_backlog TO it_backlog.
-
-
-
-
+    PERFORM calcula_columnas
+      USING
+        vl_rendimiento
+        0
+       <fs_st>
+       TEXT-003
+      .
 
   ENDLOOP.
 
@@ -1075,10 +1644,12 @@ FORM flete_gto_transf.
                  <fs_field> TYPE any.
 
 
-  DATA: vl_rg_objnr TYPE RANGE OF cosp-objnr,
-        wa_rg_objnr LIKE LINE OF vl_rg_objnr,
-        vl_rg_kstar TYPE RANGE OF cosp-kstar,
-        wa_rg_kstar LIKE LINE OF vl_rg_kstar.
+  DATA: vl_rg_objnr  TYPE RANGE OF cosp-objnr,
+        wa_rg_objnr  LIKE LINE OF vl_rg_objnr,
+        vl_rg_kstar  TYPE RANGE OF cosp-kstar,
+        wa_rg_kstar  LIKE LINE OF vl_rg_kstar,
+        vl_cant_div  TYPE menge_d,
+        vl_str_backl TYPE string.
 
   wa_rg_kstar-loW = 'S42SG0135'.
   wa_rg_kstar-option = 'EQ'.
@@ -1105,16 +1676,24 @@ FORM flete_gto_transf.
                                FOR wa IN it_flete_transf
                                NEXT s = s + wa-mes ).
 
+
+
   APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
   ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
-  <fs_field> = TEXT-007.
+  <fs_field> = TEXT-001.
+
+
 
   LOOP AT gv_tt_meses INTO DATA(wa_meses).
-    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
-    <fs_field> = vl_sum_ctas.
-    wa_backlog-wgbez60 = TEXT-007.
-    wa_backlog-valor = vl_sum_ctas.
-    APPEND wa_backlog TO it_backlog.
+
+    PERFORM calcula_columnas
+      USING
+        vl_sum_ctas
+        0
+        <fs_st>
+        TEXT-001
+      .
+
   ENDLOOP.
 ENDFORM.
 
@@ -1271,20 +1850,410 @@ FORM precio_vta_kg_uni.
                                 FOR wa1 IN it_kgs_vendidos
                                 NEXT s = s + wa1-mes ).
 
+
+  wa_backlog-wgbez60 = 'TOTAL KILOS VENDIDOS'.
+  wa_backlog-valor = vl_sum_kgs.
+  APPEND wa_backlog TO it_backlog.
+
+  APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
+  ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
+  <fs_field> = TEXT-007.
+
+  LOOP AT gv_tt_meses INTO DATA(wa_meses).
+
+    PERFORM calcula_columnas
+      USING
+        vl_sum_vtas
+        0
+        <fs_st>
+        TEXT-007.
+
+
+  ENDLOOP.
+
+ENDFORM.
+
+FORM set_gastos_distrib.
+  FIELD-SYMBOLS: <fs_st>    TYPE any,
+                 <fs_field> TYPE any.
+  DATA vl_rest TYPE menge_d.
+
+  obj_engorda->get_gtos(
+            EXPORTING
+              i_fecha  = so_fecha-low
+              CHANGING
+              ch_gtos_dist = it_gtos_dist ).
+
+  DATA(vl_sum_gtos) = REDUCE #( INIT s TYPE menge_d
+                              FOR wa IN it_gtos_dist
+                              NEXT s = s + wa-mes ).
+
+  wa_backlog-wgbez60 = 'Gasto distribucion'.
+  wa_backlog-valor = vl_sum_gtos.
+  APPEND wa_backlog TO it_backlog.
+
+  DATA(vl_tot_kgs_vend) = it_backlog[ wgbez60 = 'TOTAL KILOS VENDIDOS' ] .
+
+  APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
+  ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
+  <fs_field> = TEXT-008.
+
+
+  LOOP AT gv_tt_meses INTO DATA(wa_meses).
+
+*    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
+    IF vl_tot_kgs_vend-valor GT 0.
+      vl_rest = ( vl_sum_gtos / '30.0' )." / vl_tot_kgs_vend-valor.
+      IF vl_rest LT 0.
+        vl_rest = vl_rest * -1.
+      ENDIF.
+
+      PERFORM calcula_columnas
+        USING
+         vl_rest
+          0
+          <fs_st>
+         TEXT-008
+        .
+
+
+
+*    ELSE.
+*      <fs_field> = 0.
+    ENDIF.
+*    wa_backlog-wgbez60 = TEXT-008.
+*    wa_backlog-valor = <fs_field>.
+*    APPEND wa_backlog TO it_backlog.
+
+
+  ENDLOOP.
+
+ENDFORM.
+""""""""""""""""""""""""""""""""""""""""""
+FORM set_gastos_venta.
+  FIELD-SYMBOLS: <fs_st>    TYPE any,
+                 <fs_field> TYPE any.
+  DATA vl_gastos_venta TYPE menge_d.
+  DATA vl_rest TYPE menge_d.
+
+  obj_engorda->get_ventas(
+            EXPORTING
+              i_fecha  = so_fecha-low
+              CHANGING
+              ch_gtos_ventas = it_gtos_ventas ).
+
+  DATA(vl_sum_ventas) = REDUCE #( INIT s TYPE menge_d
+                              FOR wa IN it_gtos_ventas
+                              NEXT s = s + wa-mes ).
+
+  wa_backlog-wgbez60 = 'OTROS GASTOS DE VENTA'.
+  wa_backlog-valor = vl_sum_ventas.
+  APPEND wa_backlog TO it_backlog.
+
+  DATA(vl_tot_kgs_vend) = it_backlog[ wgbez60 = 'TOTAL KILOS VENDIDOS' ] .
+  DATA(vl_gtos_dist) = it_backlog[ wgbez60 = 'Gasto distribucion' ] .
+  vl_gastos_venta = vl_gtos_dist-valor + vl_sum_ventas.
+
+
+
   APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
   ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
   <fs_field> = TEXT-009.
 
+
   LOOP AT gv_tt_meses INTO DATA(wa_meses).
+
     ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
-    IF vl_sum_kgs GT 0.
-      <fs_field> = vl_sum_vtas / vl_sum_kgs.
-    ELSE.
-      <fs_field> = 0.
+    IF vl_tot_kgs_vend-valor GT 0.
+      vl_rest = ( vl_gastos_venta / '30.0' ). "/ vl_tot_kgs_vend-valor.
+
+      IF vl_rest LT 0.
+        vl_rest = vl_rest * -1.
+      ENDIF.
+
+
+      PERFORM calcula_columnas
+       USING
+        vl_rest
+         0
+         <fs_st>
+        TEXT-009
+       .
+
+*      IF <fs_field> LT 0.
+*        <fs_field> = <fs_field> * -1.
+*      ENDIF.
+*    ELSE.
+*      <fs_field> = 0.
     ENDIF.
-    wa_backlog-wgbez60 = TEXT-009.
-    wa_backlog-valor = <fs_field>.
-    APPEND wa_backlog TO it_backlog.
+*    wa_backlog-wgbez60 = TEXT-009.
+*    wa_backlog-valor = <fs_field>.
+*    APPEND wa_backlog TO it_backlog.
+
+
   ENDLOOP.
 
+ENDFORM.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+FORM set_gastos_admon.
+  FIELD-SYMBOLS: <fs_st>    TYPE any,
+                 <fs_field> TYPE any.
+  DATA vl_rest TYPE menge_d.
+
+  obj_engorda->get_admon(
+            EXPORTING
+              i_fecha  = so_fecha-low
+              CHANGING
+              ch_gtos_admon = it_gtos_admon ).
+
+  DATA(vl_sum_admon) = REDUCE #( INIT s TYPE menge_d
+                              FOR wa IN it_gtos_admon
+                              NEXT s = s + wa-mes ).
+
+  wa_backlog-wgbez60 = 'Gastos administracion'.
+  wa_backlog-valor = vl_sum_admon.
+  APPEND wa_backlog TO it_backlog.
+
+  DATA(vl_tot_kgs_vend) = it_backlog[ wgbez60 = 'TOTAL KILOS VENDIDOS' ] .
+
+  APPEND INITIAL LINE TO <fs_outtable> ASSIGNING <fs_st>.
+  ASSIGN COMPONENT 'WGBEZ60' OF STRUCTURE <fs_st> TO <fs_field>.
+  <fs_field> = TEXT-010.
+
+
+  LOOP AT gv_tt_meses INTO DATA(wa_meses).
+
+*    ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
+    IF vl_tot_kgs_vend-valor GT 0.
+      vl_rest = ( vl_sum_admon / '30.0' )." / vl_tot_kgs_vend-valor.
+
+      IF vl_rest LT 0.
+        vl_rest = vl_rest * -1.
+      ENDIF.
+
+
+      PERFORM calcula_columnas
+       USING
+         vl_rest
+         0
+         <fs_st>
+        TEXT-010
+       .
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDFORM.
+
+FORM get_valor_columnas USING p_valor_base TYPE menge_d
+                            p_cant_pv TYPE menge_d
+                       CHANGING
+                            p_fieldcolumn TYPE any.
+
+  DATA vl_valor TYPE menge_d.
+
+  IF p_cant_pv GT 0.
+    vl_valor = p_valor_base / p_cant_pv.
+  ELSE.
+    vl_valor = 0.
+  ENDIF.
+
+  p_fieldcolumn = vl_valor.
+
+
+ENDFORM.
+
+FORM calcula_columnas USING p_valor_base TYPE menge_d
+                            p_valor_div TYPE menge_d
+                            p_struct TYPE any
+                            p_text TYPE string.
+
+  FIELD-SYMBOLS: <fs_st>    TYPE any,
+                 <fs_field> TYPE any.
+
+  DATA: vl_cant_div   TYPE menge_d,
+        vl_str_backl  TYPE string,
+        vl_valor_base TYPE menge_d.
+
+
+  LOOP AT lt_fcat INTO ls_fcat WHERE ( fieldname NE 'WGBEZ60' AND fieldname NE lv_fname ) .
+
+    "ASSIGN COMPONENT wa_meses-zmonth OF STRUCTURE <fs_st> TO <fs_field>.
+    ASSIGN COMPONENT ls_fcat-fieldname OF STRUCTURE p_struct TO <fs_field>.
+
+    CASE ls_fcat-fieldname.
+      WHEN 'H'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_canth.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_canth_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'M'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_cantm.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_cantm_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+      WHEN 'CHIAPAS'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_chiapas.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_chiapas_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'RNS_ENTERO'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_rnsentero.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_rnsentero_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'RNS_CORTES'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_rnscortes.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_rnscortes_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'RTC'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_rtc.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_rtc_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'PINTADO_P'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_pintadopesado.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_pintadopesado_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+      WHEN 'HIDRATADO'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_hidratado.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_hidratado_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN 'RHP_CORTES'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_rhpcortes.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_rhpcortes_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+      WHEN 'LIMPIEZAS'.
+        IF p_valor_div EQ 0.
+          vl_cant_div = gv_limpiezas.
+        ELSE.
+          vl_cant_div = p_valor_div.
+        ENDIF.
+
+        IF p_text EQ TEXT-007.
+          vl_valor_base = gv_limpiezas_mn.
+        ELSE.
+          vl_valor_base = p_valor_base.
+        ENDIF.
+
+
+      WHEN OTHERS.
+        IF ls_fcat-fieldname CP 'M0*'.
+          IF p_valor_div EQ 0.
+            vl_cant_div = gv_cant_pv.
+          ELSE.
+            vl_cant_div = p_valor_div.
+          ENDIF.
+
+          IF p_text EQ TEXT-007.
+            vl_valor_base = gv_cant_pv_mn.
+          ELSE.
+            vl_valor_base = p_valor_base.
+          ENDIF.
+        ENDIF.
+    ENDCASE.
+
+
+
+
+    PERFORM get_valor_columnas
+      USING
+        vl_valor_base
+        vl_cant_div
+      CHANGING
+       <fs_field>
+      .
+
+    IF <fs_field> LT 0.
+      <fs_field> = <fs_field> * -1.
+    ENDIF.
+
+    CONCATENATE p_text ls_fcat-fieldname INTO vl_str_backl.
+
+    wa_backlog-wgbez60 = vl_str_backl.
+    wa_backlog-valor = <fs_field>.
+    APPEND wa_backlog TO it_backlog.
+
+  ENDLOOP.
 ENDFORM.

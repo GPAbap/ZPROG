@@ -119,6 +119,36 @@ CLASS zcl_cost_engorda_jhv DEFINITION
       CHANGING
         !CH_kgs_vendidos TYPE STANDARD TABLE .
 
+    METHODS get_pzas_pv
+      IMPORTING
+        !i_fecha    TYPE datum
+      CHANGING
+        !CH_pzas_pv TYPE STANDARD TABLE .
+
+    METHODS get_pzas_pro
+      IMPORTING
+        !i_fecha     TYPE datum
+      CHANGING
+        !CH_pzas_pro TYPE STANDARD TABLE .
+
+    METHODS get_gtos
+      IMPORTING
+        !i_fecha      TYPE datum
+      CHANGING
+        !CH_gtos_dist TYPE STANDARD TABLE.
+
+
+    METHODS get_ventas
+      IMPORTING
+        !i_fecha        TYPE datum
+      CHANGING
+        !CH_gtos_ventas TYPE STANDARD TABLE.
+
+    METHODS get_admon
+      IMPORTING
+        !i_fecha       TYPE datum
+      CHANGING
+        !CH_gtos_admon TYPE STANDARD TABLE.
 
     METHODS get_mb51_post   "
       IMPORTING
@@ -5736,6 +5766,7 @@ INTO TABLE @DATA(it_mseg).
 
   METHOD get_kgs_vendidos.
 
+
     SELECT c~artnr, SUM( vvpnt ) AS mes
     INTO TABLE @DATA(it_kgs_vtas)
     FROM ce1gp00 AS c
@@ -5743,10 +5774,349 @@ INTO TABLE @DATA(it_mseg).
     WHERE m~ferth IN @i_gpo_ferth
     AND c~werks IN @i_gpo_werks AND
     hzdat = @i_fecha
-    AND bukrs = @i_bukrs and vrgar = 'F'
+    AND bukrs = @i_bukrs AND vrgar = 'F'
     GROUP BY c~artnr.
 
-   ch_kgs_vendidos = it_kgs_vtas[].
+    ch_kgs_vendidos = it_kgs_vtas[].
+  ENDMETHOD.
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD get_gtos.
+    DATA: vl_periodo TYPE co_perio,
+          vl_gjahr   TYPE gjahr.
+
+    DATA: it_I011Z TYPE STANDARD TABLE OF rf011z,
+          it_X011P TYPE STANDARD TABLE OF rf011p.
+
+    DATA: rg_cebe   TYPE RANGE OF coep-prctr,
+          wa_rgcebe LIKE LINE OF rg_cebe,
+          rg_kstar  TYPE RANGE OF coep-kstar,
+          wa_kstar  LIKE LINE OF rg_kstar.
+
+    vl_gjahr = i_fecha+0(4).
+
+    vl_periodo =  |{ i_fecha+4(2) ALPHA = IN }|.
+
+    IF vl_periodo = '001'.
+      vl_gjahr = vl_gjahr - 1.
+    ENDIF.
+
+    IF vl_periodo = '001'.
+      vl_periodo = '012'.
+    ELSE.
+      vl_periodo = vl_periodo - 1.
+    ENDIF.
+
+
+
+
+    SELECT s2~valfrom AS cebe
+     INTO TABLE @DATA(it_cebes)
+     FROM setnode AS s1
+     INNER JOIN setleaf AS s2 ON s2~setname = s1~subsetname AND s2~setclass EQ '0106'
+     WHERE s1~setclass EQ '0106'
+     AND s1~setname = 'S010161'.
+
+    LOOP AT it_cebes INTO DATA(wa_cebes).
+      wa_rgcebe-low = wa_cebes-cebe.
+      wa_rgcebe-option = 'EQ'.
+      wa_rgcebe-sign = 'I'.
+      APPEND wa_rgcebe TO rg_cebe.
+    ENDLOOP.
+
+
+    CALL FUNCTION 'FI_IMPORT_BALANCE_SHEET_POS'
+      EXPORTING
+        version           = 'GP06'
+      TABLES
+        i011z             = it_i011z
+        x011p             = it_x011p
+*       x011s             =
+*       x011v             =
+*       x011f             =
+      EXCEPTIONS
+        new_balance_sheet = 1
+        OTHERS            = 2.
+
+
+    DATA(vl_ergsl) = it_x011p[ prkey = '01030000000000000000' ].
+
+    LOOP AT it_i011z INTO DATA(wa_i011z) WHERE ergso = vl_ergsl-ergsl.
+      wa_kstar-low = wa_i011z-bilkt.
+      wa_kstar-option = 'EQ'.
+      wa_kstar-sign = 'I'.
+      APPEND wa_kstar TO rg_kstar.
+    ENDLOOP.
+
+    SELECT kstar, SUM( c~wogbtr ) AS mes
+    INTO TABLE @DATA(it_coep)
+    FROM coep AS c
+    WHERE kokrs EQ 'SA00'
+    AND perio EQ @vl_periodo
+    AND gjahr EQ @vl_gjahr
+    AND kstar IN @rg_kstar
+    AND prctr IN @rg_cebe
+    GROUP BY kstar.
+
+    ch_gtos_dist = it_coep[].
+
+
+  ENDMETHOD.
+  """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD get_ventas.
+
+
+    DATA: vl_periodo TYPE co_perio,
+          vl_gjahr   TYPE gjahr.
+
+    DATA: it_I011Z TYPE STANDARD TABLE OF rf011z,
+          it_X011P TYPE STANDARD TABLE OF rf011p.
+
+    DATA: rg_cebe   TYPE RANGE OF coep-prctr,
+          wa_rgcebe LIKE LINE OF rg_cebe,
+          rg_kstar  TYPE RANGE OF coep-kstar,
+          wa_kstar  LIKE LINE OF rg_kstar.
+
+    vl_gjahr = i_fecha+0(4).
+
+    vl_periodo =  |{ i_fecha+4(2) ALPHA = IN }|.
+
+
+    IF vl_periodo = '001'.
+      vl_gjahr = vl_gjahr - 1.
+    ENDIF.
+
+    IF vl_periodo = '001'.
+      vl_periodo = '012'.
+    ELSE.
+      vl_periodo = vl_periodo - 1.
+    ENDIF.
+
+
+    SELECT s2~valfrom AS cebe
+     INTO TABLE @DATA(it_cebes)
+     FROM setnode AS s1
+     INNER JOIN setleaf AS s2 ON s2~setname = s1~subsetname AND s2~setclass EQ '0106'
+     WHERE s1~setclass EQ '0106'
+     AND s1~setname = 'S010160'.
+
+    LOOP AT it_cebes INTO DATA(wa_cebes).
+      wa_rgcebe-low = wa_cebes-cebe.
+      wa_rgcebe-option = 'EQ'.
+      wa_rgcebe-sign = 'I'.
+      APPEND wa_rgcebe TO rg_cebe.
+    ENDLOOP.
+
+
+    CALL FUNCTION 'FI_IMPORT_BALANCE_SHEET_POS'
+      EXPORTING
+        version           = 'GP06'
+      TABLES
+        i011z             = it_i011z
+        x011p             = it_x011p
+*       x011s             =
+*       x011v             =
+*       x011f             =
+      EXCEPTIONS
+        new_balance_sheet = 1
+        OTHERS            = 2.
+
+
+    DATA(vl_ergsl) = it_x011p[ prkey = '01040000000000000000' ].
+
+    LOOP AT it_i011z INTO DATA(wa_i011z) WHERE ergso = vl_ergsl-ergsl.
+      wa_kstar-low = wa_i011z-bilkt.
+      wa_kstar-option = 'EQ'.
+      wa_kstar-sign = 'I'.
+      APPEND wa_kstar TO rg_kstar.
+    ENDLOOP.
+
+    SELECT kstar, SUM( c~wogbtr ) AS mes
+    INTO TABLE @DATA(it_coep)
+    FROM coep AS c
+    WHERE kokrs EQ 'SA00'
+    AND perio EQ @vl_periodo
+    AND gjahr EQ @vl_gjahr
+    AND kstar IN @rg_kstar
+    AND prctr IN @rg_cebe
+    GROUP BY kstar.
+
+    ch_gtos_ventas = it_coep[].
+
+  ENDMETHOD.
+  """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+  METHOD get_admon.
+
+    DATA: vl_periodo TYPE co_perio,
+          vl_gjahr   TYPE gjahr.
+
+    DATA: it_I011Z TYPE STANDARD TABLE OF rf011z,
+          it_X011P TYPE STANDARD TABLE OF rf011p.
+
+    DATA: rg_cebe   TYPE RANGE OF coep-prctr,
+          wa_rgcebe LIKE LINE OF rg_cebe,
+          rg_kstar  TYPE RANGE OF coep-kstar,
+          wa_kstar  LIKE LINE OF rg_kstar.
+
+    vl_gjahr = i_fecha+0(4).
+
+    vl_periodo =  |{ i_fecha+4(2) ALPHA = IN }|.
+
+
+    IF vl_periodo = '001'.
+      vl_gjahr = vl_gjahr - 1.
+    ENDIF.
+
+    IF vl_periodo = '001'.
+      vl_periodo = '012'.
+    ELSE.
+      vl_periodo = vl_periodo - 1.
+    ENDIF.
+
+
+    SELECT s2~valfrom AS cebe
+     INTO TABLE @DATA(it_cebes)
+     FROM setnode AS s1
+     INNER JOIN setleaf AS s2 ON s2~setname = s1~subsetname AND s2~setclass EQ '0106'
+     WHERE s1~setclass EQ '0106'
+     AND s1~setname = 'S0101' AND s1~subsetname = 'S01010'.
+
+    LOOP AT it_cebes INTO DATA(wa_cebes).
+      wa_rgcebe-low = wa_cebes-cebe.
+      wa_rgcebe-option = 'EQ'.
+      wa_rgcebe-sign = 'I'.
+      APPEND wa_rgcebe TO rg_cebe.
+    ENDLOOP.
+
+
+    CALL FUNCTION 'FI_IMPORT_BALANCE_SHEET_POS'
+      EXPORTING
+        version           = 'GP06'
+      TABLES
+        i011z             = it_i011z
+        x011p             = it_x011p
+*       x011s             =
+*       x011v             =
+*       x011f             =
+      EXCEPTIONS
+        new_balance_sheet = 1
+        OTHERS            = 2.
+
+
+    DATA(vl_ergsl) = it_x011p[ prkey = '01050000000000000000' ].
+
+    LOOP AT it_i011z INTO DATA(wa_i011z) WHERE ergso = vl_ergsl-ergsl.
+      wa_kstar-low = wa_i011z-bilkt.
+      wa_kstar-option = 'EQ'.
+      wa_kstar-sign = 'I'.
+      APPEND wa_kstar TO rg_kstar.
+    ENDLOOP.
+
+    SELECT kstar, SUM( c~wogbtr ) AS mes
+    INTO TABLE @DATA(it_coep)
+    FROM coep AS c
+    WHERE kokrs EQ 'SA00'
+    AND perio EQ @vl_periodo
+    AND gjahr EQ @vl_gjahr
+    AND kstar IN @rg_kstar
+    AND prctr IN @rg_cebe
+    GROUP BY kstar.
+
+    ch_gtos_admon = it_coep[].
+
+  ENDMETHOD.
+
+  METHOD get_pzas_pv.
+
+*    SELECT matnr, spart, werks, msl, runit
+*    INTO TABLE @DATA(it_pzas_pv)
+*    FROM acdoca
+*    WHERE rbukrs EQ 'SA01' AND
+*    budat EQ @i_fecha AND
+*    matnr IN ( '000000000000500021', '000000000000500022' )
+*    AND awtyp = 'VBRK'.
+*
+*    SELECT matnr, spart, werks, fkimg, ntgew
+*    INTO TABLE @DATA(it_pzas_pv)
+*    FROM vbrp
+*    WHERE bukrs_ana EQ 'SA01' AND
+*    fkdat_ana EQ @i_fecha AND
+*    matnr IN ( '000000000000500021', '000000000000500022' )
+*    .
+
+    SELECT artnr, spart, werks, absmg, vvpnt, erlos, vvdrv , vvgdi
+    INTO TABLE @DATA(it_pzas_pv)
+     FROM ce1gp00
+    WHERE paledger EQ '02' AND
+    vrgar EQ 'F' AND
+    budat EQ @i_fecha AND
+    bukrs EQ 'SA01' AND
+    artnr IN ( '000000000000500021', '000000000000500022' ).
+
+
+    ch_pzas_pv = it_pzas_pv[].
+  ENDMETHOD.
+
+  METHOD get_pzas_pro.
+    DATA: rg_ferth TYPE RANGE OF mara-ferth,
+          wa_ferth LIKE LINE OF rg_ferth.
+
+    wa_ferth-low = 'RNSENTERO'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+    wa_ferth-low = 'RNSCORTES'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+    wa_ferth-low = 'RTC'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+    wa_ferth-low = 'PINTADOPESADO'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+    wa_ferth-low = 'HIDRATADO'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+
+    wa_ferth-low = 'RHPCORTES'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+    wa_ferth-low = 'LIMPIEZAS'.
+    wa_ferth-option = 'EQ'.
+    wa_ferth-sign = 'I'.
+    APPEND wa_ferth TO rg_ferth.
+
+
+
+
+
+
+    SELECT a~matnr, substring( m~ferth, instR( m~ferth, '/' ) + 1, length( m~ferth ) - instr( m~ferth, '/' ) )  AS ferth,  a~msl, a~hsl
+    FROM acdoca AS a
+    INNER JOIN mara AS m ON m~matnr = a~matnr
+    WHERE rbukrs EQ 'SA01' AND werks = 'PP01' AND
+    budat EQ @i_fecha
+    AND awtyp = 'VBRK'
+     INTO TABLE @DATA(it_pzas_pro)
+   .
+
+    DELETE it_pzas_pro WHERE ferth NOT IN rg_ferth.
+
+
+    ch_pzas_pro = it_pzas_pro[].
+
+
+
   ENDMETHOD.
 
 ENDCLASS.

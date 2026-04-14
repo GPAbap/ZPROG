@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>Customer development class</CTEXT>
+    <LANGUAGE>S</LANGUAGE>
+    <MASTERLANG>S</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>

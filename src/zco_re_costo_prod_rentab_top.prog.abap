@@ -23,6 +23,16 @@ TYPES: BEGIN OF st_header,
          titulo4 TYPE string,
        END OF st_header.
 
+CONSTANTS sap_file TYPE string VALUE '/sapmnt/datadev/alv_export.csv'.
+CONSTANTS: c_rnsentero TYPE p DECIMALS 2 VALUE '2.30',
+           c_rnscortes TYPE p DECIMALS 2 VALUE '2.30',
+           c_rtc       TYPE p DECIMALS 2 VALUE '1.75',
+           c_pintado   TYPE p DECIMALS 2 VALUE '2.35',
+           c_hidratado TYPE p DECIMALS 2 VALUE '2.35',
+           c_rhpcortes TYPE p DECIMALS 2 VALUE '2.35',
+           c_limpiezas TYPE p DECIMALS 2 VALUE '2.10'.
+
+
 TYPES: BEGIN OF st_aux_out,
          concepto   TYPE wgbez60,
          /cwm/menge TYPE /cwm/menge,
@@ -66,7 +76,26 @@ TYPES: BEGIN OF st_aux_out,
        BEGIN OF st_kgs_vendidos,
          artnr TYPE matnr,
          mes   TYPE rke2_vvpnt,
-       END OF st_kgs_vendidos.
+       END OF st_kgs_vendidos,
+
+       BEGIN OF st_pzas_pv,
+         matnr TYPE matnr,
+         spart TYPE spart,
+         werks TYPE werks_d,
+         absmg TYPE rke2_absmg, "piezas
+         vvpnt TYPE rke2_vvpnt, "Kilos
+         erlos TYPE rke2_erlos, "importe
+         vvdrv TYPE rke2_vvdrv, "dev
+         vvgdi TYPE rke2_vvgdi, "flete
+       END OF st_pzas_pv ,
+
+       BEGIN OF st_pzas_pro,
+         matnr TYPE matnr,
+         ferth TYPE ferth,
+         msl   TYPE quan1_12,
+         hsl   TYPE fins_vhcur12,
+       END OF st_pzas_pro.
+
 
 DATA: it_aux_out       TYPE STANDARD TABLE OF st_aux_out,
       wa_aux_out       LIKE LINE OF it_aux_out,
@@ -79,8 +108,13 @@ DATA: it_aux_out       TYPE STANDARD TABLE OF st_aux_out,
       it_kg_cad_h      TYPE STANDARD TABLE OF st_kgs_cost_trans,
       it_flete_transf  TYPE STANDARD TABLE OF st_flete_transf,
       it_vtas_netas    TYPE STANDARD TABLE OF st_flete_transf,
-      it_kgs_vendidos  type stANDARD TABLE OF st_kgs_vendidos,
+      it_kgs_vendidos  TYPE STANDARD TABLE OF st_kgs_vendidos,
+      it_gtos_dist     TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_ventas   TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_admon    TYPE STANDARD TABLE OF st_flete_transf,
       it_backlog       TYPE STANDARD TABLE OF st_backlog,
+      it_pzas_pv       TYPE STANDARD TABLE OF st_pzas_pv,
+      it_pzas_pro      TYPE STANDARD TABLE OF st_pzas_pro,
       wa_backlog       LIKE LINE OF it_backlog.
 
 TYPES: BEGIN OF st_acumulado,
@@ -122,6 +156,51 @@ DATA: lt_fcat  TYPE lvc_t_fcat, "FieldCat
       ls_fcat  TYPE lvc_s_fcat, "wa Fieldcat
       lv_fname TYPE lvc_fname.
 
+DATA: gv_cant_pv        TYPE menge_d,
+      gv_cantH          TYPE menge_d,
+      gv_cantM          TYPE menge_d,
+      gv_chiapas        TYPE menge_d,
+      gv_trasd_vivo     TYPE menge_d,
+
+      gv_cant_pv_kg     TYPE menge_d,
+      gv_cantH_kg       TYPE menge_d,
+      gv_cantM_kg       TYPE menge_d,
+      gv_chiapas_kg     TYPE menge_d,
+
+      gv_cant_pv_mn     TYPE menge_d,
+      gv_cantH_mn       TYPE menge_d,
+      gv_cantM_mn       TYPE menge_d,
+      gv_chiapas_mn     TYPE menge_d,
+
+      gv_dev_pv         TYPE menge_d,
+      gv_dev_h          TYPE menge_d,
+      gv_dev_m          TYPE menge_d,
+      gv_dev_chiapas    TYPE menge_d,
+      gv_fletes_pv      TYPE menge_d,
+      gv_fletes_h       TYPE menge_d,
+      gv_fletes_m       TYPE menge_d,
+      gv_fletes_chiapas TYPE menge_d.
+
+
+
+DATA: gv_rnsentero     TYPE menge_d,
+      gv_rnscortes     TYPE menge_d,
+      gv_rtc           TYPE menge_d,
+      gv_pintadopesado TYPE menge_d,
+      gv_hidratado     TYPE menge_d,
+      gv_rhpcortes     TYPE menge_d,
+      gv_limpiezas     TYPE menge_d.
+
+DATA: gv_rnsentero_mn     TYPE menge_d,
+      gv_rnscortes_mn     TYPE menge_d,
+      gv_rtc_mn           TYPE menge_d,
+      gv_pintadopesado_mn TYPE menge_d,
+      gv_hidratado_mn     TYPE menge_d,
+      gv_rhpcortes_mn     TYPE menge_d,
+      gv_limpiezas_mn     TYPE menge_d.
+
+
+
 DATA: o_alv           TYPE REF TO cl_salv_table,
       lr_columns      TYPE REF TO cl_salv_columns,
       lo_layout       TYPE REF TO cl_salv_layout,
@@ -153,7 +232,7 @@ ENDCLASS.
 DATA: gr_events TYPE REF TO lcl_handle_events.
 
 
-SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-001.
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE TEXT-018.
 
   PARAMETERS: p_gjahr TYPE gjahr NO-DISPLAY.
   SELECT-OPTIONS so_fecha FOR afko-gltri OBLIGATORY NO INTERVALS.

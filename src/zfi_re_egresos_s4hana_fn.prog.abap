@@ -391,27 +391,27 @@ FORM get_Data .
       <line> = space.
 
     ENDIF.
-    ASSIGN COMPONENT 'H_BLART' OF STRUCTURE <bseg2> TO <line>.
-    IF <line> EQ 'GV' AND s_belnr IS INITIAL.
-
-      ASSIGN COMPONENT 'AUGBL' OF STRUCTURE <bseg2> TO <line>.
-      aux_au =  <line>.
-
-      ASSIGN COMPONENT 'BELNR' OF STRUCTURE <bseg2> TO <line>.
-      aux_bl = <line>.
-
-      ASSIGN COMPONENT 'AUGBL' OF STRUCTURE <bseg2> TO <line>.
-      <line> = aux_bl.
-
-      ASSIGN COMPONENT 'BELNR' OF STRUCTURE <bseg2> TO <line>.
-      <line> = aux_au.
-
-
-      CLEAR: aux_au,aux_bl.
-
-
-
-    ENDIF.
+*    ASSIGN COMPONENT 'H_BLART' OF STRUCTURE <bseg2> TO <line>.
+*    IF <line> EQ 'GV' AND s_belnr IS INITIAL.
+*
+*      ASSIGN COMPONENT 'AUGBL' OF STRUCTURE <bseg2> TO <line>.
+*      aux_au =  <line>.
+*
+*      ASSIGN COMPONENT 'BELNR' OF STRUCTURE <bseg2> TO <line>.
+*      aux_bl = <line>.
+*
+*      ASSIGN COMPONENT 'AUGBL' OF STRUCTURE <bseg2> TO <line>.
+*      <line> = aux_bl.
+*
+*      ASSIGN COMPONENT 'BELNR' OF STRUCTURE <bseg2> TO <line>.
+*      <line> = aux_au.
+*
+*
+*      CLEAR: aux_au,aux_bl.
+*
+*
+*
+*    ENDIF.
   ENDLOOP.
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   IF it_bseg2 IS NOT INITIAL.
@@ -1407,7 +1407,9 @@ FORM get_Data .
             <fs_bodykz>-tot_egreso = 0.
             <fs_bodykz>-blart = 'NM'.
           ELSE.
-            <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
+           " <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
+            <fs_bodykz>-total = wa_bsegkz-dmbtr.
+            <fs_bodykz>-tot_egreso = 0.
           ENDIF.
 
           <fs_bodykz>-gkont = wa_bsegkz-hkont.
@@ -2039,6 +2041,7 @@ FORM get_inversiones .
 
 
   DELETE it_inversiones WHERE fdlev EQ 'F1'.
+   DELETE it_inversiones WHERE doc_banco is INITIAL.
   APPEND LINES OF it_inversiones    TO it_ordenainvers.
   APPEND LINES OF it_inversionesadd TO it_ordenainvers.
   SORT it_ordenainvers BY budat belnr.

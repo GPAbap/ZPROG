@@ -80,127 +80,131 @@ FORM get_data.
 
     READ TABLE vl_it_line INTO DATA(wa_line) INDEX 1.
     IF sy-subrc EQ 0.
-        <fs_outtable>-vbeln_frefac = wa_line-tdline.
-    else.
-       <fs_outtable>-vbeln_frefac = 'X'.
-    Endif.
+      <fs_outtable>-vbeln_frefac = wa_line-tdline.
+    ELSE.
+      <fs_outtable>-vbeln_frefac = 'X'.
+    ENDIF.
 
 
-      <fs_outtable>-vbeln_frefac = |{ <fs_outtable>-vbeln_frefac ALPHA = IN }|.
+    <fs_outtable>-vbeln_frefac = |{ <fs_outtable>-vbeln_frefac ALPHA = IN }|.
 
-      IF <fs_outtable>-vbeln_frefac IS NOT INITIAL.
-
-
-        SELECT v~vbeln,z1~uuid AS uuid_fo, p2~erdat ,v~kunrg, k~name1, v~netwr AS netwr, v~waerk AS waerk,
-        z2~uuid AS uuid_aj,p~shkzg,t~abgru, t~bezei,v~fksto, z2~mot_canc, z2~comentario, f~vbeln AS doc_can,
-        z2~erdat AS fec_vbeln_c
-        INTO TABLE @DATA(it_fact_canc)
-        FROM vbrk AS v
-        INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
-        INNER JOIN kna1 AS k ON k~kunnr = v~kunrg
-        LEFT JOIN vbfa AS f ON f~vbelv = v~vbeln AND f~vbtyp_n IN ( 'O', 'N' )
-        INNER JOIN zsd_cfdi_timbre AS z1 ON z1~vbeln = v~vbeln
-        LEFT JOIN zsd_cfdi_timbre AS z2 ON z2~vbeln = p~vbeln
-        LEFT JOIN vbrp AS p2 ON p2~vbeln = f~vbeln
-        LEFT JOIN vbap AS va ON va~vbeln = p~aubel
-        LEFT JOIN tvagt AS t ON t~abgru = va~abgru
-        WHERE p~aubel = @<fs_outtable>-vbeln_frefac.
+    IF <fs_outtable>-vbeln_frefac IS NOT INITIAL.
 
 
-
-        IF sy-subrc EQ 0.
-          LOOP AT it_fact_canc INTO DATA(wa_fact_canc).
-            IF wa_fact_canc-shkzg = 'X'.
-              <fs_outtable>-uuid_aj = wa_fact_canc-uuid_aj.
-            ELSE.
-              <fs_outtable>-vbeln_canc = wa_Fact_canc-vbeln.
-              <fs_outtable>-uuid_fo = wa_Fact_canc-uuid_fo.
-              <fs_outtable>-netwr = wa_fact_canc-netwr.
-              <fs_outtable>-waerk = wa_fact_canc-waerk.
-              <fs_outtable>-kunrg = wa_fact_canc-kunrg.
-              <fs_outtable>-name1 = wa_fact_canc-name1.
-              <fs_outtable>-fkdat = wa_fact_Canc-erdat.
-              <fs_outtable>-fkdat_vbeln_c = wa_fact_Canc-fec_vbeln_c.
-              <fs_outtable>-abgru = wa_fact_canc-abgru.
-              <fs_outtable>-bezei = wa_fact_canc-bezei.
-              <fs_outtable>-fksto = wa_fact_canc-fksto.
-              <fs_outtable>-mot_canc = wa_fact_canc-mot_canc.
-              <fs_outtable>-vbeln_doccan = wa_fact_canc-doc_can.
-
-            ENDIF.
-          ENDLOOP.
-        ELSE.
-          <fs_outtable>-vbeln_frefac = space.
-
-          IF <fs_outtable>-vbeln_canc IS INITIAL.
-
-            SELECT p~vbeln, sfakn_ana,kunrg_ana,fkdat_ana,z~mot_canc, z~comentario, z~uuid,
-              z~netwr, z~waers, k~name1,lpad( v~sfakn, 10, '0' ) AS sfakn
-            FROM vbrk AS v
-            INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
-            INNER JOIN kna1 AS k ON k~kunnr = p~kunag_ana
-            LEFT JOIN zsd_cfdi_timbre AS z  ON z~vbeln = p~sfakn_ana
-             WHERE aubel = @<fs_outtable>-aubel and vgbel = @<fs_outtable>-vgbel
-              AND shkzg = 'X'
-               INTO TABLE @DATA(it_fact_ana)
-              .
-
-            IF sy-subrc EQ 0.
-*              LOOP AT it_fact_ana into data(wa_ana).
-*
-*              ENDLOOP.
-              READ TABLE it_fact_ana INTO DATA(wa_ana) INDEX 1.
-
-              SELECT uuid, netwr, waers, mot_canc, erdat
-                INTO TABLE @DATA(it_cfdi_ana)
-              FROM zsd_cfdi_timbre
-              WHERE vbeln = @wa_ana-sfakn.
-
-              READ TABLE it_cfdi_ana INTO DATA(wa_cfdi_ana) INDEX 1.
-
-              IF wa_ana-sfakn_ana IS INITIAL.
-                <fs_outtable>-vbeln_canc = wa_ana-sfakn.
-              ELSE.
-                <fs_outtable>-vbeln_canc = wa_ana-sfakn_ana.
-              ENDIF.
-
-              <fs_outtable>-fkdat = wa_ana-fkdat_ana.
-              <fs_outtable>-fkdat_vbeln_c = wa_cfdi_ana-erdat.
-              <fs_outtable>-vbeln_doccan = wa_ana-vbeln.
-              <fs_outtable>-kunrg = wa_ana-kunrg_ana.
-              <fs_outtable>-fksto  = 'X'.
-              IF  wa_ana-mot_canc IS INITIAL.
-                <fs_outtable>-mot_canc = wa_cfdi_ana-mot_canc.
-              ELSE.
-                <fs_outtable>-mot_canc = wa_ana-mot_canc.
-              ENDIF.
-
-              IF wa_ana-uuid IS INITIAL.
-                <fs_outtable>-uuid_fo = wa_cfdi_ana-uuid.
-              ELSE.
-                <fs_outtable>-uuid_fo = wa_ana-uuid.
-              ENDIF.
-
-              IF wa_ana-netwr IS INITIAL.
-                <fs_outtable>-netwr = wa_cfdi_ana-netwr.
-              ELSE.
-                <fs_outtable>-netwr = wa_ana-netwr.
-              ENDIF.
-
-              IF wa_ana-waers IS INITIAL.
-                <fs_outtable>-waerk = wa_cfdi_ana-waers.
-              ELSE.
-                <fs_outtable>-waerk = wa_ana-waers.
-              ENDIF.
+      SELECT v~vbeln,z1~uuid AS uuid_fo, p2~erdat ,v~kunrg, k~name1, v~netwr AS netwr, v~waerk AS waerk,
+      z2~uuid AS uuid_aj,p~shkzg,t~abgru, t~bezei,v~fksto, z2~mot_canc, z2~comentario, f~vbeln AS doc_can,
+      z2~erdat AS fec_vbeln_c
+      INTO TABLE @DATA(it_fact_canc)
+      FROM vbrk AS v
+      INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
+      INNER JOIN kna1 AS k ON k~kunnr = v~kunrg
+      LEFT JOIN vbfa AS f ON f~vbelv = v~vbeln AND f~vbtyp_n IN ( 'O', 'N' )
+      INNER JOIN zsd_cfdi_timbre AS z1 ON z1~vbeln = v~vbeln
+      LEFT JOIN zsd_cfdi_timbre AS z2 ON z2~vbeln = p~vbeln
+      LEFT JOIN vbrp AS p2 ON p2~vbeln = f~vbeln
+      LEFT JOIN vbap AS va ON va~vbeln = p~aubel
+      LEFT JOIN tvagt AS t ON t~abgru = va~abgru
+      WHERE p~aubel = @<fs_outtable>-vbeln_frefac.
 
 
-              <fs_outtable>-name1 = wa_ana-name1.
 
-            ENDIF.
+      IF sy-subrc EQ 0.
+        LOOP AT it_fact_canc INTO DATA(wa_fact_canc).
+          IF wa_fact_canc-shkzg = 'X'.
+            <fs_outtable>-uuid_aj = wa_fact_canc-uuid_aj.
+          ELSE.
+            <fs_outtable>-vbeln_canc = wa_Fact_canc-vbeln.
+            <fs_outtable>-uuid_fo = wa_Fact_canc-uuid_fo.
+            <fs_outtable>-netwr = wa_fact_canc-netwr.
+            <fs_outtable>-waerk = wa_fact_canc-waerk.
+            <fs_outtable>-kunrg = wa_fact_canc-kunrg.
+            <fs_outtable>-name1 = wa_fact_canc-name1.
+            <fs_outtable>-fkdat = wa_fact_Canc-erdat.
+            <fs_outtable>-fkdat_vbeln_c = wa_fact_Canc-fec_vbeln_c.
+            <fs_outtable>-abgru = wa_fact_canc-abgru.
+            <fs_outtable>-bezei = wa_fact_canc-bezei.
+            <fs_outtable>-fksto = wa_fact_canc-fksto.
+            <fs_outtable>-mot_canc = wa_fact_canc-mot_canc.
+            <fs_outtable>-vbeln_doccan = wa_fact_canc-doc_can.
 
           ENDIF.
+        ENDLOOP.
+      ELSE.
+        <fs_outtable>-vbeln_frefac = space.
+
+        IF <fs_outtable>-vbeln_canc IS INITIAL.
+
+          SELECT p~vbeln, sfakn_ana,kunrg_ana,fkdat_ana,z~mot_canc, z~comentario, z~uuid,
+            z~netwr, z~waers, k~name1,lpad( v~sfakn, 10, '0' ) AS sfakn, aubel, vgbel
+          FROM vbrk AS v
+          INNER JOIN vbrp AS p ON p~vbeln = v~vbeln
+          INNER JOIN kna1 AS k ON k~kunnr = p~kunag_ana
+          LEFT JOIN zsd_cfdi_timbre AS z  ON z~vbeln = p~sfakn_ana
+           WHERE aubel = @<fs_outtable>-aubel OR vgbel = @<fs_outtable>-vgbel
+            AND shkzg = 'X'
+             INTO TABLE @DATA(it_fact_ana)
+            .
+          DELETE it_fact_ana WHERE sfakn_ana IS INITIAL.
+          SORT it_fact_ana BY fkdat_ana DESCENDING.
+          IF it_fact_ana[] IS NOT INITIAL.
+
+
+
+            READ TABLE it_fact_ana INTO DATA(wa_ana) WITH KEY vgbel  = <fs_outtable>-vgbel.
+            IF sy-subrc NE 0.
+              READ TABLE it_fact_ana INTO wa_ana WITH KEY vgbel  = <fs_outtable>-aubel.
+            ENDIF.
+
+            SELECT uuid, netwr, waers, mot_canc, erdat
+              INTO TABLE @DATA(it_cfdi_ana)
+            FROM zsd_cfdi_timbre
+            WHERE vbeln = @wa_ana-sfakn.
+
+            READ TABLE it_cfdi_ana INTO DATA(wa_cfdi_ana) INDEX 1.
+
+            IF wa_ana-sfakn_ana IS INITIAL.
+              <fs_outtable>-vbeln_canc = wa_ana-sfakn.
+            ELSE.
+              <fs_outtable>-vbeln_canc = wa_ana-sfakn_ana.
+            ENDIF.
+
+            <fs_outtable>-fkdat = wa_ana-fkdat_ana.
+            <fs_outtable>-fkdat_vbeln_c = wa_cfdi_ana-erdat.
+            <fs_outtable>-vbeln_doccan = wa_ana-vbeln.
+            <fs_outtable>-kunrg = wa_ana-kunrg_ana.
+            <fs_outtable>-fksto  = 'X'.
+            IF  wa_ana-mot_canc IS INITIAL.
+              <fs_outtable>-mot_canc = wa_cfdi_ana-mot_canc.
+            ELSE.
+              <fs_outtable>-mot_canc = wa_ana-mot_canc.
+            ENDIF.
+
+            IF wa_ana-uuid IS INITIAL.
+              <fs_outtable>-uuid_fo = wa_cfdi_ana-uuid.
+            ELSE.
+              <fs_outtable>-uuid_fo = wa_ana-uuid.
+            ENDIF.
+
+            IF wa_ana-netwr IS INITIAL.
+              <fs_outtable>-netwr = wa_cfdi_ana-netwr.
+            ELSE.
+              <fs_outtable>-netwr = wa_ana-netwr.
+            ENDIF.
+
+            IF wa_ana-waers IS INITIAL.
+              <fs_outtable>-waerk = wa_cfdi_ana-waers.
+            ELSE.
+              <fs_outtable>-waerk = wa_ana-waers.
+            ENDIF.
+
+
+            <fs_outtable>-name1 = wa_ana-name1.
+
+          ENDIF.
+
         ENDIF.
       ENDIF.
+    ENDIF.
 
 
     IF <fs_outtable>-vbeln_canc IS NOT INITIAL.
