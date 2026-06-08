@@ -9,6 +9,24 @@
    </INCLUDES>
    <FUNCTIONS>
     <item>
+     <FUNCNAME>ZMM_JB_BLOQ_PROV</FUNCNAME>
+     <SHORT_TEXT>JOB BLOQUE PROVEEDORES SERV. SIN FACTURA</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>P_FECHA</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>DATUM</TYP>
+      </RSIMP>
+     </IMPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>P_FECHA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Fecha</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
      <FUNCNAME>ZMM_RET_EMB_CJA</FUNCNAME>
      <SHORT_TEXT>Devolucion Caja de Carton</SHORT_TEXT>
      <IMPORT>

@@ -134,103 +134,103 @@
     <item>
      <ID>I</ID>
      <KEY>001</KEY>
-     <ENTRY>Flete gasto PPA</ENTRY>
+     <ENTRY>flete_gasto_ppa</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>002</KEY>
-     <ENTRY>Costo transferencia kg</ENTRY>
+     <ENTRY>cu_kg_costo_transferencia</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>003</KEY>
-     <ENTRY>Rendimiento</ENTRY>
+     <ENTRY>rendimiento</ENTRY>
      <LENGTH>11</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>004</KEY>
-     <ENTRY>Peso promedio</ENTRY>
+     <ENTRY>peso_promedio</ENTRY>
      <LENGTH>13</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>005</KEY>
-     <ENTRY>Flete gasto PPA 2</ENTRY>
+     <ENTRY>flete_gasto_ppa_2</ENTRY>
      <LENGTH>30</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>006</KEY>
-     <ENTRY>Recuperaciones</ENTRY>
+     <ENTRY>recuperaciones</ENTRY>
      <LENGTH>14</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>007</KEY>
-     <ENTRY>Precio venta</ENTRY>
+     <ENTRY>precio_venta</ENTRY>
      <LENGTH>14</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>008</KEY>
-     <ENTRY>Gasto distribucion</ENTRY>
+     <ENTRY>gasto_distribucion</ENTRY>
      <LENGTH>22</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>009</KEY>
-     <ENTRY>Gasto venta</ENTRY>
+     <ENTRY>gasto_venta</ENTRY>
      <LENGTH>18</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>010</KEY>
-     <ENTRY>Gastos administracion</ENTRY>
+     <ENTRY>gastos_admon</ENTRY>
      <LENGTH>28</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>011</KEY>
-     <ENTRY>CU materia prima</ENTRY>
+     <ENTRY>cu_mat_prima</ENTRY>
      <LENGTH>20</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>012</KEY>
-     <ENTRY>Costo total kg</ENTRY>
+     <ENTRY>costo_total_kg</ENTRY>
      <LENGTH>20</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>013</KEY>
-     <ENTRY>Utilidad bruta</ENTRY>
+     <ENTRY>utilidad_bruta</ENTRY>
      <LENGTH>15</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>014</KEY>
-     <ENTRY>Total gastos venta</ENTRY>
+     <ENTRY>total_gastos_venta</ENTRY>
      <LENGTH>21</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>015</KEY>
-     <ENTRY>Utilidad operacion</ENTRY>
+     <ENTRY>utilidad_operacion</ENTRY>
      <LENGTH>21</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>016</KEY>
-     <ENTRY>Utilidad op. pkg iniciados</ENTRY>
+     <ENTRY>utilidad_operacion_pkg_iniciados</ENTRY>
      <LENGTH>36</LENGTH>
     </item>
     <item>
      <ID>I</ID>
      <KEY>017</KEY>
-     <ENTRY>Cantidad</ENTRY>
+     <ENTRY>cantidad</ENTRY>
      <LENGTH>36</LENGTH>
     </item>
     <item>

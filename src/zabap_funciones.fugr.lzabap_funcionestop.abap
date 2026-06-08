@@ -27,5 +27,22 @@ TYPES: BEGIN OF st_pedidos,
          vbeln     TYPE vbeln,
        END OF st_created_vbeln.
 
+TYPES: BEGIN OF st_ekpo,
+         aedat TYPE erdat,
+         ebeln TYPE ebeln,
+         ebelp TYPE ebelp,
+         vgabe TYPE vgabe,
+         bewtp TYPE bewtp,
+         belnr TYPE mblnr,
+         budat TYPE budat,
+         cputm TYPE cputm,
+         buzei TYPE mblpo,
+         lifnr TYPE elifn,
+         bukrs type bukrs,
+         ekorg type ekorg,
+       END OF st_ekpo.
+
+
+
 DATA: it_created_vbeln TYPE STANDARD TABLE OF st_Created_vbeln,
       wa_created       LIKE LINE OF it_created_vbeln.

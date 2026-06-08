@@ -1,0 +1,165 @@
+*&---------------------------------------------------------------------*
+*& Report  ZSD_AUT_PEDVTAMAS
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZSD_CREAPEDVTAS_AZ.
+
+
+INCLUDE ZSD_CREAPEDVTAS_AZ_TOP.
+INCLUDE ZSD_CREAPEDVTAS_AZ_FUN.
+
+START-OF-SELECTION.
+
+  SELECT *
+    FROM ZSD_TT_CONFIGSAN
+    INTO TABLE IT_DEP
+    WHERE RESERVADO3 = 'Z'.
+
+  SELECT *
+    FROM TVV1
+    INTO TABLE IT_TVV1.
+
+
+  LV_METPAG = '01'.
+
+  SELECT SINGLE DIRECTORIO
+    FROM ZSD_TT_DIRSFTP
+    INTO LV_DIRECTORIO
+    WHERE RESERVADO1 = 'X'.
+
+
+  CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
+    EXPORTING
+      DATE      = SY-DATUM
+      DAYS      = 5
+      MONTHS    = 00
+      SIGNUM    = '-'
+      YEARS     = 00
+    IMPORTING
+      CALC_DATE = LV_DATECREA.
+
+  SELECT *
+    FROM ZSD_TT_PLANTSAN
+  INTO TABLE IT_VALIDA
+    WHERE FECHAPLAN BETWEEN LV_DATECREA AND SY-DATUM.
+
+***************************+
+
+
+  LV_FECHA = SY-DATUM.
+
+  CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
+    EXPORTING
+      DATE      = LV_FECHA
+      DAYS      = 5
+      MONTHS    = 00
+      SIGNUM    = '-'
+      YEARS     = 00
+    IMPORTING
+      CALC_DATE = LV_FECHA.
+
+  DO 6 TIMES.
+    WA_RANGO-FECHA = LV_FECHA.
+
+    CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
+      EXPORTING
+        DATE      = LV_FECHA
+        DAYS      = 1
+        MONTHS    = 00
+        SIGNUM    = '+'
+        YEARS     = 00
+      IMPORTING
+        CALC_DATE = LV_FECHA.
+
+    APPEND WA_RANGO TO IT_RANGO.
+  ENDDO.
+***************************+
+ PERFORM load_tables_conf.
+  LOOP AT IT_DEP INTO WA_DEP.
+
+    LOOP AT IT_RANGO INTO WA_RANGO.
+
+      WA_ARCHIVOS-WERKS = WA_DEP-WERKS.
+      WA_ARCHIVOS-FECHA = WA_RANGO-FECHA.
+
+      APPEND WA_ARCHIVOS TO IT_ARCHIVOS.
+
+    ENDLOOP.
+
+  ENDLOOP.
+
+
+  LOOP AT IT_ARCHIVOS INTO WA_ARCHIVOS.
+
+    CLEAR:WA_PLANTILLASAN,
+          IT_PLANTILLASAN,
+          IT_DATOS_PEDIDOS,
+         IT_DATOS_PEDIDOS3,
+         WA_DATOS_PEDIDOS3,
+         IT_DATOS_PEDIDOS2,
+         WA_DATOS_PEDIDOS2,
+         IT_DATOS_PEDIDOSV,
+         WA_DATOS_PEDIDOSV,
+         IT_DATOS_PEDIDOSV18,
+         IT_DATOS_PEDIDOS30,
+         WA_DATOS_PEDIDOS30,
+         IT_DATOS_PEDIDOS18,
+         WA_DATOS_PEDIDOS30,
+         IT_DATOS_PEDIDOS30F,
+         WA_DATOS_PEDIDOS30F,
+         IT_DATOS_PEDIDOS18F,
+         WA_DATOS_PEDIDOS18F,
+         IT_DATOS_PEDIDOSV2,
+         WA_DATOS_PEDIDOSV2,
+         WA_DATOS_PEDIDOSV182,
+         IT_DATOS_PEDIDOSV182.
+
+    REFRESH:
+          IT_PLANTILLASAN,
+          IT_DATOS_PEDIDOS,
+         IT_DATOS_PEDIDOS3,
+         IT_DATOS_PEDIDOS2,
+         IT_DATOS_PEDIDOSV,
+         IT_DATOS_PEDIDOSV18,
+         IT_DATOS_PEDIDOS30,
+         IT_DATOS_PEDIDOS18,
+         IT_DATOS_PEDIDOS30F,
+         IT_DATOS_PEDIDOS18F,
+         IT_DATOS_PEDIDOSV2,
+         IT_DATOS_PEDIDOSV182.
+
+************************ ajuste 4 de febrero 2021 aut3
+    CLEAR:
+    WA_DATOS_PEDIDOSVPGI2,
+    WA_DATOS_PEDIDOSVPGI18,
+    WA_DATOS_PEDIDOSVPGI01F,
+    IT_DATOS_PEDIDOSVPGI11F.
+
+    REFRESH:
+    IT_DATOS_PEDIDOSVPGI2,
+    IT_DATOS_PEDIDOSVPGI18,
+    IT_DATOS_PEDIDOSVPGI01F,
+    IT_DATOS_PEDIDOSVPGI11F.
+************************ ajuste 4 de febrero 2021 aut3
+
+    SELECT SINGLE CLIENTE
+    FROM ZSD_TT_CONFIGVPG
+    INTO LV_VPG
+    WHERE WERKS = WA_ARCHIVOS-WERKS.
+
+    PERFORM GET_FILE.
+
+    PERFORM SET_DATA.
+
+    IF IT_TAB IS NOT INITIAL.
+
+      PERFORM PROCESS_DATA.
+    ENDIF.
+
+  ENDLOOP.
+
+END-OF-SELECTION.

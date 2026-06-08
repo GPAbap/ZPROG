@@ -17,6 +17,33 @@ CLASS ZCL_IM_INVOICE_UPDATE IMPLEMENTATION.
 
 
   method IF_EX_INVOICE_UPDATE~CHANGE_AT_SAVE.
+
+*    DATA lv_has_downpayment TYPE abap_bool.
+*
+*  LOOP AT ti_rseg_new ASSIGNING FIELD-SYMBOL(<fs_rseg>).
+*
+*    CLEAR lv_has_downpayment.
+*
+*    SELECT SINGLE @abap_true
+*      FROM ekbe
+*      WHERE ebeln = @<fs_rseg>-ebeln
+*        AND ebelp = @<fs_rseg>-ebelp
+*        AND vgabe = '4'
+*      INTO @lv_has_downpayment.
+*
+*    IF lv_has_downpayment = abap_true.
+*
+*      "Aquí debes validar si el anticipo fue realmente compensado.
+*      "Si no existe compensación:
+*      MESSAGE e001(zmrm)
+*        WITH <fs_rseg>-ebeln <fs_rseg>-ebelp
+*        RAISING error_with_message.
+*
+*    ENDIF.
+*
+*  ENDLOOP.
+
+
   endmethod.
 
 

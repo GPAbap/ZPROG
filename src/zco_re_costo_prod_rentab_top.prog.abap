@@ -23,7 +23,9 @@ TYPES: BEGIN OF st_header,
          titulo4 TYPE string,
        END OF st_header.
 
-CONSTANTS sap_file TYPE string VALUE '/sapmnt/datadev/alv_export.csv'.
+CONSTANTS sap_file_dev TYPE string VALUE '/sapmnt/datadev/'. "alv_export.csv'.
+CONSTANTS sap_file_qas TYPE string VALUE '/sapmnt/dataqas/'. "alv_export.csv'.
+CONSTANTS sap_file_pro TYPE string VALUE '/sapmnt/datapro/'. "alv_export.csv'.
 CONSTANTS: c_rnsentero TYPE p DECIMALS 2 VALUE '2.30',
            c_rnscortes TYPE p DECIMALS 2 VALUE '2.30',
            c_rtc       TYPE p DECIMALS 2 VALUE '1.75',
@@ -62,16 +64,38 @@ TYPES: BEGIN OF st_aux_out,
          racct    TYPE racct,
        END OF st_mb51,
 
+       BEGIN OF st_acdoca,
+         aufnr  TYPE aufnr,
+         racct  TYPE racct,
+         txt50  TYPE txt50,
+         hsl    TYPE fins_vhcur12,
+         poper  TYPE poper,
+         budat  TYPE budat,
+         ryear  TYPE gjahr_pos,
+         awref  TYPE awref,
+         awitem TYPE awitem_rev,
+         belnr  TYPE belnr_d,
+         docln  TYPE docln6,
+         werks  TYPE werks_d,
+         rcntr  TYPE kostl,
+       END OF st_acdoca,
+
        BEGIN OF st_kgs_cost_trans,
          "matnr TYPE matnr,
          menge TYPE menge_d,
          meins TYPE meins,
+         dmbtr TYPE dmbtr_cs,
        END OF st_KGS_COST_TRANS,
 
        BEGIN OF st_flete_transf,
          kstar TYPE kstar,
          mes   TYPE wtgxxx,
        END OF st_FLETE_TRANSF,
+
+       BEGIN OF st_ch_cost_trnsf,
+         racct TYPE saknr,
+         mes   TYPE fins_vhcur12,
+       END OF st_ch_cost_trnsf,
 
        BEGIN OF st_kgs_vendidos,
          artnr TYPE matnr,
@@ -94,28 +118,57 @@ TYPES: BEGIN OF st_aux_out,
          ferth TYPE ferth,
          msl   TYPE quan1_12,
          hsl   TYPE fins_vhcur12,
-       END OF st_pzas_pro.
+       END OF st_pzas_pro,
+
+       BEGIN OF st_recupera, "
+         aufnr    TYPE aufnr,
+         matnr    TYPE matnr,
+         matkl    TYPE matkl,
+         wgbez60  TYPE maktx,
+         werks    TYPE werks_d,
+         menge    TYPE menge_d,
+         meins    TYPE meins,
+         budat    TYPE budat,
+         dmbtr    TYPE fins_vhcur12, "dmbtr_cs,
+         dmbtr_st TYPE fins_vhcur12, "dmbtr_cs,
+         awref    TYPE awref,
+         awitem   TYPE awitem_rev,
+
+       END OF st_recupera.
 
 
-DATA: it_aux_out       TYPE STANDARD TABLE OF st_aux_out,
-      wa_aux_out       LIKE LINE OF it_aux_out,
-      it_mb51          TYPE STANDARD TABLE OF st_mb51,
-      it_kg_cost_trans TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_kg_menudencia TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_kg_merma      TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_kg_rns        TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_kg_pro_merma  TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_kg_cad_h      TYPE STANDARD TABLE OF st_kgs_cost_trans,
-      it_flete_transf  TYPE STANDARD TABLE OF st_flete_transf,
-      it_vtas_netas    TYPE STANDARD TABLE OF st_flete_transf,
-      it_kgs_vendidos  TYPE STANDARD TABLE OF st_kgs_vendidos,
-      it_gtos_dist     TYPE STANDARD TABLE OF st_flete_transf,
-      it_gtos_ventas   TYPE STANDARD TABLE OF st_flete_transf,
-      it_gtos_admon    TYPE STANDARD TABLE OF st_flete_transf,
-      it_backlog       TYPE STANDARD TABLE OF st_backlog,
-      it_pzas_pv       TYPE STANDARD TABLE OF st_pzas_pv,
-      it_pzas_pro      TYPE STANDARD TABLE OF st_pzas_pro,
-      wa_backlog       LIKE LINE OF it_backlog.
+DATA: it_aux_out         TYPE STANDARD TABLE OF st_aux_out,
+      wa_aux_out         LIKE LINE OF it_aux_out,
+      it_mb51            TYPE STANDARD TABLE OF st_mb51,
+      it_kg_cost_trans   TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_menudencia   TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_merma        TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_harina       TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_rns          TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_pro_merma    TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_kg_cad_h        TYPE STANDARD TABLE OF st_kgs_cost_trans,
+      it_flete_transf    TYPE STANDARD TABLE OF st_flete_transf,
+      it_vtas_netas      TYPE STANDARD TABLE OF st_flete_transf,
+      it_kgs_vendidos    TYPE STANDARD TABLE OF st_kgs_vendidos,
+      it_gtos_dist       TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_dist_ppa   TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_dist_pv    TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_ventas     TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_ventas_ppa TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_ventas_pv  TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_admon      TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_admon_ppa  TYPE STANDARD TABLE OF st_flete_transf,
+      it_gtos_admon_pv   TYPE STANDARD TABLE OF st_flete_transf,
+      it_ch_cost_trsf    TYPE STANDARD TABLE OF st_ch_cost_trnsf,
+      it_pv_cost_trsf    TYPE STANDARD TABLE OF st_ch_cost_trnsf,
+      it_backlog         TYPE STANDARD TABLE OF st_backlog,
+      it_pzas_pv         TYPE STANDARD TABLE OF st_pzas_pv,
+      it_pzas_pv_mes     TYPE STANDARD TABLE OF st_pzas_pv,
+      it_pzas_pro        TYPE STANDARD TABLE OF st_pzas_pro,
+      it_pzas_pro_m      TYPE STANDARD TABLE OF st_pzas_pro,
+      it_recupera        TYPE STANDARD TABLE OF st_recupera,
+      wa_backlog         LIKE LINE OF it_backlog,
+      it_acdoca          TYPE STANDARD TABLE OF st_acdoca.
 
 TYPES: BEGIN OF st_acumulado,
          columna   TYPE wgbez60,
@@ -181,6 +234,34 @@ DATA: gv_cant_pv        TYPE menge_d,
       gv_fletes_m       TYPE menge_d,
       gv_fletes_chiapas TYPE menge_d.
 
+"datos mensuales""""""""""""""""""""""
+DATA: gv_cant_pv_m        TYPE menge_d,
+      gv_cantH_m          TYPE menge_d,
+      gv_cantM_m          TYPE menge_d,
+      gv_chiapas_m        TYPE menge_d,
+      gv_trasd_vivo_m     TYPE menge_d,
+
+      gv_cant_pv_kg_m     TYPE menge_d,
+      gv_cantH_kg_m       TYPE menge_d,
+      gv_cantM_kg_m       TYPE menge_d,
+      gv_chiapas_kg_m     TYPE menge_d,
+
+      gv_cant_pv_mn_m     TYPE menge_d,
+      gv_cantH_mn_m       TYPE menge_d,
+      gv_cantM_mn_m       TYPE menge_d,
+      gv_chiapas_mn_m     TYPE menge_d,
+
+      gv_dev_pv_m         TYPE menge_d,
+      gv_dev_h_m          TYPE menge_d,
+      gv_dev_m_m          TYPE menge_d,
+      gv_dev_chiapas_m    TYPE menge_d,
+      gv_fletes_pv_m      TYPE menge_d,
+      gv_fletes_h_m       TYPE menge_d,
+      gv_fletes_m_m       TYPE menge_d,
+      gv_fletes_chiapas_m TYPE menge_d.
+"""""""""""""""""""""""""""""""""""""2
+
+
 
 
 DATA: gv_rnsentero     TYPE menge_d,
@@ -198,7 +279,23 @@ DATA: gv_rnsentero_mn     TYPE menge_d,
       gv_hidratado_mn     TYPE menge_d,
       gv_rhpcortes_mn     TYPE menge_d,
       gv_limpiezas_mn     TYPE menge_d.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+DATA: gv_rnsentero_m     TYPE menge_d,
+      gv_rnscortes_m     TYPE menge_d,
+      gv_rtc_m           TYPE menge_d,
+      gv_pintadopesado_m TYPE menge_d,
+      gv_hidratado_m     TYPE menge_d,
+      gv_rhpcortes_m     TYPE menge_d,
+      gv_limpiezas_m     TYPE menge_d.
 
+DATA: gv_rnsentero_mn_m     TYPE menge_d,
+      gv_rnscortes_mn_m     TYPE menge_d,
+      gv_rtc_mn_m           TYPE menge_d,
+      gv_pintadopesado_mn_m TYPE menge_d,
+      gv_hidratado_mn_m     TYPE menge_d,
+      gv_rhpcortes_mn_m     TYPE menge_d,
+      gv_limpiezas_mn_m     TYPE menge_d.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 DATA: o_alv           TYPE REF TO cl_salv_table,

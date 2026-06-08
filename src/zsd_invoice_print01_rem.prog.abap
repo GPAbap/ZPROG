@@ -148,7 +148,7 @@ FORM get_data.
         lv_sim_flag TYPE boolean.
 
 
-  DATA: vl_cantidad_mh TYPE char10, vl_valor TYPE string,aux_pp type p DECIMALS 2,
+  DATA: vl_cantidad_mh TYPE char10, vl_valor TYPE string,aux_pp TYPE p DECIMALS 2,
         vl_zona        TYPE string,
         vl_posnr       TYPE posnr,
         vl_tdname      TYPE tdobname.
@@ -167,6 +167,10 @@ FORM get_data.
         vl_total_aves TYPE menge_d,
         vl_peso_prom  TYPE zpesop.
 
+  DATA: vl_llegada   TYPE string,
+        vl_ini_carga TYPE string,
+        vl_fin_carga TYPE string,
+        vl_salida    TYPE string.
 
 
   CLEAR gv_has_transient_data.
@@ -274,7 +278,9 @@ FORM get_data.
   CASE WHEN p~spart EQ '92' THEN 'M' ELSE
   CASE WHEN p~spart EQ '91' THEN 'H' ELSE
   CASE WHEN p~spart EQ '93' THEN 'R' ELSE
-  CASE WHEN p~spart EQ '94' THEN 'HL' ELSE ts~vtext END END END END  AS txtspart
+  CASE WHEN p~spart EQ '94' THEN 'HL' ELSE ts~vtext END END END END  AS txtspart,
+  '00:00:00' AS llegada, '00:00:00' AS ini_carga, '00:00:00' AS fin_carga, '00:00:00' AS salida,
+  '1234567891011121314151617181920' AS conductor, 'XXX-749-B000' AS Placas
   FROM vbak AS v
 INNER JOIN vbap AS p ON p~vbeln EQ v~vbeln
 INNER JOIN vbpa AS vb ON vb~vbeln = v~vbeln AND vb~parvw = 'WE'
@@ -288,7 +294,7 @@ LEFT JOIN adrc AS a ON a~addrnumber EQ k~adrnr
 WHERE v~vbeln = @nast-objky
   INTO  TABLE @it_remision.
 
-delete ADJACENT DUPLICATES FROM it_remision COMPARING ALL FIELDS.
+  DELETE ADJACENT DUPLICATES FROM it_remision COMPARING ALL FIELDS.
 
   SELECT SINGLE vbeln INTO @DATA(wa_vbeln)
     FROM vbfa
@@ -395,7 +401,7 @@ delete ADJACENT DUPLICATES FROM it_remision COMPARING ALL FIELDS.
     aux_pp = vl_valor.
     aux_pp = vl_valor / '1000.0'.
     IF aux_pp GT 0.
-     vl_valor = aux_pp.
+      vl_valor = aux_pp.
     ENDIF.
 
     CASE vl_posnr.
@@ -469,9 +475,42 @@ delete ADJACENT DUPLICATES FROM it_remision COMPARING ALL FIELDS.
     ASSIGN COMPONENT 'ZOBSERVACIONES' OF STRUCTURE <fs_wa> TO <fs_field>.
     <fs_field> = vl_valor.
 
+     CLEAR vl_valor.
+    PERFORM get_textos USING 'ZS01' vl_tdname 'VBBK'
+                       CHANGING vl_valor.
+
+     ASSIGN COMPONENT 'CONDUCTOR' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_valor.
+
+     CLEAR vl_valor.
+    PERFORM get_textos USING 'ZS09' vl_tdname 'VBBK'
+                       CHANGING vl_valor.
+
+         ASSIGN COMPONENT 'PLACAS' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_valor.
+
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    PERFORM get_textos_tm USING 'ZS23' vl_tdname 'VBBK'
+                          CHANGING vl_llegada
+                                   vl_ini_carga
+                                   vl_fin_carga
+                                   vl_salida.
+
+    ASSIGN COMPONENT 'LLEGADA' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_llegada.
+
+    ASSIGN COMPONENT 'INI_CARGA' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_ini_carga.
+
+    ASSIGN COMPONENT 'FIN_CARGA' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_fin_carga.
+
+    ASSIGN COMPONENT 'SALIDA' OF STRUCTURE <fs_wa> TO <fs_field>.
+    <fs_field> = vl_salida.
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
     "se suma la cantidad de las posiciones
-
+    CLEAR vl_valor.
     CASE vl_posnr.
       WHEN '000010'.
         ASSIGN COMPONENT 'ZKWMENG' OF STRUCTURE <fs_wa> TO <fs_field>.
@@ -772,6 +811,76 @@ FORM get_textos USING td_id TYPE tdid
   READ TABLE it_lines INTO DATA(wa_lines) INDEX 1.
   CONCATENATE p_valor wa_lines-tdline INTO p_valor SEPARATED BY space.
   "p_valor = .
+ENDFORM.
+FORM get_textos_tm USING td_id TYPE tdid
+                      td_tdname TYPE tdobname
+                      td_obj TYPE tdobject
+                CHANGING p_hr_llegada TYPE string
+                         p_hr_ini_carga TYPE string
+                         p_hr_fin_carga TYPE string
+                         p_hr_salida   TYPE string.
+
+  DATA: it_lines TYPE STANDARD TABLE OF tline.
+
+
+  CALL FUNCTION 'READ_TEXT'
+    EXPORTING
+      client                  = sy-mandt
+      id                      = td_id
+      language                = 'S'
+      name                    = td_tdname
+      object                  = td_obj
+    TABLES
+      lines                   = it_lines
+    EXCEPTIONS
+      id                      = 1
+      language                = 2
+      name                    = 3
+      not_found               = 4
+      object                  = 5
+      reference_check         = 6
+      wrong_access_to_archive = 7
+      OTHERS                  = 8.
+
+
+*  READ TABLE it_lines INTO DATA(wa_lines) INDEX 1.
+*  CONCATENATE p_valor wa_lines-tdline INTO p_valor SEPARATED BY space.
+  IF it_lines[] IS NOT INITIAL.
+
+    TRY.
+
+
+        READ TABLE it_lines INTO DATA(wa_lines) INDEX 1.
+        IF sy-subrc EQ 0.
+          p_hr_llegada = wa_lines-tdline+0(8).
+          CLEAR wa_lines.
+        ENDIF.
+
+        READ TABLE it_lines INTO wa_lines INDEX 2.
+        IF sy-subrc EQ 0.
+          p_hr_ini_carga = wa_lines-tdline+0(8).
+          CLEAR wa_lines.
+        ENDIF.
+
+        READ TABLE it_lines INTO wa_lines INDEX 3.
+        IF sy-subrc EQ 0.
+          p_hr_fin_carga = wa_lines-tdline+0(8).
+          CLEAR wa_lines.
+        ENDIF.
+
+        READ TABLE it_lines INTO wa_lines INDEX 4.
+        IF sy-subrc EQ 0.
+          p_hr_salida = wa_lines-tdline+0(8).
+          CLEAR wa_lines.
+        ENDIF.
+
+
+
+      CATCH cx_sy_range_out_of_bounds INTO DATA(lx_error).
+        WRITE: / 'Error de substring:',
+            lx_error->get_text( ).
+    ENDTRY.
+  ENDIF.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *&      Form  get_item_details

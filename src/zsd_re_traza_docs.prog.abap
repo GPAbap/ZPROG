@@ -21,5 +21,14 @@ ENDLOOP.
 
 START-OF-SELECTION.
 
-  PERFORM get_data.
+IF s_vkorg-low cp 'AZ*'.
+  PERFORM get_data_azucar.
+ELSEIF s_vkorg-low cp 'AV*'.
+  PERFORM get_data_avicola.
+else.
+  PERFORM get_data_avicola.
+ENDIF.
+
+
+
   perform show_data.

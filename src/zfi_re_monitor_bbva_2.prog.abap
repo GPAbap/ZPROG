@@ -25,17 +25,17 @@ INCLUDE ZMON_ALTA_NOMINA_TOP.
 INCLUDE ZMON_ALTA_NOMINA_SEL.
 
 *** Include de procesamiento
-INCLUDE ZMON_ALTA_NOMINA_F01.
+*INCLUDE ZMON_ALTA_NOMINA_F01.
 
 
-"$. Region DATA
-DATA: IT_CAB TYPE TABLE OF ZST_PAGOSBBVA,
-      WA_CAB LIKE LINE OF IT_CAB,
-      IT_DET TYPE TABLE OF ZST_PAGOSBBVAD,
-      WA_DET LIKE LINE OF IT_DET.
+*"$. Region DATA
+*DATA: IT_CAB TYPE TABLE OF ZST_PAGOSBBVA,
+*      WA_CAB LIKE LINE OF IT_CAB,
+*      IT_DET TYPE TABLE OF ZST_PAGOSBBVAD,
+*      WA_DET LIKE LINE OF IT_DET.
 
-DATA: FM_NAME TYPE RS38L_FNAM,
-      C_SMART TYPE RS38L_FNAM VALUE 'ZSF_PAGOSFORMATOTEST'.
+*DATA: FM_NAME TYPE RS38L_FNAM,
+*      C_SMART TYPE RS38L_FNAM VALUE 'ZSF_PAGOSFORMATOTEST'.
 
 ********************** SMARTFORMS ********************************
 DATA: LT_FIELDCAT TYPE SLIS_T_FIELDCAT_ALV,
@@ -104,19 +104,19 @@ DATA: IT_PREFINAL  TYPE TABLE OF TY_PREFINAL,
       IT_PREFINALC TYPE TABLE OF TY_PREFINALC,
       WA_PREFINALC LIKE LINE OF IT_PREFINALC.
 
-DATA: IT_OPERACIONES    TYPE TABLE OF TY_OPERACIONES,
-      CONTROL          TYPE SSFCTRLOP,
-      OUTPUT_OPTIONS   TYPE SSFCOMPOP,
-      USER_SETTINGS    TYPE TDBOOL,
-      V_E_DEVTYPE      TYPE RSPOPTYPE,
-      LS_JOB_INFO      TYPE SSFCRESCL,
-      V_BIN_FILESIZE   TYPE I,
-      L_XSTRING        TYPE XSTRING,
-      LT_DATA          TYPE STANDARD TABLE OF X255,
-      WA_DATA          TYPE X255,
-      LV_URL           TYPE CHAR255,
-      G_HTML_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
-      G_HTML_CONTROL   TYPE REF TO CL_GUI_HTML_VIEWER.
+DATA: IT_OPERACIONES    TYPE TABLE OF TY_OPERACIONES.
+*      CONTROL          TYPE SSFCTRLOP,
+*      OUTPUT_OPTIONS   TYPE SSFCOMPOP,
+*      USER_SETTINGS    TYPE TDBOOL,
+*      V_E_DEVTYPE      TYPE RSPOPTYPE,
+*      LS_JOB_INFO      TYPE SSFCRESCL,
+*      V_BIN_FILESIZE   TYPE I,
+*      L_XSTRING        TYPE XSTRING,
+*      LT_DATA          TYPE STANDARD TABLE OF X255,
+*      WA_DATA          TYPE X255,
+*      LV_URL           TYPE CHAR255,
+*      G_HTML_CONTAINER TYPE REF TO CL_GUI_CUSTOM_CONTAINER,
+*      G_HTML_CONTROL   TYPE REF TO CL_GUI_HTML_VIEWER.
 
 DATA: LV_ADR      TYPE ADRNR,
       LV_NAME1    TYPE CHAR40,
@@ -345,14 +345,14 @@ CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
 
 ENDFORM.                    " F_ARMA_CATALOGO
 "$. Endregion FORM: Armar Catalogo de datos
-""" -----------------------------------------------------------------------------------------------
+"" -----------------------------------------------------------------------------------------------
 "$. Region FORM: Status GUI
 FORM PF USING RT_EXTAB TYPE SLIS_T_EXTAB.
   SET PF-STATUS 'ZSTATUS'.
 ENDFORM.
-"$. Endregion FORM: Status GUI
-""" -----------------------------------------------------------------------------------------------
-"$. Region Comandos de Usuario en GUI
+*$. Endregion FORM: Status GUI
+"" -----------------------------------------------------------------------------------------------
+*$. Region Comandos de Usuario en GUI
 FORM USER_COMMAND USING R_UCOMM LIKE SY-UCOMM
                   RS_SELFIELD TYPE SLIS_SELFIELD.
 

@@ -78,7 +78,7 @@ CLASS zcl_tm_fletes IMPLEMENTATION.
                   "/SCMTMS/D_TORROT".labeltxt as zetiqueta,
                   ekpo.werks as zcentro,
                   c_frtordgendatabasicfacts.sourcelocationlabel as zdes_ubiorigen, c_frtordgendatabasicfacts.destinationlocationlabel as zdes_ubidestino,
-*                  '5125' as  zflete_vtas,
+**                  '5125' as  zflete_vtas,
                   case when vbrp.kzwi6 is null then vbap.kzwi6 else vbrp.kzwi6 end as zflete_vtas,
                   c_transpchargeitemelement.transpchargecalcdamount as ztarifa,
                   c_transpchargeitemelement.transpchargecalcdamountcrcy as zmoneda,
@@ -100,15 +100,15 @@ CLASS zcl_tm_fletes IMPLEMENTATION.
            left join vbrp on vbrp.vgbel = likp.vbeln
 *           inner join c_frtordgendatabasicfacts on c_frtordgendatabasicfacts.freightorder = "/SCMTMS/D_TORROT".tor_id
            left join c_frtordgendatabasicfacts on c_frtordgendatabasicfacts.freightorder = "/SCMTMS/D_TORROT".tor_id
-*           inner join ekpo ON ekpo.txz01 = ltrim( "/SCMTMS/D_TORROT".tor_id,'0')
-           left join ekpo ON ekpo.txz01 = ltrim( "/SCMTMS/D_TORROT".tor_id,'0')
+           inner join ekpo ON ekpo.txz01 = ltrim( "/SCMTMS/D_TORROT".tor_id,'0')
+*           left join ekpo ON ekpo.txz01 = ltrim( "/SCMTMS/D_TORROT".tor_id,'0')
            left join rseg ON rseg.ebeln = ekpo.ebeln
            left join rbkp on rbkp.belnr = rseg.belnr
            left join "/SCMTMS/D_SF_DOC" on "/SCMTMS/D_SF_DOC".BTD_ID = ekpo.ebeln
-*           inner join "/SCMTMS/D_SF_ROT"  on "/SCMTMS/D_SF_ROT".db_key = "/SCMTMS/D_SF_DOC".parent_key
-*                        and "/SCMTMS/D_SF_ROT".lifecycle <> '06'
-           left join "/SCMTMS/D_SF_ROT"  on "/SCMTMS/D_SF_ROT".db_key = "/SCMTMS/D_SF_DOC".parent_key
+           inner join "/SCMTMS/D_SF_ROT"  on "/SCMTMS/D_SF_ROT".db_key = "/SCMTMS/D_SF_DOC".parent_key
                         and "/SCMTMS/D_SF_ROT".lifecycle <> '06'
+*           left join "/SCMTMS/D_SF_ROT"  on "/SCMTMS/D_SF_ROT".db_key = "/SCMTMS/D_SF_DOC".parent_key
+*                        and "/SCMTMS/D_SF_ROT".lifecycle <> '06'
            left join dd07t on dd07t.domvalue_l = "/SCMTMS/D_SF_ROT".lifecycle and dd07t.ddlanguage = 'S' AND dd07t.as4local = 'A'
            and dd07t.domname = '/SCMTMS/SFIR_LC_STATUS'
 
@@ -124,10 +124,10 @@ CLASS zcl_tm_fletes IMPLEMENTATION.
            left join i_transportationorderallbp ON i_transportationorderallbp.transportationorderuuid = c_frtordgendatabasicfacts.transportationorderuuid
            left join "/SAPAPO/LOC" on "/SAPAPO/LOC".locno = c_frtordgendatabasicfacts.sourcelocation
            left join "/SAPAPO/LOC" as dest on dest.locno = c_frtordgendatabasicfacts.destinationlocation
-           left join adrc on adrc.addrnumber = i_transportationorderallbp.businesspartneraddressid and i_transportationorderallbp.businesspartnerrole = 'WE'
+           inner join adrc on adrc.addrnumber = i_transportationorderallbp.businesspartneraddressid and i_transportationorderallbp.businesspartnerrole = 'WE'
            left join c_transpchargeitemelement ON ( c_transpchargeitemelement.transpchargehostdocumentuuid =  c_frtordgendatabasicfacts.transportationorderuuid
-*                                       and c_transpchargeitemelement.transportationrate <> ' ' and transpchargecalcsheetlinenmbr = '000010')
-                                       and c_transpchargeitemelement.transportationrate <> ' ' and TRANSPCHARGECALCDAMOUNT > 0 )
+                                       and c_transpchargeitemelement.transportationrate <> ' ' and transpchargecalcsheetlinenmbr = '000010')
+*                                       and c_transpchargeitemelement.transportationrate <> ' ' and TRANSPCHARGECALCDAMOUNT > 0 )
            left join zaxnare_tb001 on zaxnare_tb001.doc_contable = rbkp.belnr
            where
              likp.mandt                   = :clnt and
