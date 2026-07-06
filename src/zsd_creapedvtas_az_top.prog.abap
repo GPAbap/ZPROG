@@ -18,7 +18,11 @@ TABLES: tvakt, "Clase de Documento
         tvbvk, "Grupo de vendedores
         tvau. "Motivo de pedido
 
-data: it_equivaleppa type STANDARD TABLE OF ZSD_TT_PPAEQUSAN.
+DATA: it_equivaleppa TYPE STANDARD TABLE OF zsd_tt_ppaequsan.
+
+DATA: rg_spart TYPE RANGE OF vbak-spart,
+      wa_spart LIKE LINE OF rg_spart.
+
 
 TYPES: BEGIN OF ty_string,
 
@@ -140,6 +144,7 @@ TYPES: BEGIN OF st_datos_pedidos,
          net_weight TYPE ntgew_ap, "Peso neto de la posición
          untof_wght TYPE gewei, "Unidad de peso
          unof_wtiso TYPE gewei_iso, "Unidad de peso en código ISO
+         bsark      TYPE bsark,
 ****************** 27 diciembre 2021 - DESK943284
        END OF st_datos_pedidos.
 
@@ -222,6 +227,14 @@ DATA: it_datos_pedidosV TYPE STANDARD TABLE OF st_datos_pedidos,
 
 DATA: it_datos_pedidosV2 TYPE STANDARD TABLE OF st_datos_pedidos,
       wa_datos_pedidosV2 LIKE LINE OF it_datos_pedidosV2.
+
+DATA: it_datos_pedidos_vpg TYPE STANDARD TABLE OF st_datos_pedidos,
+      wa_datos_pedidos_vpg LIKE LINE OF it_datos_pedidos_vpg.
+
+DATA: it_datos_pedidos_vpg_i TYPE STANDARD TABLE OF st_datos_pedidos,
+      wa_datos_pedidos_vpg_i LIKE LINE OF it_datos_pedidos_vpg_i.
+
+
 ***********************************+************************************+*
 *******29 de enero VPGI ***********************************+*
 

@@ -845,7 +845,9 @@ FORM get_Data .
 *        "Datos de la factura (Documento Provision)
     CLEAR lv_exist_prov.
 
-    LOOP AT it_bseg2 INTO DATA(wa_bseg2) WHERE augbl = wa_bkpf-belnr.
+    LOOP AT it_bseg2 INTO DATA(wa_bseg2) WHERE augbl = wa_bkpf-belnr
+                                               OR ( belnr = wa_bkpf-belnr  AND augbl CP '19*' ).
+
 
       IF wa_bseg2-h_blart EQ 'NM'.
         lv_exist_prov = abap_false.
@@ -876,7 +878,12 @@ FORM get_Data .
       <fs_body>-belnr = wa_bkpf-belnr.
       "<fs_body>-usnam = wa_acdoca-usnam. pendiente
       <fs_body>-budat = wa_bseg2-h_budat.
-      <fs_body>-rebzg  = wa_bseg2-belnr.
+      IF wa_bseg2-augbl CP '19*'.
+        <fs_body>-rebzg  = wa_bseg2-augbl.
+      ELSE.
+        <fs_body>-rebzg  = wa_bseg2-belnr.
+      ENDIF.
+
       "<fs_body>-valut = wa_acdoca-valut. -pendiente
       <fs_body>-moneda = wa_bseg2-moneda.
 
@@ -963,7 +970,7 @@ FORM get_Data .
       "------------------------------------------------------------------
 
 
-      IF wa_bseg2-belnr NE wa_bkpf-belnr.
+      IF wa_bseg2-belnr NE wa_bkpf-belnr OR wa_bseg2-augbl CP '19*'.
         IF wa_bseg2-bschl EQ '21' OR wa_bseg2-bschl EQ '27' OR wa_bseg2-bschl EQ '96'. "nota de credito o Ajuste
 
 
@@ -1104,7 +1111,7 @@ FORM get_Data .
         IF wa_bseg2-mwskz IS INITIAL.
           <fs_body>-wsl = wa_bseg2-dmbtr. "No tienen base, por lo regular SA
           IF wa_bseg2-h_blart EQ 'KZ' OR wa_bseg2-h_blart EQ 'GV'.
-            IF wa_bseg2-bschl EQ '25'. "GV que son Anticipos
+            IF wa_bseg2-bschl EQ '25' OR wa_bseg2-bschl EQ '29'. "GV que son Anticipos
               <fs_body>-no_considerado = wa_bseg2-dmbtr. "No considerado.
               <fs_body>-wsl = '0.00'.
             ELSE.
@@ -1148,7 +1155,7 @@ FORM get_Data .
           ENDIF.
         ENDIF.
       ELSE.
-       <fs_body>-del_alv = 'X'.
+        <fs_body>-del_alv = 'X'.
       ENDIF.
 
       IF wa_bseg2-bschl NE '50' AND  wa_bseg2-buzid NE 'T' AND wa_bseg2-augbl IS INITIAL .
@@ -1407,7 +1414,7 @@ FORM get_Data .
             <fs_bodykz>-tot_egreso = 0.
             <fs_bodykz>-blart = 'NM'.
           ELSE.
-           " <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
+            " <fs_bodykz>-tot_egreso = wa_bsegkz-dmbtr.
             <fs_bodykz>-total = wa_bsegkz-dmbtr.
             <fs_bodykz>-tot_egreso = 0.
           ENDIF.
@@ -1517,7 +1524,7 @@ FORM get_Data .
           <fs_body>-fecpago_xml = wa_valida-fecha.
           <fs_body>-fectimbxml = wa_valida-fechatimbrado.
         ENDIF.
-        clear add_line.
+        CLEAR add_line.
       ENDLOOP.
     ENDIF.
     """"""""""""""""""""""""""""""""""""""""""""""""""
@@ -2041,7 +2048,7 @@ FORM get_inversiones .
 
 
   DELETE it_inversiones WHERE fdlev EQ 'F1'.
-   DELETE it_inversiones WHERE doc_banco is INITIAL.
+  DELETE it_inversiones WHERE doc_banco IS INITIAL.
   APPEND LINES OF it_inversiones    TO it_ordenainvers.
   APPEND LINES OF it_inversionesadd TO it_ordenainvers.
   SORT it_ordenainvers BY budat belnr.

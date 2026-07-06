@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo Func. BP</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZBP_FUNCIONESTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZBP_FUNCIONES</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZBP_PAI_RFC_FILL_ADDR</FUNCNAME>
+     <SHORT_TEXT>Funciones para CSF BP</SHORT_TEXT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>CITY1</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AD_CITY1</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>POST_CODE1</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AD_PSTCD1</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>STREET</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AD_STREET</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>HOUSE_NUM1</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>AD_HSNM1</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>COUNTRY</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>LAND1</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>REGION</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>REGIO</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>STATUS_CODE</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>I</TYP>
+      </RSCHA>
+     </CHANGING>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>CITY1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Población</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>POST_CODE1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Código postal de la población</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>STREET</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Calle</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>HOUSE_NUM1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nº (edificio)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>COUNTRY</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Clave de país/región</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>REGION</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Región (Estado federal, Estado federado, provincia, condado)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>STATUS_CODE</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

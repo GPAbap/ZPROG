@@ -784,20 +784,20 @@ FORM crea_pedidos USING p_werks type werks_d.
   DELETE it_datos_pedidos WHERE bsark EQ 'VTRU'.
   DELETE it_pedidos_vtru WHERE bsark NE 'VTRU'.
 
+*
+*  obj_pedidos->get_sectores(
+*    EXPORTING
+*      i_tt_pedidos = it_datos_pedidos
+*    IMPORTING
+*      e_sectores   = rg_sectores
+*  ).
 
-  obj_pedidos->get_sectores(
-    EXPORTING
-      i_tt_pedidos = it_datos_pedidos
-    IMPORTING
-      e_sectores   = rg_sectores
-  ).
-
-  LOOP AT rg_sectores INTO DATA(wa_sectores).
+*  LOOP AT rg_sectores INTO DATA(wa_sectores).
 
     "se obtienen pedidos de venta público en general.
     obj_pedidos->get_vpg(
       EXPORTING
-        i_sector     = wa_sectores-low
+        i_sector     = ''".wa_sectores-low
         i_c_vpg      = lv_vpg
         i_tt_pedidos = it_datos_pedidos
       CHANGING
@@ -808,7 +808,7 @@ FORM crea_pedidos USING p_werks type werks_d.
     "se obtienen pedidos que no son venta público en general.
     obj_pedidos->get_novpg(
       EXPORTING
-        i_sector     = wa_sectores-low
+        i_sector     = ''"wa_sectores-low
         i_c_vpg      = lv_vpg
         i_tt_pedidos = it_datos_pedidos
       CHANGING
@@ -821,7 +821,7 @@ FORM crea_pedidos USING p_werks type werks_d.
     "primero los vpg
     obj_pedidos->set_crea_vpg(
    EXPORTING
-     i_sector     = wa_sectores-low
+     i_sector     = ''"wa_sectores-low
      i_indicavpg  = abap_true
      i_tt_pedidos = it_vpg
      i_tt_pedidosi = it_vpgi
@@ -830,14 +830,14 @@ FORM crea_pedidos USING p_werks type werks_d.
     "despues no que no son vpg
     obj_pedidos->set_crea_vpg(
          EXPORTING
-           i_sector     = wa_sectores-low
+           i_sector     = '' "wa_sectores-low
            i_indicavpg  = abap_false
            i_tt_pedidos = it_novpg
            i_tt_pedidosi = it_vpgi
         ).
 
 
-  ENDLOOP.
+*  ENDLOOP.
 
   """"""""""""""""pedidos a ruta""""""""""""""""""""""""""""""""""""""""
   REFRESH: rg_sectores,
@@ -846,19 +846,19 @@ FORM crea_pedidos USING p_werks type werks_d.
             it_novpg.
 
 
-  obj_pedidos->get_sectores(
-      EXPORTING
-        i_tt_pedidos = it_pedidos_vtru
-      IMPORTING
-        e_sectores   = rg_sectores
-    ).
+*  obj_pedidos->get_sectores(
+*      EXPORTING
+*        i_tt_pedidos = it_pedidos_vtru
+*      IMPORTING
+*        e_sectores   = rg_sectores
+*    ).
 
-  LOOP AT rg_sectores INTO wa_sectores.
+*  LOOP AT rg_sectores INTO wa_sectores.
 
     "se obtienen pedidos de venta público en general.
     obj_pedidos->get_vpg(
       EXPORTING
-        i_sector     = wa_sectores-low
+        i_sector     = '' "wa_sectores-low
         i_c_vpg      = lv_vpg
         i_tt_pedidos = it_pedidos_vtru
       CHANGING
@@ -869,7 +869,7 @@ FORM crea_pedidos USING p_werks type werks_d.
     "se obtienen pedidos que no son venta público en general.
     obj_pedidos->get_novpg(
       EXPORTING
-        i_sector     = wa_sectores-low
+        i_sector     = '' "wa_sectores-low
         i_c_vpg      = lv_vpg
         i_tt_pedidos = it_pedidos_vtru
       CHANGING
@@ -882,7 +882,7 @@ FORM crea_pedidos USING p_werks type werks_d.
     "primero los vpg
     obj_pedidos->set_crea_vpg(
    EXPORTING
-     i_sector     = wa_sectores-low
+     i_sector     = '' "wa_sectores-low
      i_indicavpg  = abap_true
      i_tt_pedidos = it_vpg
      i_tt_pedidosi = it_vpgi
@@ -891,14 +891,14 @@ FORM crea_pedidos USING p_werks type werks_d.
     "despues no que no son vpg
     obj_pedidos->set_crea_vpg(
          EXPORTING
-           i_sector     = wa_sectores-low
+           i_sector     = '' "wa_sectores-low
            i_indicavpg  = abap_false
            i_tt_pedidos = it_novpg
            i_tt_pedidosi = it_vpgi
         ).
 
 
-  ENDLOOP.
+*  ENDLOOP.
 
 
 ENDFORM.

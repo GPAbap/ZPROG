@@ -78,7 +78,7 @@ START-OF-SELECTION.
     APPEND WA_RANGO TO IT_RANGO.
   ENDDO.
 ***************************+
- PERFORM load_tables_conf.
+
   LOOP AT IT_DEP INTO WA_DEP.
 
     LOOP AT IT_RANGO INTO WA_RANGO.

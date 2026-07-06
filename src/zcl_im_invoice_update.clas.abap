@@ -71,7 +71,13 @@ CLASS ZCL_IM_INVOICE_UPDATE IMPLEMENTATION.
 
         IF ls_rseg-matnr IS NOT INITIAL.
 
+          SELECT SINGLE t~begru INTO @data(vl_begru)
+            FROM mara AS m
+            INNER JOIN t134 AS t
+            ON t~mtart = m~mtart
+            WHERE m~matnr = @ls_rseg-matnr.
 
+        IF vl_begru = 'X' and ls_rseg-werks ne 'PP01'.
 
           ls_headdata-material   = ls_rseg-matnr.
           ls_headdata-purchase_view = 'X'.
@@ -103,7 +109,7 @@ CLASS ZCL_IM_INVOICE_UPDATE IMPLEMENTATION.
 *            CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
 *              EXPORTING
 *                wait = 'X'.
-*          ENDIF.
+         ENDIF.
         ENDIF.
       ENDLOOP.
     ENDIF.

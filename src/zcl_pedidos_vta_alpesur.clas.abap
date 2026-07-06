@@ -525,7 +525,7 @@ METHOD get_novpg.
 
     ztt_pedidos = i_tt_pedidos[].
     row = 0.
-    LOOP AT ztt_pedidos INTO DATA(wa_pedidos) WHERE vpg <> 'X' AND spart = i_sector.
+    LOOP AT ztt_pedidos INTO DATA(wa_pedidos) WHERE vpg <> 'X'." AND spart = i_sector.
       CLEAR lv_rfc.
       MOVE-CORRESPONDING wa_pedidos TO workarea.
       workarea-row = row.
@@ -626,7 +626,7 @@ METHOD get_vpg.
 
     ztt_pedidos = i_tt_pedidos[].
     row = 0.
-    LOOP AT ztt_pedidos INTO DATA(wa_pedidos) WHERE vpg = 'X' AND spart = i_sector.
+    LOOP AT ztt_pedidos INTO DATA(wa_pedidos) WHERE vpg = 'X'. "AND spart = i_sector.
       CLEAR lv_rfc.
       MOVE-CORRESPONDING wa_pedidos TO workarea.
       workarea-row = row.
